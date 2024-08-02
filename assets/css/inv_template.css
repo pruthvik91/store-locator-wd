@@ -1,0 +1,413 @@
+        
+
+        table {
+            width: 100%;
+            font-size: 13px;
+            line-height: 1.3;
+        }
+
+        td {
+            /*padding: 4px;*/
+            vertical-align: top;
+        }
+
+        .page-wrapper {
+            margin-top: 50px;
+            padding-bottom: 50px;
+            border-bottom: 3px dashed #000;
+        }
+
+        .page-wrapper-table,
+        .page-wrapper-tr,
+        .page-copy-container-wrapper {
+            position: relative;
+        }
+
+        .page-copy-container-wrapper {
+            margin: 30px 0 100px;
+        }
+
+        .page-wrapper-table {
+            margin: 0px auto;
+            position: relative;
+        }
+
+
+
+
+
+        
+
+      
+         /* Section 3 Css  ____________________________________________________________________________________________ */
+
+        #section3 {
+            padding-top: 10px;
+        }
+
+        
+
+        #section3 .section3_table {
+            border-collapse: collapse;
+        }
+
+        #section3 .section3_table th {
+            padding: 3px;
+        }
+
+      	#section4 .section3_tbl_color {
+            background-color: #f6fafd;
+            color: black;
+            font-size: 12px;
+        }
+
+        #section41 .section3_table {
+            border-collapse: collapse;
+        }
+
+        #section41 .section3_table th {
+            padding: 3px 3px 3px 5px;
+        }
+
+
+        #section3 .section3_text_left {
+            text-align: left;
+        }
+
+        #section3 .section3_text_end {
+            text-align: end;
+        }
+        
+        #section3 .section3_text_right {
+            text-align: right;
+        }
+        
+        #section3 .section3_text_center {
+            text-align: center;
+        }
+
+        #section3 .section3_tbl_border {
+            border-bottom: 2px solid #b3c0c7;
+        }
+
+        #section3 .section3_item {
+            font-weight: 600;
+        }
+
+        #section41 .section3_text_left {
+            text-align: left;
+        }
+
+        #section41 .section3_text_end {
+            text-align: end;
+        }
+        
+        #section41 .section3_text_right {
+            text-align: right;
+        }
+        
+        #section41 .section3_text_center {
+            text-align: center;
+        }
+
+        #section41 .section3_tbl_border {
+            border-bottom: 2px solid #b3c0c7;
+        }
+
+        #section41 .section3_item {
+            font-weight: 600;
+        }
+
+        /* Section 4 Css ____________________________________________________________________________________________*/
+
+        #section4 .section4_td1_right {
+            text-align: right;
+            font-weight: 700;
+        }
+
+        #section4 .section4_td2_right {
+            color: #5e5e5e;
+            text-align: right;
+            font-weight: 700;
+            padding-top: 3px;
+        }
+		
+		#section4 .section4_td_right {
+            text-align: right;
+            font-weight: 400;
+        }
+
+        #section4 .invoiceTotal td {
+            padding: 1px 4px;
+        }
+
+        #section4 .invoiceTotal .section4_td_right:last-child {
+            font-weight: 600;
+        }
+        
+
+        #section4 .section4_td1_ttl {
+            font-size: 20px;
+        }
+
+        #section4 .section4_tbl_border {
+            border-bottom: 2px solid #b3c0c7;
+        }
+
+        #section4 .section4_tbl_height {
+            height: 120px;
+        }
+		
+		#section4 .section4_height {
+            height: auto;
+        }
+
+        #section4 .section4_amunt_pay {
+            font-weight: 600;
+            font-size: 15px;
+            text-align: right;
+            color: #515756;
+        }
+
+        #section4 .section4_text_clr {
+            color: #000;
+            width: 25%;
+            vertical-align: bottom;
+        }
+
+        #section4 .totalinvoicesection span.amount_in_words {
+            font-weight: 600;
+        }
+
+        /* Section 5 Css  ____________________________________________________________________________________________*/
+
+        #section5 .section5_upi {
+            width: 200px;
+        }
+
+        #section5 .section5_logo {
+            margin-top: 3px;
+        }
+
+        #section5 td, #section6 td {
+            padding: 4px;
+            vertical-align: top;
+        }
+        
+        #section5 .section5_left, #section5 .section5_right {
+            padding: 0;
+        }
+
+        #section5 .section5_tbl_w {
+            width: 50%;
+        }
+
+        #section5 .section5_tbl_w td {
+            padding: 0;
+        }
+
+
+        #section5 .section5_pay {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        #section5 .bankInfo .section5_bank.sectionHeader {
+            font-size: 13px;
+            margin-bottom: 3px;
+            margin-top: 0px;
+            font-weight: 600;
+        }
+
+        #section5 .section5_bank {
+            font-weight: normal;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
+        #section5 .section5_bank_label {
+            font-size: 15px;
+            color: #5b5b5b;
+            margin-top: 3px;
+        }
+
+        #section5 .bankInfo .section5_bank_label {
+            font-size: 13px;
+            color: #000;
+        }
+
+        #section5 .section5_cmp_name {
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 3px;
+            font-weight: bold;
+        }
+
+        #section5 .section5_sig {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #section5 .no_sign {
+            height: 20px;
+        }
+
+        #section5 p.signtitle {
+            margin-top: 5px;
+            font-size: 9px;
+        }
+
+        section#section5 {
+            padding-top: 5px;
+        }
+        
+        section#section5 .bankdetail td{
+            padding: 0;
+        }
+
+        /* Section 6 Css ____________________________________________________________________________________________ */
+
+        
+
+        #section5 .section6_title ,#section6 .section6_title {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        #section5 .section6_value ,#section6 .section6_value {
+            font-size: 14px;
+        }
+
+        .bank_term {
+            width: 65%;
+            float: left;
+        }
+
+        #section7{
+            min-height: 30px;
+        }
+      
+
+        section #headersec h3{
+            font-size:15px;
+        }
+        section#headersec td:first-child {
+            text-align: left;
+        }
+        section#headersec td:last-child {
+            text-align: right;
+        }
+
+        section#exportshipping td{
+            padding: 2px 0;
+            border: none !important;
+        }
+
+        section#exportshipping .customerexportdata_item_label{
+            font-weight:bold;
+        }
+
+        #section3 .section3_thead td[rowspan="2"], #section41 .section3_thead td[rowspan="2"] {
+            vertical-align: middle;
+        }
+
+        #section3 .section3_table td {
+            padding: 2px;
+        }
+
+        #section3 .section3_table td h4{
+            font-size: 13px;
+        }
+
+        #section3 .section3_thead tr:last-child td , #section41 .section3_thead tr:last-child td {
+            font-size: 11px;
+            text-align: center;
+            padding-top: 0;
+        }
+
+
+        h2.section1_title_logo {
+            font-weight: 600;
+            margin-bottom: 2px;
+            font-size: 17px;
+            line-height: 1.2;
+        }
+
+
+
+        .print-icon,.download-icon {
+            display: inline-block;
+            margin: 0 10px;
+            width: 200px;
+            background: #0070C0;
+            position: relative;
+            line-height: 40px;
+            color: #fff;
+            padding: 10px 30px;
+            font-size: 21px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .print-icon:hover,.download-icon:hover{
+            cursor:pointer;
+        }
+
+        .ads-container{margin:10px auto;text-align:center;}
+        .print-icon svg,
+        .download-icon svg {
+            height: 40px;
+            width: 40px;
+            float: left;
+            margin-right: 15px;
+        }
+
+        @media print {
+            .ads-container,.print-action-bar {
+                display:none;
+            }
+            .page-copy-container-wrapper {
+                margin: 0;
+            }
+
+            .submit_font_sizes{display:none;}
+            .page-wrapper {
+                margin-top: 0;
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+            .branding_rt {
+                opacity:1;
+                visibility:visible;
+            }
+        }
+        .page-header img + br {
+            display:none;
+        }
+        @media screen and (max-width:1200px) {
+        }
+        @media screen and (max-width:1000px) {
+        }
+
+        .txt-tranport-sr-no{color:#fff;font-size:0;}
+
+        .totalinvoicesection {
+            width: 45%;
+            float: left;
+        }
+
+        
+        .einvoice-tag {
+            font-size: 13px;
+            margin-top: 5px;
+            margin-right: 40px;
+        }
+
+        .branding_image img {
+            max-width: 100%;
+            float: left;
+        }
+        img.document-sign-image {
+            max-width: 240px;
+            max-height: 75px;
+        }

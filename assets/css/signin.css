@@ -1,0 +1,384 @@
+/*------------------------------------------------------------------
+Bootstrap Admin Template by EGrappler.com
+------------------------------------------------------------------*/
+
+
+
+
+/** Base Body Styles **/
+body {
+    background: #F9FAFB;
+    font: 13px/1.7em 'Open Sans';
+}
+.login_right_section {
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.login_right_section .content {
+    width: 100%;
+}
+
+.account-container {
+	width: 890px; 
+	max-width:calc(100% - 40px);
+	display: block;
+	margin: 20px auto 20px auto;
+	border:none;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%);
+    -webkit-box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%);
+    -moz-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
+    -ms-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
+	padding:0;background:#fff;
+}
+
+.content {
+	padding: 16px 28px 23px;
+} 
+
+.login-fields {
+	
+}
+
+.login-fields .field {
+	margin-bottom: 1.25em;
+}
+
+.login-fields label {
+	display: none;
+}
+
+.login-fields input {
+	font-family: 'Open Sans';
+	font-size: 13px;
+	color: #8e8d8d;
+	padding: 11px 15px 10px 15px;
+	background-color: #fff;
+
+	display: block;
+	margin: 0;
+	
+	width: 100%;
+	height: 41px;
+}
+.account-container-outer {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* .username-field { background: url(../img/signin/user.png) no-repeat; } */
+
+/* .password-field { background: url(../img/signin/pw.png) no-repeat; } */
+
+
+
+
+.login-actions {
+	float: left;
+	width: 100%;
+}
+
+.login-social {
+	float: left;
+	
+	padding: 10px 0 15px;
+	
+	border: 1px dotted #CCC;
+	border-right: none;
+	border-left: none;	
+}
+
+span.login-checkbox {
+	float: left;
+	margin-top: 10px;
+}
+
+span.login-checkbox > input[type='checkbox'] {
+    opacity: 0;
+    float: left;
+    width: 0;
+position: absolute;
+height: 0;
+}
+
+span.login-checkbox > input[type='checkbox'] + label {    
+    clear: none;    
+	height: 15px; 
+	display: block;
+    padding: 0 0 0 22px; 
+    line-height: 1.2em;    
+    background: url(../img/signin/check.png) no-repeat 0 0;    
+    cursor: pointer;
+	margin-bottom: 15px;
+}
+.login_image {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center center;
+}
+span.login-checkbox > input[type='checkbox']:checked + label {	
+	background-position: 0 -15px;
+	display: block !important;
+    float: left;
+}
+
+/** Text Under Box**/
+.login-extra {
+	display: block; 
+	width: 300px; 
+	margin: 1.5em auto;
+	 
+	text-align: left;
+	line-height: 19px; 
+	
+	text-shadow: 1px 1px 0px #fff; 	
+}
+
+
+.account-container h1 {
+	margin-bottom: .4em;
+	
+	color: #525252;
+}
+
+/** Buttons **/
+.twitter, .fb {
+	position: relative;
+	
+	height: 32px; 
+	width: 157px; 
+	display: block;
+	
+	background: url(../img/signin/twitter_btn.png) no-repeat; 
+	
+}
+
+.fb {
+	width: 162px; 
+	
+	background: url(../img/signin/fb_btn.png) no-repeat; 	
+}
+
+.twitter:active, .fb:active {
+	top: 1px;
+}
+
+.twitter:hover, .fb:hover {
+	background-position: 0 -32px;
+}
+
+.twitter a, .fb a {
+	padding: 5px 0 0 35px; 
+	text-shadow: -1px -1px 0px rgba(0,0,0,.3); 
+	color:#fff; 
+	font-weight: bold; 
+	font-size: 11px; 
+	height: 32px; 
+	display: block;	
+}
+
+.fb a {
+	padding: 5px 0 0 31px; 
+	
+}
+
+.twitter, .fb {
+	display: inline-block;
+}
+
+.twitter a:hover, .fb a:hover {
+	color: #FFF;
+	text-decoration: none;
+}
+
+.button {-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; display: inline-block; float: left; margin-top: 10px;}
+
+
+.account-container a:not(.button) {
+    color: #333;
+    text-decoration: underline;
+}
+
+
+
+.register .login-social {
+	margin-bottom: 1em;
+}
+
+.register .login-actions {
+	margin-bottom: 0;
+}
+
+.register .login-fields input {
+	width: 299px;
+	padding-left: 6px;
+}
+
+.register h1 {
+	color: #444;
+}
+
+.register span.login-checkbox {
+	position: relative;
+	top: -6px;
+	
+	width: 200px;
+}
+
+.register span.login-checkbox > input[type="checkbox"] + label {
+	
+	position: relative;
+	
+	line-height: 1.3em;
+}
+
+
+
+
+
+
+
+/* SIgnUp Page Css Here*/
+.signup-container {
+	display: block;
+	margin: 0;	
+	background: #f9f9f9;	
+	border: 1px solid #d5d5d5;	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+    padding: 30px;
+	box-shadow:  0px 0px 2px #dadada, inset 0px -3px 0px #e6e6e6;}
+.signup-title {
+    color: #000;
+    text-align: center;
+    margin: 50px;
+}
+.signup-subtitle {
+    color: #00BA8B;
+    margin: 15px 0;
+}
+.signup-container input[type="text"], .signup-container input[type="email"], .signup-container input[type="password"], .signup-container select[type="list"] {
+    height: auto;
+    padding: 8px;
+	width:100%;
+}
+ .signup-container select[type="list"] {
+    margin-bottom: 7px;
+}
+.footer_info {
+    margin: 30px 0 50px 0;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .footer_info h1,
+    .footer_info span {
+        display: block; 
+    }
+}
+
+#signupform .control-group { 
+    height: auto;
+}
+.account-container.account-container-create-new-account input,
+.account-container.account-container-company-details input,
+.account-container.account-container-company-details select {
+    width: 100%;
+    height: 35px;
+    padding: 5px 10px;
+}
+.control-label.control-label-reffereal-account {
+    font-weight: bold;
+}
+.login-fields.signup_update_email_box {
+    clear: both;
+}
+.signup_update_email {
+    float: right;
+}
+.signup-verify-email-container #btnsubmit {
+    margin-top: 0;
+	margin-bottom: 0;
+}
+.signup_update_email_box {
+    display: inline-block;
+    width: 100%;
+}
+
+.control-group .g-recaptcha {
+    display: inline-block;
+    width: 100%;
+    margin: 10px 0 0;
+}
+form {
+    display: inline-block;
+    width: 100%;
+}
+.login_right_section {
+    min-height: 640px;
+}
+.sperator_or {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    font-size: 16px;
+    line-height: 24px;
+}
+.sperator_or:before {
+    content: "";
+    background: #f5f5f5;
+    width: calc(50% - 25px);
+    display: inline-block;
+    height: 2px;
+    position: absolute;
+    left: 0;
+    top: 11px;
+}
+.sperator_or:after {
+    content: "";
+    background: #f5f5f5;
+    width: calc(50% - 25px);
+    display: inline-block;
+    height: 2px;
+    position: absolute;
+    right: 0;
+    top: 11px;
+}
+body a.login_using_mobile ,a.login_using_userid{
+    background: #eee;
+    padding: 8px 10px;
+    font-size: 16px;
+    text-decoration: none !important;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    width: 200px;
+    margin-top: 20px;
+    border-radius: 30px;
+    font-weight: bold;
+}
+.account-container.account-container-create-new-account input#otp {
+    width: 210px;
+}
+@media only screen and (max-width:767px){
+	.login_left_section {
+		display: none;
+	}
+	.login_right_section{
+		width:100% !important;
+	}
+}
