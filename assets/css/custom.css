@@ -8322,59 +8322,7 @@ div.tagsinput{
   .payment-type-section label.btn.btn-payment-type {
       font-weight: bold;
   }
-  .payment-type-section label.btn.btn-payment-type.btn-payment-type-credit {
-      border-color: #ffea89;
-      background: #fff6cd;
-  }
-  .payment-type-section label.btn.btn-payment-type.btn-payment-type-cash {
-      border-color: #a6eca3;
-      background: #cbf4c9;
-  }
-  .payment-type-section label.btn.btn-payment-type.btn-payment-type-cheque {
-      border-color: #b6f8d7;
-      background: #e0fcee;
-  }
-  .payment-type-section label.btn.btn-payment-type.btn-payment-type-online {
-      border-color: #bbb3f1;
-      background: #f2ebff;
-  }
-  .payment-type-section input:checked+label.btn.btn-payment-type.btn-payment-type-credit {
-      border:1px solid  #ffea89;
-      background: #ffea89;
-  }
-  .payment-type-section input:checked+label.btn.btn-payment-type.btn-payment-type-cash {
-      border:1px solid  #a6eca3;
-      background: #a6eca3;
-  }
-  .payment-type-section input:checked+label.btn.btn-payment-type.btn-payment-type-cheque {
-      border:1px solid  #b6f8d7;
-      background: #b6f8d7;
-  }
-  .payment-type-section input:checked+label.btn.btn-payment-type.btn-payment-type-online {
-      border:1px solid  #bbb3f1;
-      background: #bbb3f1;
-  }
-  
-  .payment-type-section input:disabled+label.btn.btn-payment-type.btn-payment-type-credit,
-  .payment-type-section input:disabled+label.btn.btn-payment-type.btn-payment-type-cash,
-  .payment-type-section input:disabled+label.btn.btn-payment-type.btn-payment-type-cheque,
-  .payment-type-section input:disabled+label.btn.btn-payment-type.btn-payment-type-online
-  {
-    background-color: #f5f5f5;
-    border-color: #d9d9d9;
-    cursor: not-allowed;
-  }
-  
-  .payment-type-section input:disabled:checked+label.btn.btn-payment-type.btn-payment-type-credit,
-  .payment-type-section input:disabled:checked+label.btn.btn-payment-type.btn-payment-type-cash,
-  .payment-type-section input:disabled:checked+label.btn.btn-payment-type.btn-payment-type-online,
-  .payment-type-section input:disabled:checked+label.btn.btn-payment-type.btn-payment-type-cheque
-  {
-    background-color: #d9d9d9;
-    border-color: #d9d9d9;
-    cursor: not-allowed;
-    color: #333333;
-  }
+ 
   
   
   .genneral-disc-tr .cd-pricing-switcher,.other-tax-amount-tr .cd-pricing-switcher,.other-amount-tr .cd-pricing-switcher{
@@ -9521,4 +9469,35 @@ div.tagsinput{
 }
 .offcanvas-end {
   width: 50%;
+}
+.payment-type-section input {
+  position: absolute;
+  visibility: hidden;
+}
+.payment-type-section label {
+  display: inline-block;
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+}
+
+.payment-type-section input:checked+label {
+  color: #fff;
+  background-color: #00ba8b;
+  border: none;
+}
+.payment-type-section label.btn.btn-payment-type {
+    font-weight: bold;
+}
+.payment-type-section label.btn.btn-payment-type.btn-payment-type-cash {
+    border:1px solid  #6570e7;
+    background: #fff;
+    color:#6570e7;
+    box-shadow: none;
+
+}
+
+.payment-type-section input:checked+label.btn.btn-payment-type.btn-payment-type-cash {
+    border:1px solid  #6570e7;
+    background: #6570e7;
+    color:#fff;
 }

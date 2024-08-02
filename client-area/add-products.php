@@ -13,7 +13,6 @@ $gst = "";
 $item_available = "";
 $hsn_sac = "";
 if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
-    //print_r($_POST);print_r($_FILES);exit;
     if (isset($_POST["product_name"])) {
 
         $product_name = trim($_POST["product_name"]);
@@ -21,6 +20,9 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
         $sell_price = trim($_POST["sell_price"]);
         $pur_price = trim($_POST["pur_price"]);
         $item_available = trim($_POST["item_available"]);
+        $plus_minus = trim($_POST["plus_minus"]);
+        $operator = ($plus_minus == "plus") ? "+" : "-";
+        $new_item_available = trim($_POST["new_item_available"]) ?? "";
         $gst = trim($_POST["gst"]);
         $dt1 = date("Y-m-d H:i:s");
         if ((isset($_GET["id"])) && ($_GET["id"] != "")) {
@@ -36,7 +38,7 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
                 pur_price=:pur_price,
                 hsn_sac=:hsn_sac, 
                 gst=:gst, 
-                item_available=:item_available,
+                item_available=(item_available ' . $operator . $new_item_available . '):,
                 modifydate=:modifydate WHERE product_id=:product_id';
 
             $data = array(
@@ -46,35 +48,18 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
                 ':pur_price' => $pur_price,
                 ':hsn_sac' => $hsn_sac,
                 ':gst' => $gst,
-                ':item_available' => $item_available,
+                ':item_available' => $new_item_available,
                 ':modifydate' => $dt1,
             );
 
             CP_update($sqlupdate, $data);
-
-
-
-
-
-
             if (isset($_GET["id"]) && isset($_GET["page"])) {
                 $id = $_GET["id"];
                 $pn = $_GET["page"];
-
-
                 header("Location: list-products.php?id=$id&product_name=&store_category_id=&page=$pn&mode=updated");
             }
-            // if(isset($_GET["id"]) && isset($_GET["store_category_id"])){
-            //     $id = $_GET["id"];
-            //     $c_id = $_GET["store_category_id"];
-
-
-            //     header("Location: list-products.php?id=$id&product_name=&store_category_id=$c_id&page=&mode=updated");
-            // }
-            header("Location: list-products.php?mode=updated");		
         } else {
-            $sql = "INSERT INTO " . DB_BASE . ".store_product (`product_name`,`sell_price`, `pur_price`,`hsn_sac`, `gst`, `item_available`, `createdate`) VALUES 
-            (:product_name,:sell_price,:pur_price,:hsn_sac,:gst,:item_available,:createdate) ";
+            $sql = "INSERT INTO " . DB_BASE . ".store_product (product_name,sell_price,pur_price,hsn_sac,gst,item_available,createdate) VALUES (:product_name,:sell_price,:pur_price,:hsn_sac,:gst,:item_available,:createdate);";
             $data = array(
                 ':product_name' => $product_name,
                 ':sell_price' => $sell_price,
@@ -84,7 +69,6 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
                 ':item_available' => $item_available,
                 ':createdate' => $dt1
             );
-  
             $store_id = CP_Insert($sql, $data);
             if ($store_id) {
                 header("Location: list-products.php?mode=inserted");
@@ -92,9 +76,10 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
         }
     }
 }
-
+$isedit = false;
 if ((isset($_GET["id"])) && ($_GET["id"] != "")) {
     $id = $_GET["id"];
+    $isedit = 1;
     $sql = "SELECT * FROM " . DB_BASE . ".store_product where product_id = :product_id ";
     $data = array(':product_id' => $id);
     $rows = CP_select($sql, $data);
@@ -117,7 +102,11 @@ require_once('header.php');
 <nav class="page-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?php if ((isset($_GET["id"])) && ($_GET["id"] != "")) { echo "Edit";}else{echo "Add";} ?>  Product</li>
+        <li class="breadcrumb-item active" aria-current="page"><?php if ((isset($_GET["id"])) && ($_GET["id"] != "")) {
+                                                                    echo "Edit";
+                                                                } else {
+                                                                    echo "Add";
+                                                                } ?> Product</li>
     </ol>
 </nav>
 
@@ -127,7 +116,11 @@ require_once('header.php');
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title"><?php if ((isset($_GET["id"])) && ($_GET["id"] != "")) { echo "Edit";}else{echo "Add";} ?> Product</h4>
+                        <h4 class="card-title"><?php if ((isset($_GET["id"])) && ($_GET["id"] != "")) {
+                                                    echo "Edit";
+                                                } else {
+                                                    echo "Add";
+                                                } ?> Product</h4>
 
                         <div class="form-group">
                             <label for="name">Product Name</label>
@@ -147,14 +140,54 @@ require_once('header.php');
                         </div>
                         <div class="form-group">
                             <label for="store_description">Tax (in percentage)</label>
-                            <input type="number" class="form-control" name="gst" id="gst" value="<?php echo $gst; ?>" >
+                            <input type="number" class="form-control" name="gst" id="gst" value="<?php echo $gst; ?>">
                         </div>
                         <div class="form-group">
-                            <label for="item_available">Stock</label>
+                            <label for="item_available"> <?php echo ($isedit) ? "Current" : ""; ?> Stock</label>
                             <div>
-                                <input type="number" class="form-control" name="item_available" id="item_available" value="<?php echo $item_available; ?>" />
+                                <input type="number" class="form-control" name="item_available" id="item_available" value="<?php echo $item_available; ?>" <?php echo ($isedit) ? "Disabled" : ""; ?> />
                             </div>
                         </div>
+                       <?php if($isedit) {?>
+                        <div class="form-group">
+                        $(document).ready(function() {
+var curpage = $(".pagination-wrapper .w--current").text();
+hideshowbutton(curpage);
+$(".pagination-number").on("click",function(){
+	hideshowbutton(curpage);
+  });
+});
+function hideshowbutton(curpage){
+
+    if (curpage == "1") {
+        $(".pagination-wrapper .previous").css("visibility", "hidden");
+        $(".pagination-wrapper .previous").css("visibility", "visible");
+    } else if(curpage =="2") {
+        $(".pagination-wrapper .previous").css("visibility", "hidden");
+        $(".pagination-wrapper .previous").css("visibility", "visible");
+    }
+}
+                            <div class="row">
+                            
+                                <div class="col-4 float-left" >
+                                <label for="item_available" class="mt-1 text-align-left" style="width:auto">Add New Stock :</label>
+                                    <div class="cd-pricing-switcher float-none">
+                                    
+											<div class="switcher_label">Plus / Minus : </div>
+											<p class="fieldset">
+												<input type="radio" name="plus_minus" value="plus" id="disc-rs" checked="">
+												<label for="disc-rs">+</label>
+												<input type="radio" name="plus_minus" value="minus" id="disc-p">
+												<label for="disc-p">-</label>
+												<span class="cd-switch"></span>
+											</p>
+										</div>
+                                    </div>
+                                        <div class="col-6"><input type="number" placeholder="Add Stock" class="form-control" name="new_item_available" id="new_item_available" value="" /></div>
+
+                            </div>
+                        </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

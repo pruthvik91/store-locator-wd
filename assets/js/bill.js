@@ -309,48 +309,6 @@ $(document).ready(function(){
 	if(!($("[name=invoice_id][data-value!='']").length>0)){
 		getInvoiceNumber();
 	}
-	
-	$(document).on("change", "#hidden-invoice-country", function(){
-		$(".control-group-lutno").hide();
-		$(".control-group-lutno #lut_no").val("");
-		
-		var sezcurrent = $(this).val();
-		if(sezcurrent == "SEZInvoice" || sezcurrent == "SEZInvoiceWithoutIGST" || sezcurrent == "ExportInvoice" || sezcurrent == "ExportInvoiceWithoutIGST") {
-			$(".sez-box").show();
-			if(sezcurrent == "ExportInvoiceWithoutIGST" || sezcurrent == "SEZInvoice" || sezcurrent == "SEZInvoiceWithoutIGST")
-			{
-				var data_val = $(".control-group-lutno #lut_no").attr("data-value");
-				$(".control-group-lutno #lut_no").val(data_val);
-				$(".control-group-lutno").show();
-			}
-			if(!($("[name=invoicetype][data-value!='']").length>0))
-			{
-				$("#remark_sez").val("");
-				if(sezcurrent == "ExportInvoice"){
-					$("#remark_sez").val("Supply Meant for Export on Payment of Integrated Tax (IGST)");
-				}
-				if(sezcurrent == "ExportInvoiceWithoutIGST"){
-					$("#remark_sez").val("Supply Meant for Export Under Bond or Letter of Undertaking without Payment of Integrated Tax (IGST)");
-				}
-				if(sezcurrent == "SEZInvoice"){
-					$("#remark_sez").val("Supply Meant for SEZ on Payment of Integrated Tax (IGST) & claim refund");
-				}
-				if(sezcurrent == "SEZInvoiceWithoutIGST"){
-					$("#remark_sez").val("Supply Meant for SEZ Under Bond or Letter of Undertaking without Payment of Integrated Tax (IGST)");
-				}
-			}
-		}
-		else
-		{
-			$(".sez-box").hide();
-			$("#remark_sez").val("");
-		}
-		SetIGTS();
-	});
-	$(document).on("change", ".customer-information-invoice .PlaceofSupply", function(){
-		SetIGTS();
-	});
-	SetIGTS();
 	refreshSn();
 
 });
@@ -611,8 +569,6 @@ function UpdateCalculations(){
 		var row_total = 0;
 		var gd_row_total = 0;
 		var gd_discount_line_value = 0;
-		console.log(quantity);
-		console.log(rate);
 		if( quantity != "" && rate != "" )
 		{
 			if((quantity.charAt(quantity.length - 1) != "." && quantity.toString().indexOf('.') > -1  ))
@@ -818,10 +774,6 @@ function UpdateCalculations(){
 	grand_total_value = Math.round(grand_total_value * 100) / 100;
 	total_tax_value = Math.round(total_tax_value * gst_decimal_rounding) / gst_decimal_rounding;
 	var cus_pay_grandtotal = grand_total_value;
-	if(subsidy_amount != "" && subsidy_amount > 0)
-	{
-		cus_pay_grandtotal = grand_total_value - subsidy_amount;
-	}
 	cus_pay_grandtotal = Math.round(cus_pay_grandtotal * 100) / 100;
 	$("#cus_pay_grandtotal").val(cus_pay_grandtotal);	
 	$("#cus_pay_grandtotal_lable").html(cus_pay_grandtotal);
@@ -923,7 +875,7 @@ function UpdateTrigger(){
 		$( ".invoice-product-items-table tbody" ).sortable( "refresh" );	
 	}
 	*/
-	$("#document-item-list-table .quantity, #document-item-list-table .rate, #document-item-list-table .mrp, #document-item-list-table .disc, #document-item-list-table .cgst, #document-item-list-table .sgst, #document-item-list-table .igst, #document-item-list-table .cess, #document-item-list-table .cess_amount,#subsidy_amount,#total_discount_value,[name=total_discount_in_rupee],[name=total_discount_type_minus],#other_tax_value,[name=other_tax_in_rupee],[name=other_tax_type_minus],#currency_rate,#general_disc_value,[name=general_disc_in_rupee]").off('keyup change blur').on('keyup change blur',function(){
+	$("#document-item-list-table .quantity, #document-item-list-table .rate, #document-item-list-table .mrp, #document-item-list-table .disc, #document-item-list-table .cgst, #document-item-list-table .sgst, #document-item-list-table .igst, #document-item-list-table .cess, #document-item-list-table .cess_amount,#total_discount_value,[name=total_discount_in_rupee],[name=total_discount_type_minus],#other_tax_value,[name=other_tax_in_rupee],[name=other_tax_type_minus],#currency_rate,#general_disc_value,[name=general_disc_in_rupee]").off('keyup change blur').on('keyup change blur',function(){
 		UpdateCalculations();
 	});			
 	$("#document-item-list-table .line_total").off('blur').on('blur',function(){	
@@ -1173,6 +1125,7 @@ function UpdateTrigger(){
 			}
 		},
 		select: function( event, ui ) {
+			console.log(11111);
 			var $targetparnt = $( event.target ).parents(".product-item-row");
 			$(event.target).attr("data-oldval", ui.item.label);
 			$(event.target).val(ui.item.label);
@@ -1212,107 +1165,11 @@ function UpdateTrigger(){
 				mrp = parseFloat(mrp).toFixed(price_decimal_rounding_by);
 			}
 			$($targetparnt).find(".mrp").val(mrp);
-			if(ui.item.sellprice != ui.item.customerprice)
-			{
-				$($targetparnt).find(".rate").val(ui.item.customerprice);
-				$($targetparnt).find(".customer_rate_label").html(ui.item.sellprice);
-				
-			}
-			else
-			{
-				$($targetparnt).find(".rate").val(ui.item.sellprice);
-				$($targetparnt).find(".customer_rate_label").html('');
-			}
+			$($targetparnt).find(".rate").val(ui.item.sellprice);
 			if($($targetparnt).find(".quantity").val() == "")	
 			{		
 				$($targetparnt).find(".quantity").val("1");	
 			}
-			$($targetparnt).find(".cgst:not([readonly])").val(parseFloat(ui.item.cgst));
-			$($targetparnt).find(".cgst_select:not([disabled])").val(parseFloat(ui.item.cgst));
-			$($targetparnt).find(".sgst:not([readonly])").val(parseFloat(ui.item.sgst));
-			$($targetparnt).find(".igst:not([readonly])").val(parseFloat(ui.item.igst)).change();	
-			$($targetparnt).find(".cess:not([readonly])").val(ui.item.cess);
-			$($targetparnt).find(".cess_amount:not([readonly])").val(ui.item.cess_amount);
-
-			$($targetparnt).find(".hidden-item-product-stockType").val("");
-			$($targetparnt).find( ".hidden-item-product-batch-id" ).val("");			
-			$($targetparnt).find( ".hidden-item-product-batch-name" ).val("");			
-			$($targetparnt).find( ".hidden-item-manufacture-date" ).val("");			
-			$($targetparnt).find( ".hidden-item-expiry-date" ).val("");
-			$($targetparnt).find( ".batch_name" ).val("");			
-			$($targetparnt).find( ".model_no" ).val("");			
-			$($targetparnt).find( ".size" ).val("");			
-			$($targetparnt).find( ".manufacture_date" ).val("").attr('readonly',false);			
-			$($targetparnt).find( ".expiry_date" ).val("").attr('readonly',false);
-			$($targetparnt).find(".model_no").attr('readonly',true);
-			$($targetparnt).find(".size").attr('readonly',true);
-
-			$($targetparnt).find(".hidden-item-product-stockType").val(ui.item.stockType);
-			$($targetparnt).find(".serialno").attr('readonly',true);
-			$($targetparnt).find(".has-serialno").hide();
-			
-			if(ui.item.stockType == 1){
-				showHideBatchColumn();
-				$($targetparnt).find(".product_batch").attr('readonly',false);
-				$($targetparnt).find(".batch_name").attr('readonly',false);
-				$($targetparnt).find(".batch_name").prop('disabled',false);
-				$($targetparnt).find(".hidden-batch-name").prop('disabled',true);
-				$($targetparnt).find(".manufacture_date").attr('readonly',false);
-				$($targetparnt).find(".expiry_date").attr('readonly',false);
-				getBatchAutoComplete($batchName,ui.item.value);
-			}else{
-				if(ui.item.stockType == 2 && inventory_enable){
-					$($targetparnt).find(".has-serialno").show();
-					$($targetparnt).find(".serialno").attr('readonly',false);
-					var htmldata = [];
-		    		var hidden_product_serialno = $($targetparnt).find(".hidden-product-serialno").val();
-		    		if(hidden_product_serialno != undefined && hidden_product_serialno != ''){
-		    			var serialnooption = hidden_product_serialno.split(',');
-			    		for (var i = 0; i < serialnooption.length; i++) {
-			    			htmldata.push(serialnooption[i]);
-			    		}
-		    		}
-					$.ajax({
-				      type:'POST',	
-				      url: "ajaxcall.php",
-				      dataType: "json",
-				      data: {
-				        action:'getStockOnSerialNo',product_id:ui.item.value
-				      },
-				      beforeSend: function() {
-					        $("body").removeClass("is-loading");
-					  },
-				      success: function( data ) {
-				      	if(data.htmldata != ''){
-				      		$.each(data.htmldata,function(i,v){
-					      		htmldata.push(v.serialno);
-					      	});
-					      	htmldata = Array.from(new Set(htmldata));
-				      	}
-				      	if(htmldata.length != 0){
-				      		$($targetparnt).find(".serialno").tagsinput({
-							    confirmKeys: [13, 44],
-							    typeaheadjs:({
-							        name: 'serialno',
-							        source: substringMatcher(htmldata),
-							        autoSelect: true,
-							        minLength: 0,
-      								limit: Infinity
-							    }),
-							    freeInput: false,
-							    trimValue: true
-							  });
-				      	}
-				      }
-				    });
-				}
-				$($targetparnt).find(".product_batch").attr('readonly',true);
-				$($targetparnt).find(".batch_name").prop('disabled',true);
-				$($targetparnt).find(".hidden-batch-name").prop('disabled',false);
-				$($targetparnt).find(".manufacture_date").attr('readonly',true);
-				$($targetparnt).find(".expiry_date").attr('readonly',true);
-			}
-			addNewRowItem($(this));
 			UpdateCalculations();
 			return false;
 		}, minLength:0
