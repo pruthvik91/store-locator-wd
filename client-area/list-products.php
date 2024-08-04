@@ -164,8 +164,13 @@ $product_count1 = count($product1);
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Product List
+                    <a href="import-products.php"
+                        class="btn btn-primary btn-icon-text float-right ml-2">
+                        <i class="btn-icon-prepend" data-feather="plus"></i>
+                        Import Products
+                    </a>
                     <a href="add-products.php?<?php echo $url_string; ?>"
-                        class="btn btn-primary btn-icon-text float-right">
+                        class="btn btn-primary btn-icon-text float-right ">
                         <i class="btn-icon-prepend" data-feather="plus"></i>
                         Add New
                     </a>
@@ -175,6 +180,7 @@ $product_count1 = count($product1);
                     <table class="table table-hover">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>Product Name</th>
                                 <th>Hsn</th>
@@ -201,10 +207,11 @@ $product_count1 = count($product1);
                                                     $pur_price = $row->pur_price; 
 													$sell_price = $row->sell_price; 
 													$item_available = $row->item_available;    
-													$gst = $row->gst;
+													$gst = round($row->gst,0);
 											?>
                             <tr>
-                                <th><?php echo $counter; ?></th>
+                            <td><center><div class="form-check"><label class="form-check-label"><input type="checkbox" class="delall" name="delall[]" value="<?php echo $product_id ?>"><i class="input-frame"></i></label></div></center></td>
+                                <td><?php echo $counter; ?></td>
                                 <td><?php echo $product_name; ?></td>
                                 <td><?php echo $hsn_sac; ?></td>
                                 <td><?php echo number_format($pur_price,2); ?></td>
@@ -243,6 +250,9 @@ $product_count1 = count($product1);
     </div>
 </div>
 <?php echo $pagination ;?>
+<div class="form-actions form-actions-floating">
+				<a href="generate_barcode.php?" target="_blank" class="btn btn-default pull-right generatebarcode"  name="generatebarcode"><i class="btn-icon-only fa fa-barcode"> </i>Generate Barcode</a>
+    </div>
 </div>
 <script>
 function confirmDelete(productId) {
@@ -260,6 +270,26 @@ function confirmDelete(productId) {
         }
     })
 }
+$(function() 
+{
+	$("input.delall,input[name=del]").change(function() {
+			$(".generatebarcode").attr("href","generate_barcode.php?pid=");		
+			var listPrint = "";
+			var backurl = "";
+			$("input.delall").each(function() {
+				if ($(this).is(':checked')) {
+					listPrint += $(this).val().split('-')[0] + "-";
+						$(".generatebarcode").attr("href","generate_barcode.php?pid=" + listPrint + "&original=1");
+						$(".generatebarcode").attr("target","_blank");
+				}
+				if(listPrint == "")
+				{
+					$(".generatebarcode").attr("target","");
+					$(".generatebarcode").attr("href","#");
+				}
+			});
+	});
+});
 </script>
 <?php require_once('footer.php'); ?>
 

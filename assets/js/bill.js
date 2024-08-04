@@ -884,6 +884,7 @@ function UpdateTrigger(){
 	var line_total = $(ParentRowOfCurTotal).find(".line_total").val();	
 	var rate = $(ParentRowOfCurTotal).find(".rate").val();	
 	var disc = $(ParentRowOfCurTotal).find(".disc").val();	
+	console.log(disc);
 	var taxable_line_value = $(ParentRowOfCurTotal).find(".taxable_line_value").val();	
 	var cgst = "";	
 	var sgst = "";	
@@ -1009,7 +1010,7 @@ function UpdateTrigger(){
 	$( ".product-combobox" ).autocomplete({
 		/*source: availableProducts,*/
 		source: function (request, response) {
-			var results = $.grep(availableProducts, function (item) {return (item.label.toLowerCase().includes(request.term.toLowerCase())||item.barcode_no.toLowerCase().includes(request.term.toLowerCase()));});response(results.slice(0, 500));
+			var results = $.grep(availableProducts, function (item) {return (item.label.toLowerCase().includes(request.term.toLowerCase())||item.hsn.toLowerCase().includes(request.term.toLowerCase()));});response(results.slice(0, 500));
 		},
 		change: function(event, ui) {
 			if (ui.item == null || ui.item == undefined) {

@@ -14,18 +14,21 @@
 	<link rel="stylesheet" href="../assets/vendors/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="../assets/fonts/feather-font/css/iconfont.css">	
 	<link rel="stylesheet" href="../assets/css/my-bootstrap.min.css">  
-	<link rel="stylesheet" href="../assets/css/jquery-ui.css">  
-	
-	<link rel="stylesheet" href="../assets/css/style.css">
+	<link rel="stylesheet" href="../assets/css/jquery-ui.css">
 	<link rel="stylesheet" href="../assets/css/demo_5/style.css">
+	<link rel="stylesheet" href="../assets/css/style.css">
 	<link rel="stylesheet" href="../assets/css/custom.css">  
 	<link rel="stylesheet" href="../assets/css/font-awesome.css">
     <link rel="shortcut icon" href="../assets/images/favicon.png" />  
 	<script src="../assets/vendors/core/core.js"></script>
+	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<script src="../assets/js/jquery-1.12.4.min.js"></script>
 	<script src="../assets/js/jquery-ui.js"></script>
 	<script src="../assets/js/jquery-migrate-1.4.1.min.js"></script>
+	<script src="../assets/js/general.js"></script>
+	<script src="../assets/js/JsBarcode.js"></script>
+
 </head>
 <body>
 <script>
@@ -110,12 +113,12 @@
 							</li>
 							<li class="nav-item dropdown nav-profile">
 								<a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<img src="https://via.placeholder.com/30x30" alt="profile">
+								<i data-feather="user"></i>
 								</a>
 								<div class="dropdown-menu" aria-labelledby="profileDropdown">
 									<div class="dropdown-header d-flex flex-column align-items-center">
 										<div class="figure mb-3">
-											<img src="" alt="">
+											<i data-feather="user"></i>
 										</div>
 										<div class="info text-center">
 											<p class="name font-weight-bold mb-0"><?php echo $_SESSION['user_name']; ?></p>

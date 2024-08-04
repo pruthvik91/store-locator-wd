@@ -19,10 +19,15 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
         $hsn_sac = trim($_POST["hsn_sac"]);
         $sell_price = trim($_POST["sell_price"]);
         $pur_price = trim($_POST["pur_price"]);
-        $item_available = trim($_POST["item_available"]);
+
         $plus_minus = trim($_POST["plus_minus"]);
         $operator = ($plus_minus == "plus") ? "+" : "-";
+        if($_GET['id']!="")
+        {
         $new_item_available = trim($_POST["new_item_available"]) ?? "";
+        }else{
+            $item_available = trim($_POST["item_available"]);
+        }
         $gst = trim($_POST["gst"]);
         $dt1 = date("Y-m-d H:i:s");
         if ((isset($_GET["id"])) && ($_GET["id"] != "")) {
@@ -38,7 +43,7 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
                 pur_price=:pur_price,
                 hsn_sac=:hsn_sac, 
                 gst=:gst, 
-                item_available=(item_available ' . $operator . $new_item_available . '):,
+                item_available=(item_available ' . $operator . $new_item_available . '),
                 modifydate=:modifydate WHERE product_id=:product_id';
 
             $data = array(
@@ -48,8 +53,7 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
                 ':pur_price' => $pur_price,
                 ':hsn_sac' => $hsn_sac,
                 ':gst' => $gst,
-                ':item_available' => $new_item_available,
-                ':modifydate' => $dt1,
+                ':modifydate' => $dt1
             );
 
             CP_update($sqlupdate, $data);
@@ -150,30 +154,13 @@ require_once('header.php');
                         </div>
                        <?php if($isedit) {?>
                         <div class="form-group">
-                        $(document).ready(function() {
-var curpage = $(".pagination-wrapper .w--current").text();
-hideshowbutton(curpage);
-$(".pagination-number").on("click",function(){
-	hideshowbutton(curpage);
-  });
-});
-function hideshowbutton(curpage){
-
-    if (curpage == "1") {
-        $(".pagination-wrapper .previous").css("visibility", "hidden");
-        $(".pagination-wrapper .previous").css("visibility", "visible");
-    } else if(curpage =="2") {
-        $(".pagination-wrapper .previous").css("visibility", "hidden");
-        $(".pagination-wrapper .previous").css("visibility", "visible");
-    }
-}
                             <div class="row">
                             
                                 <div class="col-4 float-left" >
                                 <label for="item_available" class="mt-1 text-align-left" style="width:auto">Add New Stock :</label>
                                     <div class="cd-pricing-switcher float-none">
                                     
-											<div class="switcher_label">Plus / Minus : </div>
+											<div class="switcher_label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 											<p class="fieldset">
 												<input type="radio" name="plus_minus" value="plus" id="disc-rs" checked="">
 												<label for="disc-rs">+</label>

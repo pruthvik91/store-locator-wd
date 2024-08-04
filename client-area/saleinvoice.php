@@ -988,29 +988,6 @@ VALUES(
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
-                                                <script style="">
-                                                    $(document).ready(function() {
-                                                        $(".sortabletc").sortable({
-                                                            handle: ".sortabletc-handle",
-                                                            placeholder: "portlet-placeholder",
-                                                            update: function(event, ui) {
-                                                                var ordervalue = "";
-                                                                var counter = 1;
-                                                                $("[data-section]").each(function() {
-                                                                    if (counter > 1) {
-                                                                        ordervalue += ',';
-                                                                    }
-                                                                    ordervalue += $(this).attr("data-section");
-                                                                    counter++;
-                                                                });
-                                                            }
-                                                        });
-                                                    });
-                                                </script>
-
                                             </div>
                                         </div>
                                         <div class="span6 span-md-6  span-sm-6 span-xs-12 row-span-left" style="

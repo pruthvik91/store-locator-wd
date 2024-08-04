@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="htm">
+<html lang="en">
 <head>
     <title>Print Invoice</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
     <link type="text/css" rel="stylesheet" href="../assets/css/font-awesome.css">
 
     <!-- Favicon icon -->
-    <link rel="shortcut icon" href="../assets//images/favicon.png" type="image/x-icon" >
+    <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon">
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +19,9 @@
 
     <!-- Custom Stylesheet -->
     <link type="text/css" rel="stylesheet" href="../assets/css/invoice.css">
+    
+    <!-- html2pdf.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 <?php
@@ -48,7 +51,7 @@ if($invoice_count > 0)
 <div class="invoice-1 invoice-content">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12" style="width:85%;">
+            <div class="col-lg-12" style="width:80%;">
                 <div class="invoice-inner clearfix">
                     <div class="invoice-info clearfix" id="invoice_wrapper">
                         <div class="invoice-headar">
@@ -74,7 +77,7 @@ if($invoice_count > 0)
                         <div class="invoice-top">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="invoice-number mb-30">
+                                    <div class="invoice-number-1 mb-30">
                                         <h4 class="inv-title-1">Invoice To</h4>
                                         <h2 class="name mb-10"><?php echo $customername; ?></h2>
                                         <p class="invo-addr-1">
@@ -189,9 +192,18 @@ if($invoice_count > 0)
 </div>
 <!-- Invoice 1 end -->
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jspdf.min.js"></script>
-<script src="assets/js/html2canvas.js"></script>
-<script src="assets/js/app.js"></script>
+<script>
+    document.getElementById('invoice_download_btn').addEventListener('click', function() {
+        var element = document.getElementById('invoice_wrapper');
+        html2pdf(element, {
+            margin: 1,
+            filename: 'invoice.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        });
+    });
+</script>
+
 </body>
 </html>

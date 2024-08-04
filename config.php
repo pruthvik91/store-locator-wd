@@ -48,16 +48,19 @@ function get_timezone_offset($remote_tz, $origin_tz = null) {
     $offset = $remote_dtz->getOffset($remote_dt) - $origin_dtz->getOffset($origin_dt);
     return ($offset/60);
 }
+define("ADMIN_URL","http://localhost/store-locator-wd/client-area/");
 define("SITE_URL","http://localhost/store-locator-wd/");
 define("SITE_PATH", $_SERVER['DOCUMENT_ROOT']."/store-locator-wd/");
 define('DB_PRE', 'store_db');
+define("WKHTMLTOPDF",'C:\\wamp64\\www\\store-locator-wd\\include\\wkhtmltopdf\\bin\\wkhtmltopdf.exe');
 define('DB_MAIN', DB_PRE.'_main');
+define('DB_TEMP',DB_PRE.'_temp');
 define('DB_BASE', DB_PRE.GetCurrentUserDB());
 define('DB_ALL_BASE', all_base_db_name());
 define('ENCRYPTION_KEY', '3223223323232323');
 define('DBUSER', 'root');
 define('DBHOST', 'localhost');
-define('DBPASS', 'root');
+define('DBPASS', '');
 define('DBDSN', 'mysql:host='.DBHOST.';dbname='.DB_MAIN.';charset=utf8mb4;');
 
 require_once(SITE_PATH."include/function.php");
@@ -78,7 +81,7 @@ define('GLOBAL_ADDREPLYTONAME','Store Locator');
 define('URLVERSION','?ver=9.2252.2252&mode=9.225529'); 
 define('VERSION','9.2252.225512334aabzdfasa33azzxqaaas3');
 
-define('PERPAGE', '3');
+define('PERPAGE', '30');
 
 global $db;
 $db = new PDO(DBDSN,DBUSER,DBPASS);

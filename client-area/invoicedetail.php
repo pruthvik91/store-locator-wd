@@ -34,13 +34,13 @@
             $selectitem = $db->prepare("select quantity,product_id FROM " . DB_BASE . ".invoice_item_detail WHERE invoice_detail_id =" . $did);
             $selectitem->execute();
             $itmrows = $selectitem->fetchAll(PDO::FETCH_OBJ);
-            
+           
             $invitmrowcount = count($itmrows);
             if($invitmrowcount > 0)
                 {
                 
                 foreach($itmrows as $item)
-                {
+                { 
                     $product_id = $item->product_id;
                     $oldquantity = $item->quantity;
                     $updateproduct = $db->prepare("update " . DB_BASE . ".store_product set item_available = (item_available+$oldquantity) WHERE product_id =" . $product_id);
@@ -276,7 +276,6 @@
     </div>
     <?php echo $pagination ;?>
     </div>
-
     <script>
     function confirmDelete(productId) {
         Swal.fire({
@@ -293,8 +292,6 @@
             }
         })
     }
-
-
     </script>
     <?php require_once('footer.php'); ?>
 

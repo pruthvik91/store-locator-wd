@@ -80,3 +80,13 @@ function errorMessage(text,title = "Error",html='',icon='warning') {
 		allowEscapeKey: false
 	});
 }
+$(document).on('change', 'input[name="delall[]"]', function() {
+    var checkedCount = $('input[name="delall[]"]:checked').length;
+    console.log(checkedCount);
+    if (checkedCount >= 1) {
+      $('body').addClass("bulk-action");
+    } else {
+      $('body').removeClass("bulk-action");
+    }
+  });
+ 
