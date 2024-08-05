@@ -35,7 +35,6 @@
         var gst_rates_options_igst = "<?php echo gst_rates_options('','igst'); ?>";
         var gst_rates_options_cgst = "<?php echo gst_rates_options(); ?>";
     </script>
-	<div class="main-wrapper">
 		
 		<div class="horizontal-menu">
 			<nav class="navbar top-navbar">

@@ -446,10 +446,6 @@ if($showReport)
 					@page {
 						margin: 0;
 					}
-                    .sidebar-folded{
-                        height: initial;
-                        width: initial;
-                    }
                     .page-content
                     {
                         margin:0 !important;
@@ -469,27 +465,11 @@ if($showReport)
 						margin: 0;
 						padding: 0;
 					}
-					.subnavbar,
-					.navbar,
-					.form-actions,
-					.footer,
-					.drawer-toggle.drawer-hamburger,
-					#myTable,
-					.expiring_soon {
-						display: none;
-						margin: 0;
-						padding: 0;
-					}
                     .widget-content{
                         display: none !important;
 						margin: 0 !important;
 						padding: 0 !important;
                     }
-					.widget #myTable {
-						display: none !important;
-						margin: 0 !important;
-						padding: 0 !important;
-					}
 					.main, .main-wrapper,
 					.container,.page-wrapper,
 					.span12 {
@@ -501,28 +481,6 @@ if($showReport)
 					body {
 						min-width: 0;
 						min-height: 0;
-						margin: 0;
-						padding: 0;
-					}
-					.main .widget-content,
-					.span12 .page-content {
-						border: none !important;
-						margin: 0;
-                        min-height: 0px !important;
-						padding: 0;
-					}
-					body {
-						background: #fff;
-						margin: 0;
-						padding: 0;
-					}
-					.floating-highlight-contact {
-						display: none;
-						margin: 0;
-						padding: 0;
-					}
-					.adsbygoogle {
-						display: none;
 						margin: 0;
 						padding: 0;
 					}
@@ -544,6 +502,10 @@ if($showReport)
 						margin: 0;
 						padding: 0;
 					}
+
+					.note{
+						display: none;
+					}
 					form {
 						margin: 0;
 						padding: 0;
@@ -558,14 +520,40 @@ if($showReport)
 					.barcode-container { 
 						overflow-x: unset; 
 					}
-					.note{
+                    .widget {
+						width: 750px !important;
+					}
+					.page-wrapper{	
+						margin-top:0px !important;
+					}
+					.page-content{
+						margin: 0 !important;
+						padding: 0 !important;
+					}
+                    .navbar{
 						display: none;
 					}
-                    .bulk-action{
-                        width:initial;
-                        height:initial;
-                    }
-                    
+					.widget {
+						width: 830px;
+					}
+					.horizontal-menu{
+						display: none;
+					}
+					.form-actions-floating {
+						display: none !important;
+					}
+					.footer,div#ContentPlace_trmsg  {
+						display: none !important;
+					}
+					.barcode-container{
+						padding: 0px;
+					}
+					.widget {
+						padding: 0;
+					}
+					.horizontal-menu.fixed-on-scroll + .page-wrapper {
+						padding: 0 !important;
+					}
 				}
 			</style>
 		

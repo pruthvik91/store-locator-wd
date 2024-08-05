@@ -543,11 +543,12 @@ VALUES(
             }
         }
            
-        header("Location:invoicedetail.php");
-        exit; 
+       
         }
  
     }
+    header("Location:invoicedetail.php");
+    exit; 
 }
 ?>
 

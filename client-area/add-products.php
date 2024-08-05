@@ -24,7 +24,7 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
         $operator = ($plus_minus == "plus") ? "+" : "-";
         if($_GET['id']!="")
         {
-        $new_item_available = trim($_POST["new_item_available"]) ?? "";
+        $new_item_available =   $_POST["new_item_available"]?trim($_POST["new_item_available"]): 0;
         }else{
             $item_available = trim($_POST["item_available"]);
         }
@@ -45,7 +45,6 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
                 gst=:gst, 
                 item_available=(item_available ' . $operator . $new_item_available . '),
                 modifydate=:modifydate WHERE product_id=:product_id';
-
             $data = array(
                 ':product_id' => $id,
                 ':product_name' => $product_name,

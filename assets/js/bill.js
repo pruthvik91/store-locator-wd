@@ -633,21 +633,12 @@ function UpdateCalculations(){
 			row_total =  quantity*rate;
 			
 			var DiskRs = 0;
-			if(disc>0 && discount_in=='percentage')
-			{
-				DiskRs = (disc*row_total)/100;
-			}						
-			
+			var discount_in = 'rupee';
+			var discount_per_item = 1;
 			if(disc>0 && discount_in=='rupee' && discount_per_item == 1)
-			{
-				DiskRs = disc*quantity;
-			}
-			if(disc>0 && discount_in=='rupee' && discount_per_item == 0)
 			{
 				DiskRs = disc;
 			}
-			
-			
 			row_total_disc += DiskRs;
 			row_total = row_total-DiskRs;
 			row_total = Math.round(row_total * taxable_decimal_rounding) / taxable_decimal_rounding;

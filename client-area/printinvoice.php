@@ -48,7 +48,7 @@ if($invoice_count > 0)
 
 ?>
 <!-- Invoice 1 start -->
-<div class="invoice-1 invoice-content">
+<div class="invoice-1 invoice-content" id="invoice_content">
     <div class="container">
         <div class="row">
             <div class="col-lg-12" style="width:80%;">
@@ -193,14 +193,14 @@ if($invoice_count > 0)
 <!-- Invoice 1 end -->
 
 <script>
-    document.getElementById('invoice_download_btn').addEventListener('click', function() {
-        var element = document.getElementById('invoice_wrapper');
+    document.getElementById('invoice_download_btn').addEventListener('click', function () {
+        var element = document.getElementById('invoice_content');
         html2pdf(element, {
-            margin: 1,
+            margin: 0,
             filename: 'invoice.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
         });
     });
 </script>
