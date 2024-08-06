@@ -15,8 +15,8 @@ if(
 		
 		$_SESSION["userid"] = url_crypt($_GET["uid"] , 'd');
 		{
-			$db_main = DB_MAIN;
-			$db_base = DB_BASE;		
+		$db_main = DB_MAIN;
+		$db_base = DB_BASE;		
 		global $db_Base,$db_Extend,$db_Main;
 		$db_Main = $db_main;
 		$db_Base = $db_base;

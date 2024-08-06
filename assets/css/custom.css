@@ -9501,3 +9501,77 @@ div.tagsinput{
     background: #6570e7;
     color:#fff;
 }
+quicklink-analytics-switcher input[type=radio]:checked + label {
+  color: #fff;
+}
+.quicklink-analytics-switcher input[type=radio]:checked+label+.cd-switch, .quicklink-analytics-switcher input[type=radio]:checked+label:nth-of-type(n)+.cd-switch {
+  -webkit-transform: translateX(97.5%);
+  -moz-transform: translateX(97.5%);
+  -ms-transform: translateX(97.5%);
+  -o-transform: translateX(97.5%);
+  transform: translateX(97.5%);
+}
+.quicklink-analytics-switcher .cd-switch {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 40px;
+  width: 150px;
+  background-color: #00ba8b;
+  border-radius: 50em;
+  -webkit-transition: -webkit-transform .5s;
+  -moz-transition: -moz-transform .5s;
+  transition: transform .5s;
+}
+.quicklink-analytics-switcher  .fieldset {    
+  margin-bottom: 5px;
+}
+.quick-link-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 150px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 1%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s;
+}
+a.quick-link-card{
+text-decoration: none;
+}
+
+.quick-link-card svg {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+  transition: fill 0.3s;
+}
+
+.quick-link-card p {
+  font-size: 16px;
+  color: #333;
+font-weight: bold;
+  margin: 0;
+  transition: color 0.3s;
+}
+
+.quick-link-card:hover {
+  background-color: #727cf5; /* Green */
+}
+.quick-link-card:hover svg path[stroke] {
+  fill: #727cf5 !important;
+stroke: #fff;
+}
+.quick-link-card:hover svg path[fill] {
+  fill: #fff !important;
+stroke: #fff;
+}
+
+.quick-link-card:hover p {
+  color: #ffffff;
+}

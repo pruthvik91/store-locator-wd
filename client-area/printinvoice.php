@@ -1,3 +1,84 @@
+<?php
+require 'wkhtmltopdf/autoload.php';
+use mikehaertl\wkhtmlto\Pdf;
+if(isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"]=="PDFDownloadSubmit")
+{
+	require_once "../config.php";
+	global $db;
+	include('configure_report_setting.php');
+	foreach($_GET as $key => $val)
+	{
+		if($key == "btnPDFSubmit" && $val == "PDFDownloadSubmit")
+		{
+			$_POST["btnSubmit"]='Submit';
+		}
+		else
+		{
+			$_POST[$key]=$val;
+		}
+	}
+	$isprint = false;
+	
+}
+else if(isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"]=="PDFSubmit")
+{
+	require_once "../config.php";
+	global $db;
+	include('configure_report_setting.php');
+	$url = ADMIN_URL."printinvoice.php?1=1";
+	foreach($_GET as $key => $val)
+	{
+		if(!empty($val) && is_array($val))
+		{
+			foreach($val as $v)
+			{
+				$url .= "&$key"."[]=$v";
+			}
+			
+		}
+		else{
+			if($key == "btnPDFSubmit" && $val == "PDFSubmit")
+			{
+				$url .= "&$key=PDFDownloadSubmit";
+			}
+			else
+			{
+				$url .= "&$key=$val";
+			}
+			
+		}
+	}
+	
+	$parameter = array(
+		'ignoreWarnings' => true,
+		'commandOptions' => array(
+			'useExec' => true,   
+			'procEnv' => array(
+				'LANG' => 'en_US.utf-8',
+			),
+			'procOptions' => array(
+				'bypass_shell' => true,
+				'suppress_errors' => true,
+			),
+		),
+		'margin-bottom' => '10',
+		'margin-left' => '0',
+		'margin-right' => '0',
+		'margin-top' => '10',
+		'print-media-type',
+		'disable-smart-shrinking',
+	);
+    $parameter['page-size'] = 'A4';
+    $parameter['binary'] = WKHTMLTOPDF;
+	$pdf = new Pdf($parameter);
+	$pdf -> addPage($url);
+	ob_clean();
+	$pdfname = 'invoice- '.date("d-m-Y H-i-s").'.pdf';
+	$pdf->send($pdfname);
+	exit;
+	
+}
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,7 +173,8 @@ if($invoice_count > 0)
                                             <h4 class="inv-title-1">Invoice From</h4>
                                             <h2 class="name mb-10">Wed & Nik</h2>
                                             <p class="invo-addr-1">
-                                                99095 68777  <br/>
+                                                99095 68777 <br/>
+                                                95748 40135 <br/>
                                                 Patel Mill Road,Keshod <br/>
                                             </p>
                                         </div>
@@ -169,9 +251,9 @@ if($invoice_count > 0)
                             <div class="row g-0">
                                 <div class="col-lg-9 col-md-11 col-sm-12">
                                     <div class="contact-info">
-                                        <a href="tel:+55-4XX-634-7071"><i class="fa fa-phone"></i> +00 123 647 840</a>
-                                        <a href="tel:info@themevessel.com"><i class="fa fa-envelope"></i> info@themevessel.com</a>
-                                        <a href="tel:info@themevessel.com" class="mr-0 d-none-580"><i class="fa fa-map-marker"></i> 169 Teroghoria, Bangladesh</a>
+                                        <a href="tel:+55-4XX-634-7071"><i class="fa fa-phone"></i> 99095 68777</a>
+                                        <a href="tel:+55-4XX-634-7071"><i class="fa fa-phone"></i> 95748 40135</a>
+                                        <a href="tel:info@themevessel.com"><i class="fa fa-instagram"></i> Wed&Nik</a>                                        
                                     </div>
                                 </div>
                             </div>
@@ -184,6 +266,30 @@ if($invoice_count > 0)
                         <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme">
                             <i class="fa fa-download"></i> Download Invoice
                         </a>
+                        <?php 
+                        $url = ADMIN_URL."printinvoice.php?invoiceid=".$_GET['invoiceid']."";
+                        foreach($_POST as $key => $val)
+                        {
+                            if(!empty($val) && is_array($val))
+                            {
+                                foreach($val as $v)
+                                {
+                                    $url .= "&$key"."[]=".htmlspecialchars($v);
+                                }
+                                
+                            }
+                            
+                                
+                                   
+                                
+                            
+                        }
+                        $url .= "&btnPDFSubmit=PDFSubmit";
+                        	$url .= "&uid=".url_crypt($_SESSION["userid"], 'e');
+                            $url .= "&guid=".url_crypt(url_crypt($_SESSION["userid"], 'e'), 'e');
+                        
+					 ?>
+                        <a  class=" btn_white pdf-download-btn btn report-desktop-button pull-right" href="<?php echo $url.'&wtn-download-file=true';?>"><i class="fa fa-download"></i>Download PDF</a>
                     </div>
                 </div>
             </div>

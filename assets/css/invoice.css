@@ -329,7 +329,6 @@ table th{
 
 .invoice-1 .invoice-center {
     padding: 0 50px 40px;
-    height:160px;
 }
 
 .invoice-1 .table > :not(caption) > * > * {
