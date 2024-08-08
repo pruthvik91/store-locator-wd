@@ -1,83 +1,53 @@
 <?php
-require 'wkhtmltopdf/autoload.php';
-use mikehaertl\wkhtmlto\Pdf;
-if(isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"]=="PDFDownloadSubmit")
-{
-	require_once "../config.php";
-	global $db;
-	include('configure_report_setting.php');
-	foreach($_GET as $key => $val)
-	{
-		if($key == "btnPDFSubmit" && $val == "PDFDownloadSubmit")
-		{
-			$_POST["btnSubmit"]='Submit';
-		}
-		else
-		{
-			$_POST[$key]=$val;
-		}
-	}
-	$isprint = false;
-	
+ini_set('max_execution_time', '300'); // 5 minutes
+ini_set('memory_limit', '512M');
+
+if(isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"]=="PDFSubmit") {
+    require "../config.php";
+    $url = ADMIN_URL . "printinvoice.php?1=1";
+    foreach($_GET as $key => $val) {
+        if(!empty($val) && is_array($val)) {
+            foreach($val as $v) {
+                $url .= "&$key"."[]=$v";
+            }
+        } else {
+            if($key == "btnPDFSubmit" && $val == "PDFSubmit") {
+                $url .= "&btnPDFSubmit=PDFDownloadSubmit";
+            } else {
+                $url .= "&$key=$val";
+            }
+        }
+    }
+
+    $pdfName = 'wed&nik-'.date("d-m-Y H-i-s").'.pdf';
+    $pdfPath = "C:/Users/Lenovo/Downloads/$pdfName"; // Define the correct path
+    $url = escapeshellarg($url); // Escape special characters in the URL
+    $pdfPath = escapeshellarg($pdfPath); // Escape special characters in the PDF path
+    
+    $command = "node \"C:/wamp64/www/store-locator-wd/client-area/generate_pdf.js\" $url $pdfPath";
+    $command .= ' 2>&1'; // Redirect stderr to stdout
+
+    exec($command, $output, $return_var);
+    print_r($return_var);
+    if ($return_var !== 0) {
+        print_r("Command failed with return code: $return_var\nOutput: " . implode("\n", $output));
+    }
+    
+    // exec($command, $output, $return_var);
+   
+    // if($return_var === 0) {
+    //     // File generated successfully, send it to the browser
+    //     header('Content-Type: application/pdf');
+    //     header('Content-Disposition: attachment; filename="' . $pdfName . '"');
+    //     readfile($pdfPath);
+    //     exit;
+    // } else {
+    //     // Handle error
+    //     echo "There was an error generating the PDF.";
+    //     exit;
+    // }
 }
-else if(isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"]=="PDFSubmit")
-{
-	require_once "../config.php";
-	global $db;
-	include('configure_report_setting.php');
-	$url = ADMIN_URL."printinvoice.php?1=1";
-	foreach($_GET as $key => $val)
-	{
-		if(!empty($val) && is_array($val))
-		{
-			foreach($val as $v)
-			{
-				$url .= "&$key"."[]=$v";
-			}
-			
-		}
-		else{
-			if($key == "btnPDFSubmit" && $val == "PDFSubmit")
-			{
-				$url .= "&$key=PDFDownloadSubmit";
-			}
-			else
-			{
-				$url .= "&$key=$val";
-			}
-			
-		}
-	}
-	
-	$parameter = array(
-		'ignoreWarnings' => true,
-		'commandOptions' => array(
-			'useExec' => true,   
-			'procEnv' => array(
-				'LANG' => 'en_US.utf-8',
-			),
-			'procOptions' => array(
-				'bypass_shell' => true,
-				'suppress_errors' => true,
-			),
-		),
-		'margin-bottom' => '10',
-		'margin-left' => '0',
-		'margin-right' => '0',
-		'margin-top' => '10',
-		'print-media-type',
-		'disable-smart-shrinking',
-	);
-    $parameter['page-size'] = 'A4';
-    $parameter['binary'] = WKHTMLTOPDF;
-	$pdf = new Pdf($parameter);
-	$pdf -> addPage($url);
-	ob_clean();
-	$pdfname = 'invoice- '.date("d-m-Y H-i-s").'.pdf';
-	$pdf->send($pdfname);
-	exit;
-	
-}
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -121,6 +91,9 @@ if($invoice_count > 0)
         $cmp_contactno = $inv->cmp_contactno;
         $address = $inv->cmp_address1;
         $term_detail = $inv->term_detail; 
+        $discount_total = $inv->disc_total; 
+        $grand_total = $inv->grandtotal; 
+        $payment_type = $inv->payment_type; 
     }
 }
 }else{
@@ -129,7 +102,7 @@ if($invoice_count > 0)
 
 ?>
 <!-- Invoice 1 start -->
-<div class="invoice-1 invoice-content" id="invoice_content">
+<div class="invoice-1 invoice-content" id="invoice_content" style="padding:20px;">
     <div class="container">
         <div class="row">
             <div class="col-lg-12" style="width:80%;">
@@ -155,6 +128,7 @@ if($invoice_count > 0)
                                 </div>
                             </div>
                         </div>
+                        <div style="height:50px;"></div>
                         <div class="invoice-top">
                             <div class="row">
                                 <div class="col-sm-6">
@@ -182,6 +156,7 @@ if($invoice_count > 0)
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="invoice-center">
                             <div class="table-responsive">
                                 <table class="table mb-0 table-striped invoice-table">
@@ -191,6 +166,7 @@ if($invoice_count > 0)
                                         <th class="pl0 text-start">Item Description</th>
                                         <th class="text-center">Price</th>
                                         <th class="text-center">Quantity</th>
+                                        <th class="text-center">Discount</th>
                                         <th class="text-end">Amount</th>
                                     </tr>
                                     </thead>
@@ -218,31 +194,35 @@ if($invoice_count > 0)
                                             </div>
                                         </td>
                                         <td class="pl0"><?= $product_name; ?></td>
-                                        <td class="text-center"><?= $rate; ?></td>
-                                        <td class="text-center"><?= $quantity; ?></td>
-                                        <td class="text-end"><?= $taxable_line_value; ?></td>
+                                        <td class="text-center"><?= number_format($rate,2); ?></td>
+                                        <td class="text-center"><?= number_format($quantity,0); ?></td>
+                                        <td class="text-center"><?= number_format($discount,2); ?></td>
+                                        <td class="text-end"><?= number_format($taxable_line_value,2); ?></td>
                                     </tr>
                                    <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        <div style="height:50px;"></div>
                         <div class="invoice-bottom">
                             <div class="row">
-                                <div class="col-lg-6 col-md-8 col-sm-7">
+                                <div class="col-lg-6 col-md-6 col-sm-7" style="width:50%">
                                     <div class="mb-30 dear-client">
                                         <h3 class="inv-title-1">Terms & Conditions</h3>
-                                        <p><?= $term_detail ?></p>
+                                        <p><?= str_replace('.','. <br>',$term_detail) ?></p>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-4 col-sm-5">
-                                    <div class="mb-30 payment-method">
-                                        <!-- <h3 class="inv-title-1">Payment Method</h3>
+                                <div class="col-lg-6 col-md-6 col-sm-5" style="width:50%">
+                                    <div class="mb-30 payment-method" style="float: right;">
+                                        <h2 class="inv-title-1 text-center" style="font-size:18px;">Total</h2>
                                         <ul class="payment-method-list-1 text-14">
-                                            <li><strong>Account No:</strong> 00 123 647 840</li>
-                                            <li><strong>Account Name:</strong> Jhon Doe</li>
+                                            <li><h5>Payment Method : <strong><?= $payment_type ?></strong></h5></li>
+                                            <li><h5>Discount Total : ₹<strong><?= number_format($discount_total,1) ?></strong></h5></li>
+                                            <li><h5>Grand Total : ₹<strong><?= number_format($grand_total,2) ?></strong></h5></li>
+                                            
                                             <li><strong>Branch Name:</strong> xyz</li>
-                                        </ul> -->
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -278,18 +258,16 @@ if($invoice_count > 0)
                                 }
                                 
                             }
-                            
-                                
-                                   
-                                
-                            
                         }
                         $url .= "&btnPDFSubmit=PDFSubmit";
                         	$url .= "&uid=".url_crypt($_SESSION["userid"], 'e');
                             $url .= "&guid=".url_crypt(url_crypt($_SESSION["userid"], 'e'), 'e');
                         
 					 ?>
-                        <a  class=" btn_white pdf-download-btn btn report-desktop-button pull-right" href="<?php echo $url.'&wtn-download-file=true';?>"><i class="fa fa-download"></i>Download PDF</a>
+                      <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme" href="<?php echo $url; ?>&btnPDFSubmit=PDFSubmit">
+    <i class="fa fa-download"></i> Download Invoice
+</a>
+
                     </div>
                 </div>
             </div>
@@ -299,16 +277,33 @@ if($invoice_count > 0)
 <!-- Invoice 1 end -->
 
 <script>
-    document.getElementById('invoice_download_btn').addEventListener('click', function () {
-        var element = document.getElementById('invoice_content');
-        html2pdf(element, {
-            margin: 0,
-            filename: 'invoice.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-        });
+
+ document.getElementById('invoice_download_btn').addEventListener('click', function () {
+    var element = document.getElementById('invoice_content');
+    var opt = {
+        margin: 0,
+        filename: 'invoice.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().from(element).set(opt).outputPdf('blob').then(function(pdfBlob) {
+        var url = URL.createObjectURL(pdfBlob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'invoice.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        // Hide the download button after the PDF is downloaded
+        document.getElementById('invoice_download_btn').style.display = 'none';
     });
+});
+
+
 </script>
 
 </body>

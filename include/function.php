@@ -221,7 +221,91 @@ function url_crypt( $string, $action = 'e' ) {
  
     return $output;
 }
+global $formatter_0,$formatter_1,$formatter_2,$formatter_3,$formatter_4,$formatter_5,$formatter_6;
+
+$formatter_0 = numfmt_create( 'en_IN', NumberFormatter::CURRENCY );
+numfmt_set_pattern($formatter_0,'#,##,##0.00');
+numfmt_set_attribute($formatter_0, NumberFormatter::MIN_FRACTION_DIGITS, 0);
+numfmt_set_attribute($formatter_0, NumberFormatter::MAX_FRACTION_DIGITS, 0);
+numfmt_set_symbol ($formatter_0,NumberFormatter::CURRENCY_SYMBOL,"");
+
+$formatter_1 = numfmt_create( 'en_IN', NumberFormatter::CURRENCY );
+numfmt_set_pattern($formatter_1,'#,##,##0.00');
+numfmt_set_attribute($formatter_1, NumberFormatter::MIN_FRACTION_DIGITS, 1);
+numfmt_set_attribute($formatter_1, NumberFormatter::MAX_FRACTION_DIGITS, 1);
+numfmt_set_symbol ($formatter_1,NumberFormatter::CURRENCY_SYMBOL,"");
+
+$formatter_2 = numfmt_create( 'en_IN', NumberFormatter::CURRENCY );
+numfmt_set_pattern($formatter_2,'#,##,##0.00');
+numfmt_set_attribute($formatter_2, NumberFormatter::MIN_FRACTION_DIGITS, 2);
+numfmt_set_attribute($formatter_2, NumberFormatter::MAX_FRACTION_DIGITS, 2);
+numfmt_set_symbol ($formatter_2,NumberFormatter::CURRENCY_SYMBOL,"");
+
+$formatter_3 = numfmt_create( 'en_IN', NumberFormatter::CURRENCY );
+numfmt_set_pattern($formatter_3,'#,##,##0.00');
+numfmt_set_attribute($formatter_3, NumberFormatter::MIN_FRACTION_DIGITS, 3);
+numfmt_set_attribute($formatter_3, NumberFormatter::MAX_FRACTION_DIGITS, 3);
+numfmt_set_symbol ($formatter_3,NumberFormatter::CURRENCY_SYMBOL,"");
+
+$formatter_4 = numfmt_create( 'en_IN', NumberFormatter::CURRENCY );
+numfmt_set_pattern($formatter_4,'#,##,##0.00');
+numfmt_set_attribute($formatter_4, NumberFormatter::MIN_FRACTION_DIGITS, 4);
+numfmt_set_attribute($formatter_4, NumberFormatter::MAX_FRACTION_DIGITS, 4);
+numfmt_set_symbol ($formatter_4,NumberFormatter::CURRENCY_SYMBOL,"");
+
+$formatter_5 = numfmt_create( 'en_IN', NumberFormatter::CURRENCY );
+numfmt_set_pattern($formatter_5,'#,##,##0.00');
+numfmt_set_attribute($formatter_5, NumberFormatter::MIN_FRACTION_DIGITS, 5);
+numfmt_set_attribute($formatter_5, NumberFormatter::MAX_FRACTION_DIGITS, 5);
+numfmt_set_symbol ($formatter_5,NumberFormatter::CURRENCY_SYMBOL,"");
+
+$formatter_6 = numfmt_create( 'en_IN', NumberFormatter::CURRENCY );
+numfmt_set_pattern($formatter_6,'#,##,##0.00');
+numfmt_set_attribute($formatter_6, NumberFormatter::MIN_FRACTION_DIGITS, 6);
+numfmt_set_attribute($formatter_6, NumberFormatter::MAX_FRACTION_DIGITS, 6);
+numfmt_set_symbol ($formatter_6,NumberFormatter::CURRENCY_SYMBOL,"");
+
+function number_format_indian($amount,$decimal)
+{
+	if(is_null($amount) || $amount == "null" || $amount == "")
+	{
+		$amount = 0;
+	}
+	switch($decimal)
+	{
+		case 0 : 
+			global $formatter_0;
+			return numfmt_format($formatter_0, $amount);
+			break;
+		case 1 : 
+			global $formatter_1;
+			return numfmt_format($formatter_1, $amount);
+			break;
+		case 2 : 
+			global $formatter_2;
+			return numfmt_format($formatter_2, $amount);
+			break;
+		case 3 : 
+			global $formatter_3;
+			return numfmt_format($formatter_3, $amount);
+			break;
+		case 4 : 
+			global $formatter_4;
+			return numfmt_format($formatter_4, $amount);
+			break;
+		case 5 : 
+			global $formatter_5;
+			return numfmt_format($formatter_5, $amount);
+			break;
+		case 6 : 
+			global $formatter_6;
+			return numfmt_format($formatter_6, $amount);
+			break;
+		default :
+			return "";
+			break;
+	}
+}
 require_once('image.php');
 require_once('mail.php');
 require_once('db_class.php');
-?>

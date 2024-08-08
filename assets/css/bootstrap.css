@@ -800,7 +800,7 @@ pre code {
   width: 100%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 268px) {
   .container {
     max-width: 728px;
   }

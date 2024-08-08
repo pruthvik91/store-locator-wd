@@ -985,7 +985,9 @@ VALUES(
                                                     <div class="control-group tc_counter-1" style="margin-right: 25px;">
                                                         <label for="Address" class="control-label">Detail</label>
                                                         <div class="controls">
-                                                            <textarea name="term_detail" class="span4" placeholder="Terms & Conditions"><?= $term_detail; ?></textarea>
+                                                            <textarea name="term_detail" class="span4" placeholder="Terms & Conditions"><?= (isset($term_detail) && !empty($term_detail))?$term_detail:"કપડાં માં વોશિંગ ગેરંટી આવતી નથી.
+શેમ્પૂ વોશ કરવું ફરજિયાત છે.
+ખરીદી સમયે બરાબર ચકાસણી કરી લઇ જવું."; ?></textarea>
                                                         </div>
                                                     </div>
                                                 </div>

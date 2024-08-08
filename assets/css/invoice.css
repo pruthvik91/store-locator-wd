@@ -284,7 +284,6 @@ table th{
 
 .invoice-1 .payment-method{
     max-width: 200px;
-    margin-left: auto;
 }
 
 .invoice-1 .payment-method ul {
@@ -373,7 +372,7 @@ table th{
 }
 
 .invoice-1 .invoice-bottom {
-    padding: 0 50px 10px;
+    padding: 0px 50px 0px 50px;
 }
 
 .invoice-1 .bg-active {
@@ -432,10 +431,7 @@ table th{
         padding: 15px 10px;
     }
 
-
-    .invoice-1 .payment-method {
-        margin: 0 auto 30px 0;
-    }
+    
 
     .invoice-1 .invoice-top {
         padding: 30px 30px 0;
