@@ -1,54 +1,3 @@
-<?php
-ini_set('max_execution_time', '300'); // 5 minutes
-ini_set('memory_limit', '512M');
-
-if(isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"]=="PDFSubmit") {
-    require "../config.php";
-    $url = ADMIN_URL . "printinvoice.php?1=1";
-    foreach($_GET as $key => $val) {
-        if(!empty($val) && is_array($val)) {
-            foreach($val as $v) {
-                $url .= "&$key"."[]=$v";
-            }
-        } else {
-            if($key == "btnPDFSubmit" && $val == "PDFSubmit") {
-                $url .= "&btnPDFSubmit=PDFDownloadSubmit";
-            } else {
-                $url .= "&$key=$val";
-            }
-        }
-    }
-
-    $pdfName = 'wed&nik-'.date("d-m-Y H-i-s").'.pdf';
-    $pdfPath = "C:/Users/Lenovo/Downloads/$pdfName"; // Define the correct path
-    $url = escapeshellarg($url); // Escape special characters in the URL
-    $pdfPath = escapeshellarg($pdfPath); // Escape special characters in the PDF path
-    
-    $command = "node \"C:/wamp64/www/store-locator-wd/client-area/generate_pdf.js\" $url $pdfPath";
-    $command .= ' 2>&1'; // Redirect stderr to stdout
-
-    exec($command, $output, $return_var);
-    print_r($return_var);
-    if ($return_var !== 0) {
-        print_r("Command failed with return code: $return_var\nOutput: " . implode("\n", $output));
-    }
-    
-    // exec($command, $output, $return_var);
-   
-    // if($return_var === 0) {
-    //     // File generated successfully, send it to the browser
-    //     header('Content-Type: application/pdf');
-    //     header('Content-Disposition: attachment; filename="' . $pdfName . '"');
-    //     readfile($pdfPath);
-    //     exit;
-    // } else {
-    //     // Handle error
-    //     echo "There was an error generating the PDF.";
-    //     exit;
-    // }
-}
-
- ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,10 +48,9 @@ if($invoice_count > 0)
 }else{
     header('Location: invoicedetail.php?error=notfound');
 }
-
 ?>
 <!-- Invoice 1 start -->
-<div class="invoice-1 invoice-content" id="invoice_content" style="padding:20px;">
+<div class="invoice-1 invoice-content" id="invoice_content" style="padding-top:10px;">
     <div class="container">
         <div class="row">
             <div class="col-lg-12" style="width:80%;">
@@ -239,35 +187,13 @@ if($invoice_count > 0)
                             </div>
                         </div>
                     </div>
-                    <div class="invoice-btn-section clearfix d-print-none">
-                        <a href="javascript:window.print()" class="btn btn-lg btn-print">
+                    <div class="invoice-btn-section clearfix d-print-none no-print">
+                        <a href="javascript:window.print()" class="btn btn-lg btn-print no-print">
                             <i class="fa fa-print"></i> Print Invoice
                         </a>
-                        <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme">
+                        <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme no-print" onclick="downloadPDF()">
                             <i class="fa fa-download"></i> Download Invoice
                         </a>
-                        <?php 
-                        $url = ADMIN_URL."printinvoice.php?invoiceid=".$_GET['invoiceid']."";
-                        foreach($_POST as $key => $val)
-                        {
-                            if(!empty($val) && is_array($val))
-                            {
-                                foreach($val as $v)
-                                {
-                                    $url .= "&$key"."[]=".htmlspecialchars($v);
-                                }
-                                
-                            }
-                        }
-                        $url .= "&btnPDFSubmit=PDFSubmit";
-                        	$url .= "&uid=".url_crypt($_SESSION["userid"], 'e');
-                            $url .= "&guid=".url_crypt(url_crypt($_SESSION["userid"], 'e'), 'e');
-                        
-					 ?>
-                      <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme" href="<?php echo $url; ?>&btnPDFSubmit=PDFSubmit">
-    <i class="fa fa-download"></i> Download Invoice
-</a>
-
                     </div>
                 </div>
             </div>
@@ -275,36 +201,26 @@ if($invoice_count > 0)
     </div>
 </div>
 <!-- Invoice 1 end -->
+<style>
+    @media print {
+        .no-print {
+            display: none;
+        }
+    }
+</style>
 
 <script>
-
- document.getElementById('invoice_download_btn').addEventListener('click', function () {
-    var element = document.getElementById('invoice_content');
-    var opt = {
-        margin: 0,
-        filename: 'invoice.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().from(element).set(opt).outputPdf('blob').then(function(pdfBlob) {
-        var url = URL.createObjectURL(pdfBlob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'invoice.pdf';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        // Hide the download button after the PDF is downloaded
-        document.getElementById('invoice_download_btn').style.display = 'none';
-    });
-});
-
-
+    function downloadPDF() {
+        document.querySelector('.invoice-btn-section').style.display = 'none';
+        var element = document.getElementById('invoice_content');
+        var opt = {
+            filename:     'invoice.pdf',
+            image:        { type: 'jpeg', quality: 100 },
+            html2canvas:  { scale: 4 },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().from(element).set(opt).save();
+    }
 </script>
-
 </body>
 </html>

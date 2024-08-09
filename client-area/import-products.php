@@ -244,7 +244,7 @@ if((!empty($_POST)) && isset($_POST["btnsubmit"])){
                         
                         <div class="form-actions">
                             <button class="btn btn-primary" name="btnsubmit" type="submit"><i class="fa fa-save"></i>Save</button> 
-                            <a href="list-product.php?<?php echo $URLBack; ?>" class="btn"><i class="fa fa-chevron-left"></i>Back</a>
+                            <a href="list-products.php?<?php echo $URLBack; ?>" class="btn"><i class="fa fa-chevron-left"></i>Back</a>
                         </div> <!-- /form-actions -->
                     </fieldset>
                 </form>

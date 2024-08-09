@@ -1533,7 +1533,7 @@ div.tagsinput{
   }
   
   .call2action {
-      background-color: #00ba8b;
+      background-color: #727cf5;
       color: #fff;
       padding: 40px 0px;
       text-align: center;
@@ -1543,7 +1543,7 @@ div.tagsinput{
       background-position: center center;
   }
   .call2action.small {
-      background-color: #00ba8b;
+      background-color: #727cf5;
       color: #fff;
       padding: 45px 0px;
       text-align: center;
@@ -1573,7 +1573,7 @@ div.tagsinput{
       margin-bottom:10px;
   }
   .call2action .upgrade-btn {
-      background: #00ba8b;
+      background: #727cf5;
       border: 2px solid #fff;
       border-radius: 0;
       box-shadow: unset;
@@ -1586,7 +1586,7 @@ div.tagsinput{
   }
   .call2action .upgrade-btn:hover{
       background: #fff;
-      color: #00ba8b;
+      color: #727cf5;
   }
   .orangebtn {
       background: #F1A104;
@@ -2168,7 +2168,7 @@ div.tagsinput{
   .drawer--left .drawer-hamburger, .drawer--left.drawer-open .drawer-hamburger {
   
       padding: 13px 8px 25px;
-      background: #00BA8B;
+      background: #727cf5;
       border-radius: 50%;
       left: auto;
       right: 10px;
@@ -2786,7 +2786,7 @@ div.tagsinput{
           display:block;
           text-align: center;
           padding: 12px 0;
-          background:#00BA8B;
+          background:#727cf5;
       }
       .mobile-nav-logo img {
           width: 105px;
@@ -3007,7 +3007,7 @@ div.tagsinput{
   
   #ProductModal .batchOpt .table td input:focus ,
   #ManageStockModal .batch-section .table td input:focus {
-    border-color: #00ba8b;
+    border-color: #727cf5;
   }
   
   #ProductModal .batchOpt table td input ,
@@ -3769,17 +3769,17 @@ div.tagsinput{
   }
   
   .quick-link-container-content-dashboard .quick-link-item {
-      border: 2px solid #00BA8B;
+      border: 2px solid #727cf5;
       border-radius: 5px;
       padding: 15px 30px;
       display: inline-block;
-      color: #00BA8B;
+      color: #727cf5;
       margin: 20px 0 70px;
       cursor: pointer;
   }
   .quick-link-container-content-dashboard .quick-link-item:hover {
       color: #fff;
-      background: #00BA8B;
+      background: #727cf5;
       -webkit-box-shadow: 0px 0 8px 0px #d5d5d5;
       -moz-box-shadow: 0px 0 8px 0px #d5d5d5;
       box-shadow: 0px 0 8px 0px #d5d5d5;
@@ -3788,9 +3788,9 @@ div.tagsinput{
       -webkit-box-shadow: 0px 0 8px 0px #d5d5d5;
       -moz-box-shadow: 0px 0 8px 0px #d5d5d5;
       box-shadow: 0px 0 8px 0px #d5d5d5;
-      background: #00BA8B;
+      background: #727cf5;
       color: #fff;
-      border-color: #00BA8B;
+      border-color: #727cf5;
   }
   .welcome-user-title{text-align: center;font-size: 28px;font-weight: normal;margin: 70px 0 50px;}
   .otp-actions .submit-button {
@@ -4039,7 +4039,7 @@ div.tagsinput{
       -webkit-box-shadow: none;
       -moz-box-shadow: none;
   }
-  .pagination .active a{background:#00ba8b;}
+  .pagination .active a{background:#727cf5;}
   .pagination a {
       padding: 0px 15px;
       line-height: 35px;
@@ -4202,7 +4202,7 @@ div.tagsinput{
       box-shadow: none;
       -webkit-box-shadow: none;
       -moz-box-shadow: none;
-      border-color:#00ba8b;
+      border-color:#727cf5;
   }
   
   .input-prepend-small .input-add-on {
@@ -4305,7 +4305,7 @@ div.tagsinput{
   
   .form-check .form-check-label input[type="checkbox"]:checked + .input-frame:before,
   .form-check .form-check-label input[type="checkbox"]:checked + a + a +  .input-frame:before {
-      background: #00ba8b;
+      background: #727cf5;
       border-width: 0;
   }
   .form-check .form-check-label input[type="checkbox"]:checked + .input-frame:after,
@@ -4404,8 +4404,8 @@ div.tagsinput{
   
   .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active
   {
-      background:#00ba8b;
-      border-color:#00ba8b;
+      background:#727cf5;
+      border-color:#727cf5;
       color:#fff;
   }
   
@@ -4436,7 +4436,7 @@ div.tagsinput{
   }
   .alert-primary {
       color: #fff;
-      background-color: #00ba8b;
+      background-color: #727cf5;
       border-color: #01a77d;
   }
   .alert-secondary {
@@ -5827,13 +5827,13 @@ div.tagsinput{
   }
   
   .btn.btn-outline {
-      border: 1px solid #00BA8B;
+      border: 1px solid #727cf5;
       background: transparent;
-      color: #00BA8B;
+      color: #727cf5;
       font-weight: bold;
   }
   .success_message {
-      color: #00ba8b;
+      color: #727cf5;
       font-weight: bold;
   }
   .email-verification-notice.widget .widget-content {
@@ -6091,7 +6091,7 @@ div.tagsinput{
       position: absolute;
       left: -15px;
       top: 6px;
-      background: #00BA8B;
+      background: #727cf5;
       border-radius: 0px 10px 10px 0px;
   }
   h4.settings_menu_item.active:before {    
@@ -6101,7 +6101,7 @@ div.tagsinput{
       display: inline-block;
   }
   h4.settings_menu_item.active a {
-      color: #00BA8B;
+      color: #727cf5;
   }
   
   @media screen and (max-width:991px)
@@ -6116,7 +6116,7 @@ div.tagsinput{
       display: inline;
   }
   div#cbalance {
-      background: #00ba8b;
+      background: #727cf5;
       color: white;
       border-radius: 50px;
       width: auto;
@@ -6677,7 +6677,7 @@ div.tagsinput{
   }
   .menu_account .dropdown-menu li:not(:last-child):hover:before {
     display: inline-block;
-    background-color: #00BA8B;
+    background-color: #727cf5;
   }
   .menu_account .dropdown-menu li:before {
     content: '';
@@ -6687,13 +6687,13 @@ div.tagsinput{
     position: absolute;
     left: -10px;
     top: 50%;
-    background: #00BA8B;
+    background: #727cf5;
     border-radius: 0px 10px 10px 0px;
     margin-top:-17px;
   }
   .menu_account .dropdown-menu li>a:hover{
     background: none;
-    color: #00BA8B;
+    color: #727cf5;
   }
   .menu_account .dropdown-menu li a.socialicon {
     padding: 5px;
@@ -6811,7 +6811,7 @@ div.tagsinput{
       display: inline-block;
   }
   .emailul li a.email-btn.send-email-btn.btn:hover {
-      background: #00ba8b ;
+      background: #727cf5 ;
       color: #fff;
   }
   
@@ -6912,7 +6912,7 @@ div.tagsinput{
   
   .switch-field input:checked + label {
     color: #fff;
-      background-color: #00ba8b;
+      background-color: #727cf5;
       box-shadow: none;
   }
   
@@ -7029,8 +7029,8 @@ div.tagsinput{
   }
   #PrintInvoiceModal .modal-content .modal-header #whatsappBtn:hover,
   #PrintInvoiceModal .modal-content .modal-header #emailBtn:hover{
-    background: #00ba8b;
-    border-color: #00ba8b;
+    background: #727cf5;
+    border-color: #727cf5;
     color: white;
     fill: white;
   }
@@ -7379,12 +7379,12 @@ div.tagsinput{
     position: absolute;
     left: -10px;
     top: 1px;
-    background: #00BA8B;
+    background: #727cf5;
     border-radius: 0px 10px 10px 0px;
   }
   .create-new-tab .dropdown-menu li>a:hover{
     background: white;
-    color: #00BA8B;
+    color: #727cf5;
   }
   .create-new-tab .dropdown-menu li>a:hover::before{
     display: inline-block;
@@ -7486,7 +7486,7 @@ div.tagsinput{
   
   .floating-highlight-contact.hidden-floating-highlight-contact {
       background: #fff;
-      color: #00ba8b;
+      color: #727cf5;
       padding: 0;
       border-radius: 5px;
       overflow: hidden;
@@ -7994,7 +7994,7 @@ div.tagsinput{
       .product-item-row input:focus,
       .product-item-row textarea:focus,
       .product-item-row select:focus {
-          border-color: #00ba8b;
+          border-color: #727cf5;
       }
       #ManageStockModal .batch-section tr td,
     #ProductModal tr td,
@@ -8076,8 +8076,8 @@ div.tagsinput{
     #ProductModal td .btn-primary ,
     table#document-item-list-table td .btn-primary ,
     table#document-item-list td .btn-primary {
-          border: 1px solid #00BA8B;
-      color: #00BA8B;
+          border: 1px solid #727cf5;
+      color: #727cf5;
       float: none;
       font-weight: bold;
       padding-top: 0px;
@@ -8288,7 +8288,7 @@ div.tagsinput{
   }
   
   .btn.btn-text2 i{
-      background: #00ba8b;
+      background: #727cf5;
       color: #fff;
       padding: 3px 4px 2px 4px;
       border-radius: 2px;
@@ -8314,7 +8314,7 @@ div.tagsinput{
   
   .payment-type-section input:checked+label {
     color: #fff;
-    background-color: #00ba8b;
+    background-color: #727cf5;
     border: none;
   }
   
@@ -8372,7 +8372,7 @@ div.tagsinput{
   }
   
   .check_icon {
-      background: #00ba8b;
+      background: #727cf5;
       box-shadow: 0 1px 5px rgb(0 0 0 / 30%);
       border-radius: 50% 50%;
       cursor: pointer;
@@ -8415,7 +8415,7 @@ div.tagsinput{
   }
   
   #PrintOptions input:checked + .image_box {
-      border: 2px solid #00ba8b;
+      border: 2px solid #727cf5;
   }
   
   #PrintOptions input:checked + .image_box .check_img {
@@ -8488,7 +8488,7 @@ div.tagsinput{
       position: absolute;
       left: -15px;
       top: 0px;
-      background: #00BA8B;
+      background: #727cf5;
       border-radius: 0px 10px 10px 0px;
   }
   
@@ -8517,7 +8517,7 @@ div.tagsinput{
   .accordion-group.AccordianOpen .accordion-heading a,
   .accordion-group:hover .accordion-heading a
   {
-          color:#00BA8B;
+          color:#727cf5;
   }
   
   .template-name {
@@ -8546,7 +8546,7 @@ div.tagsinput{
   
   
   #GeneralOptions .image_box{
-    border: 1px solid #00ba8b;
+    border: 1px solid #727cf5;
     margin-left: 10px;
     float: left;
   }
@@ -8591,7 +8591,7 @@ div.tagsinput{
   .loaderforitem {
     display: none;
     border: 5px solid #f3f3f3; /* Light grey */
-    border-top: 5px solid #00ba8b; /* Blue */
+    border-top: 5px solid #727cf5; /* Blue */
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -8657,7 +8657,7 @@ div.tagsinput{
   
   
   .batch-setting input:focus, .batch-setting input:active, .batch-setting input:hover {
-      border: 1px solid #00ba8b;
+      border: 1px solid #727cf5;
   }
   
   .btnaddmoreoption i,.btnaddmoreoptionserial i{
@@ -8881,7 +8881,7 @@ div.tagsinput{
   #document-item-list-table .tt-suggestion:hover,
   #document-item-list-table .tt-suggestion:focus,
   #document-item-list-table .tt-suggestion.tt-cursor {
-    background-color: #00BA8B;
+    background-color: #727cf5;
     color: #fff;
   }
   
@@ -8919,7 +8919,7 @@ div.tagsinput{
   }
   
   .bootstrap-tagsinput .tag:not([class*=bg-]) {
-    background-color: #00BA8B;
+    background-color: #727cf5;
     color: #FFF;
   }
   
@@ -9060,7 +9060,7 @@ div.tagsinput{
     font-weight: 400;
   }
   .content li i{
-    color: #00BA8B;
+    color: #727cf5;
     margin-right: 10px;
   }
   .rs{
@@ -9070,7 +9070,7 @@ div.tagsinput{
     padding: 4px 25px;
     border-radius: 25px;
     border: 1px solid #727cf5;
-    background-color: #00ba8b;
+    background-color: #727cf5;
     color: #fff;
     font-size: 16px;
   }
@@ -9088,7 +9088,7 @@ div.tagsinput{
   }
   
   #bannerCarousel {
-    background-color: #00ba8b;
+    background-color: #727cf5;
     margin-bottom: 2em;
   }
   
@@ -9260,7 +9260,7 @@ div.tagsinput{
   .showLastUpdate .comiseo-daterangepicker-triggerbutton{
     padding: 8px;
     border: none;
-    background-color: #00ba8b;
+    background-color: #727cf5;
     color: white;
     text-align: center !important;
     font-weight: 500;
@@ -9276,7 +9276,7 @@ div.tagsinput{
     display: none;
   }
   .comiseo-daterangepicker-buttonpanel .ui-priority-primary{
-    background-color: #00ba8b;
+    background-color: #727cf5;
       border: none;
       padding: 5px 15px;
       color: #fff;
@@ -9358,7 +9358,7 @@ div.tagsinput{
   }
   .card_container .card_wraper{
     padding: 22px ;
-    border: 1px solid #00ba8b;
+    border: 1px solid #727cf5;
     border-radius: 10px;
     text-align: center;
   }
@@ -9378,7 +9378,7 @@ div.tagsinput{
   }
   .card_wraper .outer_mark,.card_wraper .inner_mark{
     background-color: rgba(0, 0, 0, 0);
-    color: #00ba8b;
+    color: #727cf5;
     font-weight: 600;
     font-style: normal;
   }
@@ -9433,7 +9433,7 @@ div.tagsinput{
   /* for hsn and sac finder */
   .highlight_word{ 
     font-weight: 800;
-    background: #00ba8b;
+    background: #727cf5;
     color: #fff;
     border-radius: 3px;
   }
@@ -9482,7 +9482,7 @@ div.tagsinput{
 
 .payment-type-section input:checked+label {
   color: #fff;
-  background-color: #00ba8b;
+  background-color: #727cf5;
   border: none;
 }
 .payment-type-section label.btn.btn-payment-type {
@@ -9517,7 +9517,7 @@ quicklink-analytics-switcher input[type=radio]:checked + label {
   left: 2px;
   height: 40px;
   width: 150px;
-  background-color: #00ba8b;
+  background-color: #727cf5;
   border-radius: 50em;
   -webkit-transition: -webkit-transform .5s;
   -moz-transition: -moz-transform .5s;

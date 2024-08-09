@@ -623,7 +623,7 @@ if (true) {
 					?>
 						<div class="form-actions">
 							<button class="btn btn-primary" name="btnsubmit" type="submit" value="submit"><i class="fa fa-save"></i>Save</button>
-							<a href="list-product.php" class="btn btn_white"><i class="fa fa-chevron-left"></i>Back</a>
+							<a href="list-products.php" class="btn btn_white"><i class="fa fa-chevron-left"></i>Back</a>
 							<?php if ($rowcount > 0) { ?><a href="import-product-stock.php" class="btn  btn_white  pull-right"><i class="fa fa-download"></i>Bulk Edit Stock</a><?php } ?>
 						</div>
 					<?php

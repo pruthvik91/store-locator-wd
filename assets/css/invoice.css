@@ -527,8 +527,8 @@ table th{
 /** Print **/
 @media print {
     @page {
-        size: A4; /* Adjust as needed */
-        margin: 0; /* Remove default margins */
+        size: A4; 
+        margin: 0;
     }   
     body * {
         visibility: hidden;
@@ -542,6 +542,7 @@ table th{
         top: 0;
         width: 100%;
     }
+    
    .col-lg-12 {
         width: 100% !important;
     }
@@ -606,9 +607,7 @@ table th{
 
     .invoice-1 .active-color {
         color: #262525!important;
-    }
-
-   
+    }   
 }
 
 

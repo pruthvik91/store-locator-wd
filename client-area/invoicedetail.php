@@ -73,7 +73,7 @@
         }	
     }
     if(isset($_GET["showall"])=="Showall"){
-        header("Location: list-products.php");
+        header("Location: invoicedetail.php");
     }
     //search end
 

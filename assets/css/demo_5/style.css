@@ -12978,25 +12978,6 @@ button.bg-danger-muted:focus {
   .d-xl-inline-flex {
     display: inline-flex !important; } }
 
-@media print {
-  .d-print-none {
-    display: none !important; }
-  .d-print-inline {
-    display: inline !important; }
-  .d-print-inline-block {
-    display: inline-block !important; }
-  .d-print-block {
-    display: block !important; }
-  .d-print-table {
-    display: table !important; }
-  .d-print-table-row {
-    display: table-row !important; }
-  .d-print-table-cell {
-    display: table-cell !important; }
-  .d-print-flex {
-    display: flex !important; }
-  .d-print-inline-flex {
-    display: inline-flex !important; } }
 
 .embed-responsive {
   position: relative;
@@ -15188,65 +15169,6 @@ a.text-danger-muted:hover, a.text-danger-muted:focus {
 
 .invisible {
   visibility: hidden !important; }
-
-@media print {
-  *,
-  *::before,
-  *::after {
-    text-shadow: none !important;
-    box-shadow: none !important; }
-  a:not(.btn) {
-    text-decoration: underline; }
-  abbr[title]::after {
-    content: " (" attr(title) ")"; }
-  pre {
-    white-space: pre-wrap !important; }
-  pre,
-  blockquote {
-    border: 1px solid #adb5bd;
-    page-break-inside: avoid; }
-  thead {
-    display: table-header-group; }
-  tr,
-  img {
-    page-break-inside: avoid; }
-  p,
-  h2,
-  h3 {
-    orphans: 3;
-    widows: 3; }
-  h2,
-  h3 {
-    page-break-after: avoid; }
-  @page {
-    size: a3; }
-  body {
-    min-width: 992px !important; }
-  .container {
-    min-width: 992px !important; }
-  .navbar {
-    display: none; }
-  .badge {
-    border: 1px solid #000; }
-  .table {
-    border-collapse: collapse !important; }
-    .table td,
-    .table th {
-      background-color: #ffffff !important; }
-  .table-bordered th,
-  .table-bordered td {
-    border: 1px solid #dee2e6 !important; }
-  .table-dark {
-    color: inherit; }
-    .table-dark th,
-    .table-dark td,
-    .table-dark thead th,
-    .table-dark tbody + tbody {
-      border-color: #e8ebf1; }
-  .table .thead-dark th {
-    color: inherit;
-    border-color: #e8ebf1; } }
-
 /* Animation mixins */
 @keyframes dropdownAnimation {
   from {
@@ -20069,13 +19991,13 @@ address p {
   flex-grow: 1; }
   @media (min-width: 576px) {
     .page-wrapper .page-content {
-      max-width: 540px; } }
+      max-width: 1140px; } }
   @media (min-width: 768px) {
     .page-wrapper .page-content {
-      max-width: 720px; } }
+      max-width: 1140px; } }
   @media (min-width: 992px) {
     .page-wrapper .page-content {
-      max-width: 960px; } }
+      max-width: 1140px; } }
   @media (min-width: 1200px) {
     .page-wrapper .page-content {
       max-width: 1140px; } }
