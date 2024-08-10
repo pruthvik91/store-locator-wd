@@ -11,8 +11,14 @@ $label_no = "";
 $line_1 = "";
 $line_2 = "";
 $header = "";
-$line_3 = "";
-$line_33 = "";
+$line_m = "";
+$line_l = "";
+$line_xl = "";
+$line_xxl = "";
+$line_mm = "";
+$line_ll = "";
+$line_xll = "";
+$line_xxll = "";
 $url_string = "";
 $searchQuery = "";
 $searchUser = '';
@@ -48,7 +54,18 @@ if ($showReport) {
 	$size = "";
 	$printer_name = '';
 	$barwidth = 1;
-	if ((!empty($_POST) && $_POST['label_no'] != '') && ((isset($_POST["btnSubmit"]) && $_POST["btnSubmit"] == "Submit"))) {
+	$sizearr = ['line_m', 'line_l', 'line_xl', 'line_xxl'];
+
+$found = false;
+foreach ($sizearr as $size1) {
+    if (isset($_POST[$size1])) {
+        $found = true;
+        break;
+    }
+}
+$product_size ="";
+
+	if ((!empty($_POST) && $found)   && ((isset($_POST["btnSubmit"]) && $_POST["btnSubmit"] == "Submit"))) {
 		foreach ($rows1 as $rs1) {
 			if ($rs1['barcode_no'] != null && !empty($rs1['barcode_no'])) {
 				$product_name = $rs1['product_name'];
@@ -59,7 +76,23 @@ if ($showReport) {
 				$line_2 = $line_22 = isset($_POST['line_2']) ? $_POST['line_2'] : '';
 				$printer_name = isset($_POST['printer_name']) ? $_POST['printer_name'] : '';
 				$size = isset($_POST['size']) ? $_POST['size'] : '';
-				$line_3 = $line_33 =$product_size = isset($_POST['line_3']) ? $_POST['line_3'] : '';
+				$line_m = $line_mm  = isset($_POST['line_m']) ? intval($_POST['line_m']) : '';
+				$line_l = $line_ll  = isset($_POST['line_l']) ? intval($_POST['line_l']) : '';
+				$line_xl = $line_xll  = isset($_POST['line_xl']) ? intval($_POST['line_xl']) : '';
+				$line_xxl = $line_xxll  = isset($_POST['line_xxl']) ? intval($_POST['line_xxl']) : '';
+				
+				if ($line_m > 0) $product_size .= 'M: ' . $line_m . ' ';
+				if ($line_l > 0) $product_size .= 'L: ' . $line_l . ' ';
+				if ($line_xl > 0) $product_size .= 'XL: ' . $line_xl . ' ';
+				if ($line_xxl > 0) $product_size .= 'XXL: ' . $line_xxl . ' ';
+				$sizes = [
+					'M' => isset($_POST['line_m']) ? intval($_POST['line_m']) : 0,
+					'L' => isset($_POST['line_l']) ? intval($_POST['line_l']) : 0,
+					'XL' => isset($_POST['line_xl']) ? intval($_POST['line_xl']) : 0,
+					'XXL' => isset($_POST['line_xxl']) ? intval($_POST['line_xxl']) : 0,
+				];
+		
+				
 				$orgname = "Wed & Nik";
 				switch ($header) {
 					case '{{Company Name}}':
@@ -98,10 +131,25 @@ if ($showReport) {
 						$line_22 = "Price: " . floor($sellprice);
 						break;
 				}
-				$line_33 = (isset($line_3)&&!empty($line_3))? "(Size: " . $product_size.")":"";
-				$product_detail[] = array('barcode_no' => $rs1['barcode_no'], 'header' => $header1, 'line1' => $line_11, 'line2' => $line_22, 'line3' => $line_33);
+				$line_33 = (isset($product_size)&&!empty($product_size))? "(Size: " . $product_size.")":"";
+				foreach ($sizes as $size1 => $quantity) {
+					for ($i = 0; $i < $quantity; $i++) {
+						$line_33 = "(Size: $size1)";
+						$product_detail[] = array(
+							'barcode_no' => $rs1['barcode_no'],
+							'header' => $header1,
+							'line1' => $line_11,
+							'line2' => $line_22,
+							'line3' => $line_33
+						);
+					}
+				}
+				// $product_detail[] = array('barcode_no' => $rs1['barcode_no'], 'header' => $header1, 'line1' => $line_11, 'line2' => $line_22, 'line3' => $line_33);
+				
 			}
 		}
+		// print_R($product_detail);
+		// exit;
 
 		$labelSettings = [
 			'65_label' => [
@@ -456,10 +504,6 @@ if ($showReport) {
 							<input type="text" class="span3 autoHeaderField" name="line_2" id="line_2" value="<?php echo $line_2; ?>" data-value="<?php echo $line_22; ?>" autocomplete="off" />
 						</div>
 						<div class="control-group-search" style="float:left; margin-left:10px;">
-							<label class="control-label" for="firstname">Line 3:</label>
-							<input type="text" class="span3 autosizefield" name="line_3" id="line_3" value="<?php echo $line_3; ?>" data-value="<?php echo $line_33; ?>" autocomplete="off" />
-						</div>
-						<div class="control-group-search" style="float:left; margin-left:10px;">
 							<label class="control-label" for="firstname">Printer:</label>
 							<select class="span3" name="printer_name" id="printer">
 								<option value="regular" <?php echo ($printer_name == "regular") ? 'selected' : '' ?>>Regular</option>
@@ -472,12 +516,24 @@ if ($showReport) {
 
 							</select>
 						</div>
+						<div class="control-group-search" style="float:left; margin-left:10px;width:20%">
+							<label class="control-label" for="firstname">Size M:</label>
+							<input type="text" class="span3 " name="line_m" id="line_m" value="<?php echo $line_m; ?>" data-value="<?php echo $line_mm; ?>" autocomplete="off" />
+						</div>
+						<div class="control-group-search" style="float:left; margin-left:10px;width:20%">
+							<label class="control-label" for="firstname">Size L:</label>
+							<input type="text" class="span3 " name="line_l" id="line_l" value="<?php echo $line_l; ?>" data-value="<?php echo $line_ll; ?>" autocomplete="off" />
+						</div><div class="control-group-search" style="float:left; margin-left:10px;width:20%">
+							<label class="control-label" for="firstname">Size XL:</label>
+							<input type="text" class="span3 " name="line_xl" id="line_xl" value="<?php echo $line_xl; ?>" data-value="<?php echo $line_xll; ?>" autocomplete="off" />
+						</div>
+						<div class="control-group-search" style="float:left; margin-left:10px;width:20%">
+							<label class="control-label" for="firstname">Size XXL:</label>
+							<input type="text" class="span3 " name="line_xxl" id="line_xxl" value="<?php echo $line_xxl; ?>" data-value="<?php echo $line_xxll; ?>" autocomplete="off" />
+						</div>
 						<div class="list-detail-search-action">
 							<div class="control-group-search control-group-search-action search-btn" style="margin-left:20px; margin-top:20px;">
 								<button type="submit" class="btn btn-primary" value="Submit" name="btnSubmit"><i class="fa fa-barcode"></i>Generate</button>
-								<?php if ($label_no != '') { ?>
-
-								<?php } ?>
 							</div>
 						</div>
 					</div>
