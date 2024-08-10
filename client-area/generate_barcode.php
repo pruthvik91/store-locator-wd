@@ -31,7 +31,7 @@ $product_detail = [];
 $marginbottom = false;
 $isprint = true;
 $showReport = true;
-
+$displaylabel = 0 ;
 $db_main = DB_MAIN;
 $db_base = DB_BASE;
 if ($showReport) {
@@ -76,10 +76,10 @@ $product_size ="";
 				$line_2 = $line_22 = isset($_POST['line_2']) ? $_POST['line_2'] : '';
 				$printer_name = isset($_POST['printer_name']) ? $_POST['printer_name'] : '';
 				$size = isset($_POST['size']) ? $_POST['size'] : '';
-				$line_m = $line_mm  = isset($_POST['line_m']) ? intval($_POST['line_m']) : '';
-				$line_l = $line_ll  = isset($_POST['line_l']) ? intval($_POST['line_l']) : '';
-				$line_xl = $line_xll  = isset($_POST['line_xl']) ? intval($_POST['line_xl']) : '';
-				$line_xxl = $line_xxll  = isset($_POST['line_xxl']) ? intval($_POST['line_xxl']) : '';
+				$line_m = $line_mm  = isset($_POST['line_m']) ? intval($_POST['line_m']) : 0;
+				$line_l = $line_ll  = isset($_POST['line_l']) ? intval($_POST['line_l']) : 0;
+				$line_xl = $line_xll  = isset($_POST['line_xl']) ? intval($_POST['line_xl']) : 0;
+				$line_xxl = $line_xxll  = isset($_POST['line_xxl']) ? intval($_POST['line_xxl']) : 0;
 				
 				if ($line_m > 0) $product_size .= 'M: ' . $line_m . ' ';
 				if ($line_l > 0) $product_size .= 'L: ' . $line_l . ' ';
@@ -91,8 +91,8 @@ $product_size ="";
 					'XL' => isset($_POST['line_xl']) ? intval($_POST['line_xl']) : 0,
 					'XXL' => isset($_POST['line_xxl']) ? intval($_POST['line_xxl']) : 0,
 				];
-		
-				
+				$label_no = 1;
+				$displaylabel = $line_m + $line_l + $line_xl + $line_xxl;
 				$orgname = "Wed & Nik";
 				switch ($header) {
 					case '{{Company Name}}':
@@ -148,8 +148,7 @@ $product_size ="";
 				
 			}
 		}
-		// print_R($product_detail);
-		// exit;
+
 
 		$labelSettings = [
 			'65_label' => [
@@ -487,7 +486,7 @@ $product_size ="";
 					<div class="control-group-search-container">
 						<div class="control-group-search" style="float:left; margin-left:10px;">
 							<label class="control-label" for="firstname">No of Label:</label>
-							<input type="number" class="span3" name="label_no" id="label_no" value="<?php echo htmlspecialchars($label_no); ?>" />
+							<input type="number" class="span3" name="label_no" id="label_no" value="<?php echo htmlspecialchars($displaylabel); ?>" disabled/>
 							<input type="hidden" name="barcode_no" id="barcode_no" value="<?php echo htmlspecialchars($products); ?>" />
 						</div>
 						<div class="control-group-search " style="float:left; margin-left:10px;">
@@ -817,14 +816,16 @@ $product_size ="";
 								}
 							];
 						} else {
-							options = [{
-									value: '65_label',
-									label: '65 Labels (38 * 21mm)'
-								},
+							options = [
 								{
 									value: '48_label',
 									label: '48 Labels (48 * 24mm)'
 								},
+								{
+									value: '65_label',
+									label: '65 Labels (38 * 21mm)'
+								},
+								
 								{
 									value: '40_label',
 									label: '40 Labels (39 * 35mm)'
@@ -849,7 +850,6 @@ $product_size ="";
 						options.forEach(function(option) {
 							var selected = '';
 							if (size == option.value) {
-								selected = "selected";
 							}
 							$('#size').append('<option value="' + option.value + '"' + selected + ' >' + option.label + '</option>');
 						});
