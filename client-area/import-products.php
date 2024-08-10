@@ -17,7 +17,6 @@ ini_set("display_errors", 1);
 
 $file_error = false;    
 if((!empty($_POST)) && isset($_POST["btnsubmit"])){
-    $temp_table = 'products_temp';
     
     $file_name = "";
     $allowed_image_extension = array("xls", "xlsx");
@@ -39,9 +38,10 @@ if((!empty($_POST)) && isset($_POST["btnsubmit"])){
             $all_ext = array("xls", "xlsx");
     
             if(in_array($ext, $all_ext)){
-                $file_name = "sheet_product_.$ext";
+                $date = date('d-m-y_H-i-s'); 
+                $file_name = "sheet_product_$date.$ext";
                 $file_tmp = $_FILES["file"]["tmp_name"];
-                move_uploaded_file($file_tmp, 'upload/'.$file_name);
+                move_uploaded_file($file_tmp, 'upload_excels/'.$file_name);
             }
             else {
                 echo "Please Select Valid File to Import Data.";
@@ -54,7 +54,7 @@ if((!empty($_POST)) && isset($_POST["btnsubmit"])){
         exit;
     }
     
-    $result_sheet_path = "./upload/".$file_name;
+    $result_sheet_path = "./upload_excels/".$file_name;
     
     $spreadsheet = IOFactory::load($result_sheet_path);
     $data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
@@ -129,7 +129,7 @@ if((!empty($_POST)) && isset($_POST["btnsubmit"])){
             
             if($productExists){
                 $IsInsertError++;
-                $ERROR .= "Error in Row - '$i'. Product with Barcode No '$hsn' already exists.<br>";
+                $ERROR .= "Error in Row - '$i'. Product with This Product code '$hsn' already exists.<br>";
                 $rowNoError = false;
                 $summaryExist[$i] = "Product with this Code No '$hsn' already exists.";
             }
@@ -205,6 +205,12 @@ if((!empty($_POST)) && isset($_POST["btnsubmit"])){
                 $values .= "(:product_name$i, :sellprice$i, :purchaseprice$i, :hsn$i, :items_available$i, :igst$i, :barcode_no$i, DATE_ADD(NOW(), INTERVAL ".DB_TIMEDIFF." MINUTE)),";
             }
         }
+        if ($ERROR) {
+            echo "<div class='alert alert-danger'>$ERROR</div>";
+            $ERROR = "No Rows Imports Please Fix.<br>";
+            echo "<div class='alert alert-danger'>$ERROR</div>";
+            $values = "";
+        }
         if($values != ""){
             if(substr($values, -1) == ','){
                 $values = rtrim($values, ",");
@@ -228,7 +234,7 @@ if((!empty($_POST)) && isset($_POST["btnsubmit"])){
         <div class="widget">
             <div class="widget-header "> 
                 <h3>Import Product</h3>        
-                <a class="btn btn-primary pull-right" href="product-sample-new.xlsx?wtn-download-file=true"><i class="fa fa-edit"></i>Download Sample Data</a>    
+                <a class="btn btn-primary pull-right" href="./sheet_product_.xls"><i class="fa fa-edit"></i>Download Sample Data</a>    
             </div>
             <hr>
             <div class="widget-content">

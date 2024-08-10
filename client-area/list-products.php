@@ -16,10 +16,28 @@
 if(isset($_GET["did"]) && !empty($_GET["did"])){
 	$did = $_GET["did"];	
 	if(is_numeric($did) && $did > 0 ){
-		$sqldelete = 'DELETE from '.DB_BASE.'.store_product where product_id=:product_id';		
-		$datadelete = array(':product_id' => $did);		
-		CP_Delete($sqldelete,$datadelete);
-		header("Location: list-products.php?mode=deleted");
+        $sql = "SELECT product_id FROM ".DB_BASE.".invoice_item_detail where 1=1 AND is_deleted != 1 AND product_id = :product_id;";
+        $datacheck = array(':product_id' => $did);		
+        $product =  CP_Select($sql,$datacheck);
+        $product_count = count($product);
+        if($product_count > 0){ ?>
+            <script>
+                $(document).ready(function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Product Already In Use. Cant Be Delete!',
+                                didClose: (e) => {
+                                  window.location.href = 'list-products.php';
+                                }
+                            });
+                });
+            </script>
+        <?php }else{
+            $sqldelete = 'update '.DB_BASE.'.store_product set is_deleted = 1 where product_id=:product_id;';	
+            $datadelete = array(':product_id' => $did);		
+            CP_Update($sqldelete,$datadelete);
+            header("Location: list-products.php?mode=deleted");
+        }
 	}
 }
 //delete end
@@ -56,7 +74,7 @@ if(isset($_GET["showall"])=="Showall"){
 }
 //search end
 
-$sql = "SELECT * FROM ".DB_BASE.".store_product where 1=1 ".$searchQuery."";
+$sql = "SELECT * FROM ".DB_BASE.".store_product where 1=1 AND is_deleted != 1 ".$searchQuery."";
 $product =  CP_Select($sql,[]);
 $product_count = count($product);
 
@@ -94,7 +112,7 @@ if ($total_pages > 1) {
 }
 
 $sql1 = "SELECT * FROM " . DB_BASE . ".store_product 
-         WHERE 1=:user" . $searchQuery . " 
+         WHERE 1=:user AND is_deleted != 1 " . $searchQuery . " 
          ORDER BY product_id DESC 
          LIMIT " . $page_start . "," . $per_page;
 $data1 = array(':user' => 1);
