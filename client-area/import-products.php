@@ -115,7 +115,8 @@ if((!empty($_POST)) && isset($_POST["btnsubmit"])){
             $items_available = trim($data[$i][$xlsstock_available] ?? '');
             $igst = trim($data[$i][$xlsgst] ?? '');
             $barcode_no = $data[$i][$xlsbarcode_no];
-            $barcode_no = !empty($barcode_no) ? str_replace(",", "", $barcode_no) : '';
+            $generated_barcode = randombarcode();
+            $barcode_no = !empty($barcode_no) ? str_replace(",", "", $barcode_no) : $generated_barcode;
             $product_name = str_replace("\n", "" , $product_name);
             $igst = preg_replace("/[^0-9.]/", "", $igst);
             $sellprice = preg_replace("/[^0-9.]/", "", $sellprice);
@@ -162,16 +163,6 @@ if((!empty($_POST)) && isset($_POST["btnsubmit"])){
                 }
             } else {
                 $purchaseprice = 0;
-            }
-            if(isset($hsn) && $hsn != ""){
-                if(!is_numeric($hsn)){
-                    $IsInsertError++;
-                    $ERROR .= "Error in Row - '$i'. Not Valid hsn.<br>";
-                    $summaryInvalid[$i] = 'Not Valid hsn.';
-                    $rowNoError = false;
-                }
-            } else {
-                $hsn = "";
             }
             if(isset($items_available) && $items_available != ""){
                 if(!is_numeric($items_available)){

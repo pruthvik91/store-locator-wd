@@ -440,9 +440,18 @@ function parseDate(s) {
 				});
 			}
 		});
+		
 	});
 	
-	
+	document.addEventListener('DOMContentLoaded', function() {
+		const form = document.getElementById('product_invoice_form');
+
+		form.addEventListener('keypress', function(event) {
+			if (event.key === 'Enter') {
+				event.preventDefault(); // Prevent form submission
+			}
+		});
+	});
 	UpdateTrigger();
 	$( "#product_invoice_form" ).validate({
 		rules: {
@@ -463,7 +472,7 @@ function parseDate(s) {
 						icon: 'warning',
 						title: 'Please Select Payment Type.',
 						didClose: (e) => {
-							$("#save").focus();
+							e.preventDefault();
 						}
 					});
 				} else {

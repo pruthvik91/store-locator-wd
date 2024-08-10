@@ -306,6 +306,17 @@ function number_format_indian($amount,$decimal)
 			break;
 	}
 }
+function randombarcode() {
+    $barcode = '';
+    $length = 8; // Common length for barcodes
+
+    for ($i = 0; $i < $length; $i++) {
+        // Generate a random digit from 0 to 9
+        $barcode .= rand(0, 9);
+    }
+
+    return $barcode;
+}
 require_once('image.php');
 require_once('mail.php');
 require_once('db_class.php');

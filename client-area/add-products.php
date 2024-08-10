@@ -149,7 +149,7 @@ require_once('header.php');
                         </div>
                         <div class="form-group">
                             <label for="name">Barcode No</label>
-                            <input id="name" class="form-control" name="barcode_no" value="<?php echo $barcode_no; ?>" type="number" required>
+                            <input id="name" class="form-control" name="barcode_no" value="<?php echo !empty($barcode_no)?$barcode_no:randombarcode(); ?>" type="number" required>
                         </div>
                         <div class="form-group">
                             <label for="store_description">Tax (in percentage)</label>

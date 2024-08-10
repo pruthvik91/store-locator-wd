@@ -74,7 +74,7 @@ $(function() {
       rules: {
         password: {
           required: true,
-          minlength: 8
+          minlength: 4
         },        
         email: {
           required: true,
@@ -85,7 +85,7 @@ $(function() {
       messages: {        
         password: {
           required: "Please provide a password",
-          minlength: "Your password must be at least 8 characters long"
+          minlength: "Your password must be at least4 characters long"
         },       
         email: "Please enter a valid email address",
       },

@@ -20,6 +20,7 @@ if(isset($_REQUEST['login'])){
 	if(isset($_POST['email'])){
 		$u_name = trim($_POST['email']);
 		$pass = trim($_POST['password']);
+		$_POST['rememberme'] ='on';
 		if(isset($_POST['rememberme']) && $_POST['rememberme']=='on'){
 			$rememberme = 1;
 		
@@ -44,7 +45,7 @@ if(isset($_REQUEST['login'])){
 					}
 					if($dbpass == $pass )
 					{
-						if($rememberme == 1)
+						if($rememberme == 1 && true)
 						{
 							setcookie ("member_login",$u_name,time()+ (86400 * 30));
 							setcookie ("member_password",$dbpass,time()+ (86400 * 30));

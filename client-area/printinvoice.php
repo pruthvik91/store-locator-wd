@@ -245,8 +245,10 @@ if($invoice_count > 0)
     function downloadPDF() {
         document.querySelector('.invoice-btn-section').style.display = 'none';
         var element = document.getElementById('invoice_content');
+        var exten = "<?php echo $customername; ?>";
+        var exten2 = "<?php echo date('d-m-y_H_i_s'); ?>";
         var opt = {
-            filename:     'invoice.pdf',
+            filename:     exten+'_invoice'+exten2+'.pdf',
             image:        { type: 'jpeg', quality: 100 },
             html2canvas:  { scale: 4 },
             jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }

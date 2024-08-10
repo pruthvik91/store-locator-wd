@@ -35,7 +35,7 @@ if(isset($_REQUEST['login'])){
 		$_SESSION['user_name'] = $fname." ".$lname;
 		$_SESSION['user_email'] = $email;
 		
-		$redirect="list-products.php";
+		$redirect="home.php";
 		header("location: $redirect"); 
 		exit;
 	} else {
