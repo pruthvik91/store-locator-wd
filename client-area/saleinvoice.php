@@ -258,7 +258,7 @@ if ((!empty($_POST)) && isset($_POST)) {
     $bill_date = dateFromString($_POST['bill_date'], true);
     $discount_in = $_POST['discount_in'];
     $discount_per_item = $_POST['discount_per_item'];
-    $payment_type = $_POST['payment'];
+    $payment_type = $_POST['payment_type'];
     $qty_total = $_POST['row_total_qty'];
     $price_total = $_POST['row_total_price'];
     $disc_total = $_POST['row_total_disc'];
@@ -305,6 +305,7 @@ if ((!empty($_POST)) && isset($_POST)) {
             taxable_total=:taxable_total,
             tax_total=:tax_total,
             grandtotal=:grandtotal,
+            payment_type=:payment_type,
             total_discount_in_rupee=:total_discount_in_rupee,
             total_discount_type_minus=:total_discount_type_minus,
             total_discount_value=:total_discount_value,
@@ -337,6 +338,7 @@ if ((!empty($_POST)) && isset($_POST)) {
             ':taxable_total' => $taxable_total,
             ':tax_total' => $tax_total,
             ':grandtotal' => $grandtotal,
+            ':payment_type' => $payment_type,
             ':total_discount_in_rupee' => $total_discount_in_rupee,
             ':total_discount_type_minus' => $total_discount_type_minus,
             ':total_discount_value' => $total_discount_value,
@@ -580,6 +582,7 @@ VALUES(
                     $bill_date = $row->bill_date;
                     $term_detail = $row->term_detail;
                     $payment_type = $row->payment_type;
+                    $document_note = $row->document_note;
                 }
             }
             ?>
@@ -1059,9 +1062,9 @@ VALUES(
 
 
                                                         <div class="payment-type-section">
-                                                            <input type="radio" id="cash" value="cash" class="payment" name="payment" required <?php echo ($payment_type == "cash")?'checked':''; ?>>
+                                                            <input type="radio" id="cash" value="cash" class="payment" name="payment_type" required <?php echo ($payment_type == "cash")?'checked':''; ?>>
                                                             <label for="cash" class="btn btn-payment-type btn-payment-type-cash">CASH</label>
-                                                            <input type="radio" id="Online" value="online" class="payment" name="payment" required <?php echo ($payment_type == "online")?'checked':''; ?>>
+                                                            <input type="radio" id="Online" value="online" class="payment" name="payment_type" required <?php echo ($payment_type == "online")?'checked':''; ?>>
                                                             <label for="Online" class="btn btn-payment-type btn-payment-type-cash">ONLINE</label>
 
                                                         </div>
@@ -1152,6 +1155,7 @@ if (isset($rowcountpro) && $rowcountpro != "") {
 				gst: "' . $product->gst . '",
 				name: "' . addslashes($product->product_name ?? '') . '",
 				hsn: "' . addslashes($product->hsn_sac ?? '') . '",
+				barcode_no: "' . addslashes($product->barcode_no ?? '') . '",
 			}';
                     $procounter++;
                 }

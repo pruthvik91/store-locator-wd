@@ -1,8 +1,7 @@
 <?php
-require 'wkhtmltopdf/autoload.php';
-
-use mikehaertl\wkhtmlto\Pdf;
-
+$title = "Generate Barcode";
+require_once "../config.php";
+include('header.php');
 $searchname = "";
 $barcode_no = "";
 $barcode_count = 1;
@@ -26,87 +25,9 @@ $product_detail = [];
 $marginbottom = false;
 $isprint = true;
 $showReport = true;
-if (isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"] == "PDFDownloadSubmit") {
-	require_once "../config.php";
-	global $db;
-	include('configure_report_setting.php');
-	$db_main = DB_MAIN;
-	$db_base = DB_BASE;
-	foreach ($_GET as $key => $val) {
-		if ($key == "btnPDFSubmit" && $val == "PDFDownloadSubmit") {
-			$_POST["btnSubmit"] = 'Submit';
-		} else {
-			$_POST[$key] = $val;
-		}
-	}
-	$isprint = false;
-} else if (isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"] == "PDFSubmit") {
-	require_once "../config.php";
-	global $db;
-	include('configure_report_setting.php');
-	$url = ADMIN_URL . "generate_barcode.php?1=1";
-	foreach ($_GET as $key => $val) {
-		if (!empty($val) && is_array($val)) {
-			foreach ($val as $v) {
-				$url .= "&$key" . "[]=$v";
-			}
-		} else {
-			if ($key == "btnPDFSubmit" && $val == "PDFSubmit") {
-				$url .= "&$key=PDFDownloadSubmit";
-			} else {
-				$url .= "&$key=$val";
-			}
-		}
-	}
-	$parameter = [
-		'ignoreWarnings' => true,
-		'commandOptions' => array(
-			'useExec' => true,
-			'procEnv' => array(
-				'LANG' => 'en_US.utf-8',
-			),
-			'procOptions' => array(
-				'bypass_shell' => true,
-				'suppress_errors' => true,
-			),
-		),
-		'margin-bottom' => '0',
-		'margin-left' => '0',
-		'margin-right' => '0',
-		'margin-top' => '0',
-		'disable-smart-shrinking'
-	];
-	define("GOGSTBILL_MODE", "local");
-	if (GOGSTBILL_MODE == "local" || GOGSTBILL_MODE == "offline") {
-		$parameter['binary'] = WKHTMLTOPDF;
-	}
-	$pdf = new Pdf($parameter);
-	$pdf->addPage($url);
-	ob_clean();
-	$pdfname = 'Wed & Nik Barcode - ' . date("d-m-Y H-i-s") . '.pdf';
-	$pdf->send($pdfname);
-	exit;
-} else {
 
-	$title = "Generate Barcode";
-	require_once "../config.php";
-	include('header.php');
-	$db_main = DB_MAIN;
-	$db_base = DB_BASE;
-}
-if ($isprint) {
-	global $db;
-	if (true) {
-		if (isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"] == "PDFSubmit") {
-
-			$_POST = array();
-			$_GET = array();
-		}
-	} else {
-		include('access-denied.php');
-		$showReport = false;
-	}
-}
+$db_main = DB_MAIN;
+$db_base = DB_BASE;
 if ($showReport) {
 	$barcode_no = [];
 	$product_ids = isset($_REQUEST['pid']) ? $_REQUEST['pid'] : '';
@@ -489,13 +410,18 @@ if ($showReport) {
 					.widget.action-table {
 					    width: 756px !important;
 					}
+					footer.footer.footer-hide.d-flex.flex-column.flex-md-row.align-items-center.justify-content-between {
+    display: none !important;
+}
+.horizontal-menu.fixed-on-scroll {
+    display: none;
+}
 				}
 			</style>
 
 		<?php
 		}
 	}
-	$url = ADMIN_URL . "generate_barcode.php?pid=" . $products . "&label_no=" . $label_no . "&btnPDFSubmit=PDFSubmit";
 	if ((!(isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"] == "PDFDownloadSubmit"))) {
 		?>
 
@@ -567,24 +493,7 @@ if ($showReport) {
 			<?php } ?>
 		</div> <!-- /widget-content -->
 	<?php
-	} else { ?>
-		<!DOCTYPE html>
-		<html xmlns="http://www.w3.org/1999/xhtml">
-
-		<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-			<link href="css/my-bootstrap.min.css<?php echo URLVERSION . VERSION; ?>" rel="stylesheet">
-			<link href="css/OpenSans.css<?php echo URLVERSION . VERSION; ?>" rel="stylesheet">
-			<link href="css/style.css<?php echo URLVERSION . VERSION; ?>" rel="stylesheet">
-			<script src="js/jquery-1.12.4.min.js<?php echo URLVERSION . VERSION; ?>"></script>
-			<script src="js/jquery-migrate-1.4.1.min.js<?php echo URLVERSION . VERSION; ?>"></script>
-			<script src="js/JsBarcode.js<?php echo URLVERSION . VERSION; ?>"></script>
-			<script src="js/ui/jquery-ui.js<?php echo URLVERSION . VERSION; ?>"></script>
-		</head>
-
-		<body>
-			<div class="container">
-			<?php }
+	}
 		if ($label_no != '') {
 			?>
 				<form id="list-data-table" name="tabledata" method="post">
@@ -596,26 +505,6 @@ if ($showReport) {
 			<?php if (!((isset($_GET["btnPDFSubmit"]) && $_GET["btnPDFSubmit"] == "PDFDownloadSubmit"))) { ?>
 				<div class="form-actions form-actions-floating ">
 					<button type="Button" class="btn" name="print" onclick="window.print()"><i class="fa fa-print"></i>Print</button>
-					<?php
-					foreach ($_POST as $key => $val) {
-						if (!empty($val) && is_array($val)) {
-							foreach ($val as $v) {
-								$url .= "&$key" . "[]=$v";
-							}
-						} else {
-							if ($key == "btnSubmit" && $val == "Submit") {
-								$url .= "&btnPDFSubmit=PDFSubmit";
-							} else {
-								$url .= "&$key=$val";
-							}
-						}
-					}
-					$url .= "&label_no=" . $label_no;
-					$url .= "&uid=" . url_crypt($_SESSION["userid"], 'e');
-					$url .= "&guid=" . url_crypt(url_crypt($_SESSION["userid"], 'e'), 'e');
-
-					?>
-					<a class="btn  pull-right " data-filename="gogst_barcode.pdf" href="<?php echo $url . '&wtn-download-file=true'; ?>" style="width:auto;"><i class="fa fa-download"></i>Download</a>
 				</div>
 
 			<?php }
@@ -632,6 +521,19 @@ if ($showReport) {
 		?>
 
 		<script>
+			$(document).ready(function() {
+				$(window).scroll(function() {
+      if(window.matchMedia('(min-width: 992px)').matches) {
+        var header = $('.horizontal-menu');
+        if ($(window).scrollTop() >= 60) {
+			$(header).removeClass('fixed-on-scroll');
+        } else {
+			$(header).removeClass('fixed-on-scroll');
+        }
+      }
+    });
+			})
+			 
 			var barcode_count = 0;
 			<?php $count = 0;
 			if (count($product_detail) > 0) { ?>
@@ -908,6 +810,6 @@ if ($showReport) {
 
 		</html>
 <?php } else {
-			// include('footer.php');
+			include('footer.php');
 		}
 	}	?>

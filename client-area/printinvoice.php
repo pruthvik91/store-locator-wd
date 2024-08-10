@@ -11,7 +11,7 @@
     <link type="text/css" rel="stylesheet" href="../assets/css/font-awesome.css">
 
     <!-- Favicon icon -->
-    <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./favicon_io/android-chrome-192x192.png" type="image/x-icon">
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,16 +26,26 @@
 <body>
 <?php
  require_once('../config.php');
+ $settings= "";
 if((isset($_GET["invoiceid"]))&&($_GET["invoiceid"]!="")){
-    
-    $invoice_detail_id = $_GET["invoiceid"];
+$getsettings = "SELECT * FROM ".DB_BASE.".store_settings order by store_id desc limit 1";
+$qrysettings =  CP_Select($getsettings,[]);
+$settings_count = count($qrysettings);
+$st = json_decode($qrysettings[0]->settings,true);
+$number1 = isset($st['number1']) && !empty($st['number1']) ? $st['number1'] :'Add number In store Setting';
+$number1 = preg_replace('/(\d{5})(\d{5})/', '$1 $2', $number1);
+$number2 = isset($st['number2']) && !empty($st['number2']) ? $st['number2'] :'Add number In store Setting';
+$number2 = preg_replace('/(\d{5})(\d{5})/', '$1 $2', $number2);
+$instagram = isset($st['instagram']) && !empty($st['instagram']) ? $st['instagram'] :'Add instagram store Setting';
+$storeaddress = isset($st['storeaddress']) && !empty($st['storeaddress']) ? $st['storeaddress']:'Add store address store Setting';
+$display_hsn = isset($st['display_hsn']) && !empty($st['display_hsn']) ? $st['display_hsn']:'';
+$invoice_detail_id = $_GET["invoiceid"];
 $sql = "SELECT * FROM ".DB_BASE.".invoice_detail where 1=1 AND invoice_detail_id = $invoice_detail_id";
 $invoice =  CP_Select($sql,[]);
 $invoice_count = count($invoice);
 if($invoice_count > 0)
 {
     foreach($invoice as $inv){
-
         $customername = $inv->companyname;
         $cmp_contactno = $inv->cmp_contactno;
         $address = $inv->cmp_address1;
@@ -43,6 +53,8 @@ if($invoice_count > 0)
         $discount_total = $inv->disc_total; 
         $grand_total = $inv->grandtotal; 
         $payment_type = $inv->payment_type; 
+        $total_tax = $inv->tax_total; 
+        $bill_date = date('d-M-y',strtotime($inv->bill_date)); 
     }
 }
 }else{
@@ -70,8 +82,8 @@ if($invoice_count > 0)
                                 <div class="col-sm-6 invoice-id">
                                     <div class="info">
                                         <h1 class="color-white inv-header-1">Invoice</h1>
-                                        <p class="color-white mb-1">Invoice Number <span>#45613</span></p>
-                                        <p class="color-white mb-0">Invoice Date <span>21 Sep 2021</span></p>
+                                        <p class="color-white mb-1">Invoice Number <span><?= $invoice_detail_id ?></span></p>
+                                        <p class="color-white mb-0">Invoice Date <span><?= $bill_date ?></span></p>
                                     </div>
                                 </div>
                             </div>
@@ -95,9 +107,11 @@ if($invoice_count > 0)
                                             <h4 class="inv-title-1">Invoice From</h4>
                                             <h2 class="name mb-10">Wed & Nik</h2>
                                             <p class="invo-addr-1">
-                                                99095 68777 <br/>
-                                                95748 40135 <br/>
-                                                Patel Mill Road,Keshod <br/>
+                                                <?=  $number1 ?> <br/>
+                                                <?=  $number2 ?> <br/>
+                                                <?=  $storeaddress ?> <br/>
+                                            
+                                            
                                             </p>
                                         </div>
                                     </div>
@@ -111,10 +125,17 @@ if($invoice_count > 0)
                                     <thead class="bg-active">
                                     <tr class="tr">
                                         <th>No.</th>
-                                        <th class="pl0 text-start">Item Description</th>
+                                        <th class="pl0 text-start">Name</th>
+                                        <?php  if($display_hsn != "0" && !empty($display_hsn))
+                                        { ?>
+                                        <th class="pl0 text-start">Code</th>
+                                        <?php }?>
                                         <th class="text-center">Price</th>
                                         <th class="text-center">Quantity</th>
+                                        <?php  if($discount_total != "0" && !empty($discount_total))
+                                        { ?>
                                         <th class="text-center">Discount</th>
+                                        <?php }?>
                                         <th class="text-end">Amount</th>
                                     </tr>
                                     </thead>
@@ -128,6 +149,7 @@ if($invoice_count > 0)
                                         foreach ($item as $itm){
                                             $counter++;
                                             $product_name = $itm->producttitle; 
+                                            $HSC_SAC = $itm->HSC_SAC; 
                                             $rate = $itm->rate; 
                                             $quantity = $itm->quantity; 
                                             $discount = $itm->disc; 
@@ -142,9 +164,16 @@ if($invoice_count > 0)
                                             </div>
                                         </td>
                                         <td class="pl0"><?= $product_name; ?></td>
+                                        <?php  if($display_hsn != "0" && !empty($display_hsn))
+                                        { ?>
+                                        <td class="pl0"><?= $HSC_SAC; ?></td>
+                                        <?php } ?>
                                         <td class="text-center"><?= number_format($rate,2); ?></td>
                                         <td class="text-center"><?= number_format($quantity,0); ?></td>
+                                        <?php if($discount_total != "0" && !empty($discount_total))
+                                        { ?>
                                         <td class="text-center"><?= number_format($discount,2); ?></td>
+                                        <?php }?>
                                         <td class="text-end"><?= number_format($taxable_line_value,2); ?></td>
                                     </tr>
                                    <?php } ?>
@@ -166,22 +195,25 @@ if($invoice_count > 0)
                                         <h2 class="inv-title-1 text-center" style="font-size:18px;">Total</h2>
                                         <ul class="payment-method-list-1 text-14">
                                             <li><h5>Payment Method : <strong><?= $payment_type ?></strong></h5></li>
-                                            <li><h5>Discount Total : ₹<strong><?= number_format($discount_total,1) ?></strong></h5></li>
+                                            <?php if($discount_total != "0" && !empty($discount_total)){ ?>
+                                            <li><h5>Total Discount : ₹<strong><?= number_format($discount_total,1) ?></strong></h5></li>
+                                            <?php } ?>
+                                            <?php if($total_tax != "0" && !empty($total_tax)){ ?>
+                                            <li><h5>Total Tax : ₹<strong><?= number_format($total_tax,1) ?></strong></h5></li>
+                                            <?php } ?>
                                             <li><h5>Grand Total : ₹<strong><?= number_format($grand_total,2) ?></strong></h5></li>
-                                            
-                                            <li><strong>Branch Name:</strong> xyz</li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div>  
                             </div>
                         </div>
                         <div class="invoice-contact clearfix">
                             <div class="row g-0">
                                 <div class="col-lg-9 col-md-11 col-sm-12">
                                     <div class="contact-info">
-                                        <a href="tel:+55-4XX-634-7071"><i class="fa fa-phone"></i> 99095 68777</a>
-                                        <a href="tel:+55-4XX-634-7071"><i class="fa fa-phone"></i> 95748 40135</a>
-                                        <a href="tel:info@themevessel.com"><i class="fa fa-instagram"></i> Wed&Nik</a>                                        
+                                        <a href="tel:+91<?= $number1 ?>"><i class="fa fa-phone"></i> <?= $number1 ?></a>
+                                        <a href="tel:+91<?= $number1 ?>"><i class="fa fa-phone"></i> <?= $number2 ?></a>
+                                        <a href="https://www.instagram.com/ <?= $instagram ?>/" target="_blank"><i class="fa fa-instagram"></i> <?= $instagram; ?></a>                                        
                                     </div>
                                 </div>
                             </div>
@@ -221,6 +253,9 @@ if($invoice_count > 0)
         };
         html2pdf().from(element).set(opt).save();
     }
+    setTimeout(function() {
+        document.querySelector('.invoice-btn-section').style.display = 'block';
+        },3000)
 </script>
 </body>
 </html>

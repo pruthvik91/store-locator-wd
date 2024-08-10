@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="../assets/css/style.css">
 	<link rel="stylesheet" href="../assets/css/custom.css">  
 	<link rel="stylesheet" href="../assets/css/font-awesome.css">
-    <link rel="shortcut icon" href="../assets/images/favicon.png" />  
+    <link rel="shortcut icon" href="./favicon_io/android-chrome-192x192.png" />  
 	<script src="../assets/vendors/core/core.js"></script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -46,7 +46,7 @@
 						<ul class="navbar-nav">
 							
 							
-							<li class="nav-item dropdown nav-notifications">
+							<!-- <li class="nav-item dropdown nav-notifications">
 								<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<i data-feather="bell"></i>
 									<div class="indicator">
@@ -109,7 +109,7 @@
 										<a href="javascript:;">View all</a>
 									</div>
 								</div>
-							</li>
+							</li> -->
 							<li class="nav-item dropdown nav-profile">
 								<a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i data-feather="user"></i>
@@ -117,7 +117,7 @@
 								<div class="dropdown-menu" aria-labelledby="profileDropdown">
 									<div class="dropdown-header d-flex flex-column align-items-center">
 										<div class="figure mb-3">
-											<i data-feather="user"></i>
+											<img src="./favicon_io/android-chrome-512x512.png" alt="">
 										</div>
 										<div class="info text-center">
 											<p class="name font-weight-bold mb-0"><?php echo $_SESSION['user_name']; ?></p>
@@ -127,9 +127,9 @@
 									<div class="dropdown-body">
 										<ul class="profile-nav p-0 pt-3">
 											<li class="nav-item">
-												<a href="../../pages/general/profile.html" class="nav-link">
+												<a href="store-Setting.php" class="nav-link">
 													<i data-feather="user"></i>
-													<span>Profile</span>
+													<span>Store Settings</span>
 												</a>
 											</li>			
 											<li class="nav-item">

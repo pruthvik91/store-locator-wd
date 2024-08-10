@@ -426,6 +426,21 @@ function parseDate(s) {
 		var ddd = $("#datepicker_lr").attr("data-default-due");
 		$("#datepicker_lr").datepicker("setDate", "+"+ddd);
 	}
+	$(document).ready(function() {
+		$("#product_invoice_form").submit(function(event) {
+			if ($("#address").val().trim() == "") {
+				event.preventDefault(); // Prevent the form from submitting
+				
+				Swal.fire({
+					icon: 'warning',
+					title: 'Please Add Address.',
+					didClose: (e) => {
+						$("#address").focus(); // Focus back on the textarea after alert is closed
+					}
+				});
+			}
+		});
+	});
 	
 	
 	UpdateTrigger();
@@ -455,66 +470,6 @@ function parseDate(s) {
 					$(validator.errorList[0].element).focus();
 				}
 			}
-		},
-		submitHandler: function(form) {
-			var isValid = validateCurrentRowsForSubmit() &&
-                      qty_validate_items();
-
-	        if (isValid) {
-								confirm_rev_charges(function (confirm) {
-									if (confirm) {
-										$("#SameShippingAdd").attr("disabled", false);
-										$("#customers").attr("disabled", false);
-										$("#document-item-list-table [readonly]").attr("readonly", false);
-										var formData = $(form).serialize();
-										checkMigrateStock(function (result) {
-										if (result) {
-											$.ajax({
-												type: form.method,
-												data: formData,
-												dataType: 'json',
-												beforeSend: function() {
-													$("body").addClass("is-loading");
-												},
-												success: function(data) {
-													if(data.status=='OK')
-													{
-														window.location.href = data.redirect;			
-													}
-													else
-													{
-														if(data.errorTitle)
-														{
-															var errTitle = data.errorTitle;
-														}
-														else{
-															var errTitle = 'Error In Saving Invoice';
-														}
-														errorMessage(data.data,errTitle,'','error');
-														$("body").removeClass("is-loading");
-													}
-												},
-												error: function(xhr, status, error) { 
-													var err = xhr.responseText;
-													if(data.errorTitle)
-													{
-														var errTitle = data.errorTitle;
-													}
-													else{
-														var errTitle = 'Error In Saving Invoice';
-													}
-													errorMessage(err.Message,errTitle,'','error');
-													$("body").removeClass("is-loading");
-												},
-												complete: function() {
-													
-												}
-											});
-										}
-										});
-									}
-								});
-	        }	
 		}
 	});
 	
@@ -1001,7 +956,7 @@ function UpdateTrigger(){
 	$( ".product-combobox" ).autocomplete({
 		/*source: availableProducts,*/
 		source: function (request, response) {
-			var results = $.grep(availableProducts, function (item) {return (item.label.toLowerCase().includes(request.term.toLowerCase())||item.hsn.toLowerCase().includes(request.term.toLowerCase()));});response(results.slice(0, 500));
+			var results = $.grep(availableProducts, function (item) {return (item.label.toLowerCase().includes(request.term.toLowerCase())||item.hsn.toLowerCase().includes(request.term.toLowerCase())||item.barcode_no.toLowerCase().includes(request.term.toLowerCase()));});response(results.slice(0, 500));
 		},
 		change: function(event, ui) {
 			if (ui.item == null || ui.item == undefined) {
@@ -1168,6 +1123,49 @@ function UpdateTrigger(){
 	}).focus(function(){            
             $(this).autocomplete("search");
     
+}).scannerDetection({
+	timeBeforeScanTest: 500,
+	avgTimeByChar: 100,
+	onComplete: function () {
+		var target = $(this);
+		target.autocomplete("search", "");
+		var requestBarcode = target.val();			
+		var matchingProducts = availableProducts.filter(function(product) {
+			return product.barcode_no === requestBarcode;
+		});			
+		if (matchingProducts.length == 1) {
+			var productName = matchingProducts[0].label;
+			var checkprev = $('.product-item-row').filter(function(product,val) {
+				return $(this).find('.hidden-item-product-name').val() === productName;
+			});
+			if(matchingProducts[0].stockType == 2)
+			{
+				target.autocomplete("widget").find(`li:contains("${productName}")`).addClass("ui-state-active").trigger("click");
+				setTimeout(function() {target.closest("tr").find(".has-serialno").find("input.tt-input").focus();}, 50);
+			}else{
+				if(checkprev.length >= 1) {
+					addcount = parseFloat(checkprev.eq(checkprev.length - 1).find('.quantity').val()) + 1;
+					checkprev.eq(checkprev.length - 1).find('.quantity').val(addcount);
+					target.val("");
+				}else{
+					target.autocomplete("widget").find(`li:contains("${productName}")`).addClass("ui-state-active").trigger("click");
+					$(".product-combobox:last").focus();
+				}
+			}
+		}else if(matchingProducts.length > 1){}else{ 
+				Swal.fire({
+				icon: 'warning',
+				title: 'Scanned Product Not Found.',
+				didClose: function (e) {
+					$(this).find(".product-combobox").focus();
+					target.val("");
+				}
+			});
+		}
+		
+		$(this).autocomplete("close");
+		 
+}
 });
 	var rowcounter = 1;
 	var rowlength = $("#document-item-list-table .product-item-row").length;
@@ -1259,7 +1257,7 @@ function validateCurrentRowsForSubmit(){
 					isValid = false;
 					return false;
 				}
-				if( hsccode == "" && enable_einvoice_options == 1)
+				if( hsccode == "")
 				{
 					Swal.fire({
 						icon: 'warning',

@@ -11,6 +11,7 @@ $pur_price = "";
 $sell_price = "";
 $gst = "";
 $item_available = "";
+$barcode_no = "";
 $hsn_sac = "";
 if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
     if (isset($_POST["product_name"])) {
@@ -19,6 +20,7 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
         $hsn_sac = trim($_POST["hsn_sac"]);
         $sell_price = trim($_POST["sell_price"]);
         $pur_price = trim($_POST["pur_price"]);
+        $barcode_no = trim($_POST["barcode_no"]);
 
         $plus_minus = trim($_POST["plus_minus"]);
         $operator = ($plus_minus == "plus") ? "+" : "-";
@@ -42,6 +44,7 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
                 sell_price=:sell_price,
                 pur_price=:pur_price,
                 hsn_sac=:hsn_sac, 
+                barcode_no=:barcode_no, 
                 gst=:gst, 
                 item_available=(item_available ' . $operator . $new_item_available . '),
                 modifydate=:modifydate WHERE product_id=:product_id';
@@ -51,23 +54,25 @@ if ((!empty($_POST)) && isset($_POST["btnsubmit"])) {
                 ':sell_price' => $sell_price,
                 ':pur_price' => $pur_price,
                 ':hsn_sac' => $hsn_sac,
+                ':barcode_no' => $barcode_no,
                 ':gst' => $gst,
                 ':modifydate' => $dt1
             );
 
-            CP_update($sqlupdate, $data);
-            if (isset($_GET["id"]) && isset($_GET["page"])) {
+           $update= CP_update($sqlupdate, $data);
+            if ($update) {
                 $id = $_GET["id"];
-                $pn = $_GET["page"];
-                header("Location: list-products.php?id=$id&product_name=&store_category_id=&page=$pn&mode=updated");
+                $pn = (!isset($_GET["page"])&&$_GET["page"]=="")? '' :'&page='.$pn.'';
+                header("Location: list-products.php?id=$id&product_name=&store_category_id=&mode=updated");
             }
         } else {
-            $sql = "INSERT INTO " . DB_BASE . ".store_product (product_name,sell_price,pur_price,hsn_sac,gst,item_available,createdate) VALUES (:product_name,:sell_price,:pur_price,:hsn_sac,:gst,:item_available,:createdate);";
+            $sql = "INSERT INTO " . DB_BASE . ".store_product (product_name,sell_price,pur_price,hsn_sac,barcode_no,gst,item_available,createdate) VALUES (:product_name,:sell_price,:pur_price,:hsn_sac,:barcode_no,:gst,:item_available,:createdate);";
             $data = array(
                 ':product_name' => $product_name,
                 ':sell_price' => $sell_price,
                 ':pur_price' => $pur_price,
                 ':hsn_sac' => $hsn_sac,
+                ':barcode_no' => $barcode_no,
                 ':gst' => $gst,
                 ':item_available' => $item_available,
                 ':createdate' => $dt1
@@ -95,6 +100,7 @@ if ((isset($_GET["id"])) && ($_GET["id"] != "")) {
             $gst = $row->gst;
             $item_available = $row->item_available;
             $hsn_sac = $row->hsn_sac;
+            $barcode_no = $row->barcode_no;
         }
     }
 }
@@ -140,6 +146,10 @@ require_once('header.php');
                         <div class="form-group">
                             <label for="name">Sale Price</label>
                             <input id="name" class="form-control" name="sell_price" value="<?php echo $sell_price; ?>" type="number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Barcode No</label>
+                            <input id="name" class="form-control" name="barcode_no" value="<?php echo $barcode_no; ?>" type="number" required>
                         </div>
                         <div class="form-group">
                             <label for="store_description">Tax (in percentage)</label>

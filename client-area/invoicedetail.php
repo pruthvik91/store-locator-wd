@@ -2,8 +2,8 @@
         require_once('../config.php');
         require_once('uservalidation.php');
         require_once('header.php'); 
-    $product_id = "";
-        $product_name = "";
+        $product_id = "";
+        $customer_name = "";
         $hsn_sac = "";
         $pur_price = "";
         $sell_price = "";
@@ -56,19 +56,19 @@
     //delete end
 
     //search start
-    if(isset($_GET["btnSearch1"])=="Search"){	
-        $product_name = $_GET["product_name"];
-        if(!empty($product_name))
+    if(isset($_POST["btnSearch1"])=="Search"){	
+        $customer_name = $_POST["customer_name"];
+        if(!empty($customer_name))
         {
-            $searchQuery = $searchQuery." AND product_name LIKE '%".$product_name."%' ";
+            $searchQuery = $searchQuery." AND companyname LIKE '%".$customer_name."%' ";
         }
         
     }else{		
-        if(!empty($_GET["product_name"]) || !empty($_GET["store_category_id"])){
-            $product_name = $_GET["product_name"];
-            if(!empty($product_name))
+        if(!empty($_GET["customer_name"]) || !empty($_GET["store_category_id"])){
+            $customer_name = $_GET["customer_name"];
+            if(!empty($customer_name))
             {
-                $searchQuery = $searchQuery." AND product_name LIKE '%".$product_name."%' ";
+                $searchQuery = $searchQuery." AND companyname LIKE '%".$customer_name."%' ";
             }
         }	
     }
@@ -107,7 +107,7 @@
 
     $pagination = "";
     $url_string = "";
-    $url_string .= "product_name=".$product_name;
+    $url_string .= "customer_name=".$customer_name;
     // $url_string .= "&search=".$;
     if ($total_pages > 1) {
         $pagination = paginate('invoicedetail.php?'.$url_string, $cur_page, $total_pages);
@@ -171,7 +171,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Customer Name</label>
                                     <input type="text" class="form-control" placeholder="Enter Customer Name"
-                                        name="product_name" value="<?php echo $product_name; ?>">
+                                        name="customer_name" value="<?php echo $customer_name; ?>">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
@@ -232,7 +232,7 @@
                                 <tr>
                                     <td><?php echo $invoice_id; ?></td>
                                     <td><?php echo $companyname; ?></td>
-                                    <td><?php echo $bill_date; ?></td>
+                                    <td><?php echo date('d-M-Y',strtotime($bill_date)); ?></td>
                                     <td><?php echo $grandtotal; ?></td>
                                     <td class="text-center">
                                         

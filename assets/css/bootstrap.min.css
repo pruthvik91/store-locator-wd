@@ -2999,17 +2999,6 @@ input[type="submit"].btn.btn-mini {
     -moz-border-radius: 4px;
     border-radius: 4px;
 }
-.navbar .dropdown-menu:before {
-    content: '';
-    display: inline-block;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-bottom: 7px solid #ccc;
-    border-bottom-color: rgba(0, 0, 0, 0.2);
-    position: absolute;
-    top: -7px;
-    left: 9px;
-}
 .navbar .dropdown-menu:after {
     content: '';
     display: inline-block;

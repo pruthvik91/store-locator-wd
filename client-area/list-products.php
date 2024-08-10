@@ -25,21 +25,31 @@ if(isset($_GET["did"]) && !empty($_GET["did"])){
 //delete end
 
 //search start
-if(isset($_GET["btnSearch1"])=="Search"){	
-	$product_name = $_GET["product_name"];
+if(isset($_POST["btnSearch1"])=="Search"){	
+	$product_name = $_POST["product_name"];
+	$hsn_sac = $_POST["hsn_sac"];
 	if(!empty($product_name))
 	{
 		$searchQuery = $searchQuery." AND product_name LIKE '%".$product_name."%' ";
 	}
+	if(!empty($hsn_sac))
+	{
+		$searchQuery = $searchQuery." AND hsn_sac LIKE '%".$hsn_sac."%' ";
+	}
 	
 }else{		
-	if(!empty($_GET["product_name"]) || !empty($_GET["store_category_id"])){
-		$product_name = $_GET["product_name"];
-		if(!empty($product_name))
-		{
-			$searchQuery = $searchQuery." AND product_name LIKE '%".$product_name."%' ";
-		}
-	}	
+    if(!empty($_GET["product_name"]))
+    {
+        
+        $product_name = $_GET["product_name"];
+        $searchQuery = $searchQuery." AND product_name LIKE '%".$product_name."%' ";
+    }
+    if(!empty($_GET["hsn_sac"])){
+    
+        $hsn_sac = $_GET["hsn_sac"];
+        $searchQuery = $searchQuery." AND hsn_sac LIKE '%".$hsn_sac."%' ";
+    
+ 	}	
 }
 if(isset($_GET["showall"])=="Showall"){
     header("Location: list-products.php");
@@ -76,7 +86,7 @@ if($total_pages==0){
 
 $pagination = "";
 $url_string = "";
-$url_string .= "product_name=".$product_name;
+$url_string .= "product_name=".$product_name."&hsn_sac=".$hsn_sac;
 // $url_string .= "&search=".$;
 if ($total_pages > 1) {
 	$pagination = paginate('list-products.php?'.$url_string, $cur_page, $total_pages);
@@ -134,13 +144,20 @@ $product_count1 = count($product1);
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Product Search</h6>
-                <form method="get">
+                <form method="POST">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label class="control-label">Product Name</label>
                                 <input type="text" class="form-control" placeholder="Enter Product Name"
                                     name="product_name" value="<?php echo $product_name; ?>">
+                            </div>
+                        </div><!-- Col -->
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">Product Code</label>
+                                <input type="text" class="form-control" placeholder="Enter Product Code"
+                                    name="hsn_sac" value="<?php echo $hsn_sac; ?>">
                             </div>
                         </div><!-- Col -->
                     </div><!-- Row -->
@@ -207,7 +224,8 @@ $product_count1 = count($product1);
                                                     $pur_price = $row->pur_price; 
 													$sell_price = $row->sell_price; 
 													$item_available = $row->item_available;    
-													$gst = round($row->gst,0);
+													$gst = $row->gst;
+                                                    $gst = !empty($gst)?number_format($gst)."%":'0%';
 											?>
                             <tr>
                             <td><center><div class="form-check"><label class="form-check-label"><input type="checkbox" class="delall" name="delall[]" value="<?php echo $product_id ?>"><i class="input-frame"></i></label></div></center></td>
@@ -217,7 +235,7 @@ $product_count1 = count($product1);
                                 <td><?php echo number_format($pur_price,2); ?></td>
                                 <td><?php echo number_format($sell_price,2); ?></td>
                                 <td><?php echo $item_available; ?></td>
-                                <td><?php echo $gst."%"; ?></td>
+                                <td><?php echo $gst; ?></td>
 
                                 <td class="text-center">
                                     <a href="add-products.php?id=<?php echo $product_id."&".$url_string; ?>"

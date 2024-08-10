@@ -8708,7 +8708,7 @@ pre {
   .form-control::placeholder, select::placeholder, .email-compose-fields .select2-container--default .select2-selection--multiple::placeholder, .select2-container--default .select2-selection--single::placeholder, .select2-container--default .select2-selection--single .select2-search__field::placeholder, .typeahead::placeholder,
   .tt-query::placeholder,
   .tt-hint::placeholder {
-    color: #c9c8c8;
+    color: #555555;
     opacity: 1; }
   .form-control:disabled, select:disabled, .email-compose-fields .select2-container--default .select2-selection--multiple:disabled, .select2-container--default .select2-selection--single:disabled, .select2-container--default .select2-selection--single .select2-search__field:disabled, .typeahead:disabled,
   .tt-query:disabled,
@@ -20167,17 +20167,7 @@ address p {
           box-shadow: 0 5px 10px 0 rgba(183, 192, 206, 0.2);
           font-size: .875rem; }
           .horizontal-menu .navbar .navbar-content .navbar-nav .nav-item.dropdown .dropdown-menu::before {
-            content: '';
-            width: 13px;
-            height: 13px;
-            background: #fff;
-            position: absolute;
-            top: -7px;
-            right: 28px;
-            -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
-            border-top: 1px solid #f2f4f9;
-            border-left: 1px solid #f2f4f9; }
+            }
           @media (max-width: 767px) {
             .horizontal-menu .navbar .navbar-content .navbar-nav .nav-item.dropdown .dropdown-menu {
               right: 20px;
@@ -22875,14 +22865,14 @@ address p {
 /* Forms */
 .input-group-append,
 .input-group-prepend {
-  color: #c9c8c8;
+  color: #555555;
   width: auto;
   border: none; }
   .input-group-append .input-group-text,
   .input-group-prepend .input-group-text {
     border-color: #e8ebf1;
     padding: 0.5rem 0.75rem;
-    color: #c9c8c8; }
+    color: #555555; }
 
 .form-control, select, .email-compose-fields .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--single .select2-search__field, .typeahead,
 .tt-query,
@@ -22904,7 +22894,7 @@ select {
     border: 1px solid #e8ebf1;
     border-radius: 0px;
     outline: none;
-    color: #c9c8c8; }
+    color: #000; }
     select.form-control.border-primary, select.border-primary, .email-compose-fields .select2-container--default select.border-primary.select2-selection--multiple, .select2-container--default select.border-primary.select2-selection--single, .select2-container--default .select2-selection--single select.border-primary.select2-search__field {
       outline: 1px solid #727cf5; }
       select.form-control.border-primary:focus, select.border-primary:focus, .email-compose-fields .select2-container--default select.border-primary.select2-selection--multiple:focus, .select2-container--default .select2-selection--single select.border-primary.select2-search__field:focus {
@@ -23522,7 +23512,7 @@ select {
 .auth-page .auth-left-wrapper {
   width: 100%;
   height: 100%;
-  background-image: url(https://via.placeholder.com/219x452);
+  background-image: url(../../images/login_wed&nik.gif);
   background-size: cover; }
 
 @media (min-width: 992px) {

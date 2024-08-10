@@ -180,6 +180,7 @@
         $(this).toggleClass('show-submenu');
       }        
     })
+    if(!window.location.href.includes('generate_barcode')){
 
     $(window).scroll(function() {
       if(window.matchMedia('(min-width: 992px)').matches) {
@@ -191,6 +192,7 @@
         }
       }
     });
+  }
 
   });
 })(jQuery);
