@@ -57,6 +57,14 @@ if($invoice_count > 0)
         $bill_date = date('d-M-y',strtotime($inv->bill_date)); 
     }
 }
+$result = $db->prepare("SELECT 1 FROM " . DB_BASE . ".invoice_item_detail iid WHERE iid.invoice_detail_id=" . $invoice_detail_id . " AND iid.is_deleted != 1 GROUP BY iid.invoice_detail_item_id;");
+$result->execute();
+$item = $result->fetchAll(PDO::FETCH_OBJ);
+$rowcount = count($item);
+$counter = 0;
+foreach ($item as $itm){
+    $counter++;
+}
 }else{
     header('Location: invoicedetail.php?error=notfound');
 }
@@ -88,7 +96,9 @@ if($invoice_count > 0)
                                 </div>
                             </div>
                         </div>
-                        <div style="height:50px;"></div>
+                        <?php if($counter < 6){ ?>
+                            <div style="height:50px;"></div>
+                        <?php  } ?>
                         <div class="invoice-top">
                             <div class="row">
                                 <div class="col-sm-6">
@@ -181,17 +191,19 @@ if($invoice_count > 0)
                                 </table>
                             </div>
                         </div>
-                        <div style="height:50px;"></div>
+                        <?php if($counter < 6){ ?>
+                            <div style="height:50px;"></div>
+                        <?php  } ?>
                         <div class="invoice-bottom">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-7" style="width:50%">
-                                    <div class="mb-30 dear-client">
+                                    <div class=" dear-client">
                                         <h3 class="inv-title-1">Terms & Conditions</h3>
                                         <p><?= str_replace('.','. <br>',$term_detail) ?></p>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-5" style="width:50%">
-                                    <div class="mb-30 payment-method" style="float: right;">
+                                    <div class=" payment-method" style="float: right;">
                                         <h2 class="inv-title-1 text-center" style="font-size:18px;">Total</h2>
                                         <ul class="payment-method-list-1 text-14">
                                             <li><h5>Payment Method : <strong><?= $payment_type ?></strong></h5></li>
