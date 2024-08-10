@@ -331,7 +331,7 @@ table th{
 }
 
 .invoice-1 .table > :not(caption) > * > * {
-    padding: 13px 30px;
+    padding: 8px 30px;
 }
 
 .invoice-1 .table > :not(caption) > * > * {
@@ -528,7 +528,7 @@ table th{
 @media print {
     @page {
         size: A4; 
-        margin: 0;
+        margin: 5mm; 
     }   
     body * {
         visibility: hidden;
@@ -563,7 +563,9 @@ table th{
     }
     .invoice-content {
         display: flex;
-        height: 500px;
+        height: auto; /* Remove fixed height for dynamic content */
+        page-break-inside: avoid; /* Prevent breaking inside this element */
+
     }
 
     .invoice-1 .container {
@@ -609,11 +611,4 @@ table th{
         color: #262525!important;
     }   
 }
-
-
-
-
-
-
-
 
