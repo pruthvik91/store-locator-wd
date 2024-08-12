@@ -288,16 +288,6 @@ $product_count1 = count($product1);
                             </tr>
                             <?php }} ?>
                         </tbody>
-                        <tfoot>
-                            <tr class="summary-row">
-                                <td colspan="4" class="text-right">Total :</td>
-                                <td class="text-right"><?php echo $rowcount; ?></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"><?php echo $total_stock; ?></td>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>

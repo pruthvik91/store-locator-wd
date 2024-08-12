@@ -439,6 +439,12 @@ function parseDate(s) {
 					}
 				});
 			}
+			if (!$('input[name="payment_type"]:checked').val()) {
+				$('#paymentError').show(); // Show error message
+				event.preventDefault(); // Prevent form submission
+			} else {
+				$('#paymentError').hide(); // Hide error message
+			}
 		});
 		
 	});
@@ -463,23 +469,7 @@ function parseDate(s) {
 			cmp_contactno: "Please enter Phone",
 			address: "Please enter Address",
 		},
-		invalidHandler: function(form, validator) {
-			var errors = validator.numberOfInvalids();
-			if (errors) {
-				var invalidElement = $(validator.errorList[0].element);
-				if (invalidElement.is(':radio')) {
-					Swal.fire({
-						icon: 'warning',
-						title: 'Please Select Payment Type.',
-						didClose: (e) => {
-							e.preventDefault();
-						}
-					});
-				} else {
-					$(validator.errorList[0].element).focus();
-				}
-			}
-		}
+
 	});
 	
 });	

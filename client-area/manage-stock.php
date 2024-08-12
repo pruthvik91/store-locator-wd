@@ -5,7 +5,7 @@ include('./header.php');
 $price_decimal_value = 2;
 
 $result = $db->prepare("SELECT 
-            product_name,hsn_sac,pur_price,sell_price,sum(item_available) AS item_available
+            product_name,hsn_sac,AVG(pur_price) as pur_price ,AVG(sell_price) as sell_price,sum(item_available) AS item_available
         FROM 
             store_db_0_5k.`store_product` 
         WHERE 

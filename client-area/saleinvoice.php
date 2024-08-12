@@ -1062,14 +1062,13 @@ VALUES(
 
 
                                                         <div class="payment-type-section">
-                                                            <input type="radio" id="cash" value="cash" class="payment" name="payment_type" required <?php echo ($payment_type == "cash")?'checked':''; ?>>
+                                                            <input type="radio" id="cash" value="cash" class="payment" name="payment_type"  <?php echo ($payment_type == "cash")?'checked':''; ?>>
                                                             <label for="cash" class="btn btn-payment-type btn-payment-type-cash">CASH</label>
-                                                            <input type="radio" id="Online" value="online" class="payment" name="payment_type" required <?php echo ($payment_type == "online")?'checked':''; ?>>
+                                                            <input type="radio" id="Online" value="online" class="payment" name="payment_type"  <?php echo ($payment_type == "online")?'checked':''; ?>>
                                                             <label for="Online" class="btn btn-payment-type btn-payment-type-cash">ONLINE</label>
-
                                                         </div>
-                                                        
-                                                    <label id="payment-error" class="error" for="payment" style="width:100%;display:none;"></label>
+                                                        <div id="paymentError" style="color: red; display: none;">Please select a payment type.</div>
+                                                    <!-- <label id="payment-error" class="error" for="payment" style="width:100%;display:none;"></label> -->
                                                 </div> <!-- /controls -->
                                             </div> <!-- /control-group -->
                                             <hr>

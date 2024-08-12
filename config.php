@@ -60,7 +60,7 @@ define('DB_ALL_BASE', all_base_db_name());
 define('ENCRYPTION_KEY', '3223223323232323');
 define('DBUSER', 'root');
 define('DBHOST', 'localhost');
-define('DBPASS', 'root');
+define('DBPASS', '');
 define('DBDSN', 'mysql:host='.DBHOST.';dbname='.DB_MAIN.';charset=utf8mb4;');
 
 require_once(SITE_PATH."include/function.php");

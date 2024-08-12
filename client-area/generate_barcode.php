@@ -77,10 +77,10 @@ $product_size ="";
 				$line_2 = $line_22 = isset($_POST['line_2']) ? $_POST['line_2'] : '';
 				$printer_name = isset($_POST['printer_name']) ? $_POST['printer_name'] : '';
 				$size = isset($_POST['size']) ? $_POST['size'] : '';
-				$line_m = $line_mm  = isset($_POST['line_m']) ? intval($_POST['line_m']) : 0;
-				$line_l = $line_ll  = isset($_POST['line_l']) ? intval($_POST['line_l']) : 0;
-				$line_xl = $line_xll  = isset($_POST['line_xl']) ? intval($_POST['line_xl']) : 0;
-				$line_xxl = $line_xxll  = isset($_POST['line_xxl']) ? intval($_POST['line_xxl']) : 0;
+				$line_m = $line_mm  = isset($_POST['line_m'])&&!empty($_POST['line_m']) ? intval($_POST['line_m']) : 1;
+				$line_l = $line_ll  = isset($_POST['line_l'])&&!empty($_POST['line_l']) ? intval($_POST['line_l']) : 1;
+				$line_xl = $line_xll  = isset($_POST['line_xl'])&&!empty($_POST['line_xl']) ? intval($_POST['line_xl']) : 1;
+				$line_xxl = $line_xxll  = isset($_POST['line_xxl'])&&!empty($_POST['line_xxl']) ? intval($_POST['line_xxl']) : 1;
 				$dynamicvalue1  = isset($_POST['dynamicvalue1'])&&!empty($_POST['dynamicvalue1']) ? ($_POST['dynamicvalue1']) : 'M';
 				$dynamicvalue2  = isset($_POST['dynamicvalue2'])&&!empty($_POST['dynamicvalue2']) ? ($_POST['dynamicvalue2']) : 'L';
 				$dynamicvalue3  = isset($_POST['dynamicvalue3'])&&!empty($_POST['dynamicvalue3']) ? ($_POST['dynamicvalue3']) : 'Xl';
@@ -446,11 +446,9 @@ $product_size ="";
 						margin: 0;
 						padding: 0;
 					}
-
 					.barcode-table tr td {
-						border: 1px solid;
-					}
-
+    border:none;
+}
 					.footer-hide,
 					.navbar,
 					.horizontal-menu {
@@ -538,16 +536,16 @@ $product_size ="";
 						</div>
 						<div class="control-group-search" style="float:left; margin-left:10px;width:20%">
 							<label class="control-label" for="firstname">Size <span contenteditable="true" id="dynamicvalue2"><?php echo (isset($dynamicvalue2)&&!empty($dynamicvalue2))?"$dynamicvalue2":"L"; ?></span>:</label>
-							<input type="hidden" name="dynamicvalue2" value="<?php (isset($dynamicvalue2)&&!empty($dynamicvalue2))?"$dynamicvalue2":"L";?>">
+							<input type="hidden" name="dynamicvalue2" value="<?php echo (isset($dynamicvalue2)&&!empty($dynamicvalue2))?"$dynamicvalue2":"L";?>">
 							<input type="text" class="span3 " name="line_l" id="line_l" value="<?php echo $line_l; ?>" data-value="<?php echo $line_ll; ?>" autocomplete="off" />
 						</div><div class="control-group-search" style="float:left; margin-left:10px;width:20%">
 							<label class="control-label" for="firstname">Size <span contenteditable="true" id="dynamicvalue3"><?php echo (isset($dynamicvalue3)&&!empty($dynamicvalue3))?"$dynamicvalue3":"XL"; ?></span>:</label>
-							<input type="hidden" name="dynamicvalue3" value="<?php (isset($dynamicvalue3)&&!empty($dynamicvalue3))?"$dynamicvalue3":"XL";?>" >
+							<input type="hidden" name="dynamicvalue3" value="<?php echo (isset($dynamicvalue3)&&!empty($dynamicvalue3))?"$dynamicvalue3":"XL";?>" >
 							<input type="text" class="span3 " name="line_xl" id="line_xl" value="<?php echo $line_xl; ?>" data-value="<?php echo $line_xll; ?>" autocomplete="off" />
 						</div>
 						<div class="control-group-search" style="float:left; margin-left:10px;width:20%">
 							<label class="control-label" for="firstname">Size <span contenteditable="true" id="dynamicvalue4"><?php echo (isset($dynamicvalue4)&&!empty($dynamicvalue4))?"$dynamicvalue4":"XXL"; ?></span>:</label>
-							<input type="hidden" name="dynamicvalue4" value="<?php (isset($dynamicvalue4)&&!empty($dynamicvalue4))?"$dynamicvalue4":"XXL";?>" >
+							<input type="hidden" name="dynamicvalue4" value="<?php echo (isset($dynamicvalue4)&&!empty($dynamicvalue4))?"$dynamicvalue4":"XXL";?>" >
 							<input type="text" class="span3 " name="line_xxl" id="line_xxl" value="<?php echo $line_xxl; ?>" data-value="<?php echo $line_xxll; ?>" autocomplete="off" />
 						</div>
 						<div class="list-detail-search-action">
@@ -813,13 +811,10 @@ $product_size ="";
 			 <script>
         function updateInputField(editableElement) {
             var id = editableElement.id;
-			console.log(id);
-            var hiddenInput = document.querySelector('input[name="' + id + '"]');
+			var hiddenInput = document.querySelector('input[name="' + id + '"]');
 
             // Update the hidden input field with the content of the editable element
             hiddenInput.value = editableElement.textContent.trim();
-			console.log(editableElement.textContent.trim());
-			console.log(hiddenInput.value);
         }
 
         // Add event listeners to all contenteditable elements on page load
