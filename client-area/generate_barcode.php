@@ -39,7 +39,7 @@ if ($showReport) {
 	$product_ids = isset($_REQUEST['pid']) ? $_REQUEST['pid'] : '';
 	$products = rtrim(implode(',', explode('-', $product_ids)), ',');
 	$products = str_replace("'", '', $products);
-	$result1 = $db->prepare("SELECT product_name,sell_price,barcode_no FROM " . $db_base . ".store_product where  product_id IN ($products)");
+	$result1 = $db->prepare("SELECT product_name,sell_price,barcode_no,hsn_sac FROM " . $db_base . ".store_product where  product_id IN ($products)");
 	$result1->execute();
 	$rows1 = $result1->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($rows1 as $rw) {
@@ -69,6 +69,7 @@ $product_size ="";
 		foreach ($rows1 as $rs1) {
 			if ($rs1['barcode_no'] != null && !empty($rs1['barcode_no'])) {
 				$product_name = $rs1['product_name'];
+				$hsn_sac = $rs1['hsn_sac'];
 				$sellprice = $rs1['sell_price'];
 				$label_no = isset($_POST['label_no']) ? $_POST['label_no'] : '';
 				$header = $header1 = isset($_POST['Header']) ? $_POST['Header'] : '';
@@ -80,16 +81,19 @@ $product_size ="";
 				$line_l = $line_ll  = isset($_POST['line_l']) ? intval($_POST['line_l']) : 0;
 				$line_xl = $line_xll  = isset($_POST['line_xl']) ? intval($_POST['line_xl']) : 0;
 				$line_xxl = $line_xxll  = isset($_POST['line_xxl']) ? intval($_POST['line_xxl']) : 0;
-				
-				if ($line_m > 0) $product_size .= 'M: ' . $line_m . ' ';
-				if ($line_l > 0) $product_size .= 'L: ' . $line_l . ' ';
-				if ($line_xl > 0) $product_size .= 'XL: ' . $line_xl . ' ';
-				if ($line_xxl > 0) $product_size .= 'XXL: ' . $line_xxl . ' ';
+				$dynamicvalue1  = isset($_POST['dynamicvalue1'])&&!empty($_POST['dynamicvalue1']) ? ($_POST['dynamicvalue1']) : 'M';
+				$dynamicvalue2  = isset($_POST['dynamicvalue2'])&&!empty($_POST['dynamicvalue2']) ? ($_POST['dynamicvalue2']) : 'L';
+				$dynamicvalue3  = isset($_POST['dynamicvalue3'])&&!empty($_POST['dynamicvalue3']) ? ($_POST['dynamicvalue3']) : 'Xl';
+				$dynamicvalue4  = isset($_POST['dynamicvalue4'])&&!empty($_POST['dynamicvalue4']) ? ($_POST['dynamicvalue4']) : 'XXL';
+				if ($line_m > 0) $product_size .= ''.ucfirst($dynamicvalue1).': ' . $line_m . ' ';
+				if ($line_l > 0) $product_size .= ''.ucfirst($dynamicvalue2).': ' . $line_l . ' ';
+				if ($line_xl > 0) $product_size .= ''.ucfirst($dynamicvalue3).': ' . $line_xl . ' ';
+				if ($line_xxl > 0) $product_size .= ''.ucfirst($dynamicvalue4).': ' . $line_xxl . ' ';
 				$sizes = [
-					'M' => isset($_POST['line_m']) ? intval($_POST['line_m']) : 0,
-					'L' => isset($_POST['line_l']) ? intval($_POST['line_l']) : 0,
-					'XL' => isset($_POST['line_xl']) ? intval($_POST['line_xl']) : 0,
-					'XXL' => isset($_POST['line_xxl']) ? intval($_POST['line_xxl']) : 0,
+					$dynamicvalue1 => isset($_POST['line_m']) ? ($_POST['line_m']) : 'M',
+					$dynamicvalue2 => isset($_POST['line_l']) ? ($_POST['line_l']) : 'L',
+					$dynamicvalue3 => isset($_POST['line_xl']) ? ($_POST['line_xl']) : 'Xl',
+					$dynamicvalue4 => isset($_POST['line_xxl']) ? ($_POST['line_xxl']) : 'XXL',
 				];
 				$label_no = 1;
 				$displaylabel = $line_m + $line_l + $line_xl + $line_xxl;
@@ -101,6 +105,10 @@ $product_size ="";
 						break;
 					case '{{Product Name}}':
 						$header1 = $product_name;
+
+						break;
+					case '{{Product Code}}':
+						$header1 = $hsn_sac;
 
 						break;
 					case '{{Price}}':
@@ -115,6 +123,10 @@ $product_size ="";
 					case '{{Product Name}}':
 						$line_11 = $product_name;
 						break;
+					case '{{Product Code}}':
+						$line_11 = $hsn_sac;
+
+					break;
 					case '{{Price}}':
 						$line_11 = "Price: " . floor($sellprice);
 						break;
@@ -127,6 +139,10 @@ $product_size ="";
 					case '{{Product Name}}':
 						$line_22 = $product_name;
 						break;
+					case '{{Product Code}}':
+						$line_22 = $hsn_sac;
+
+						break;	
 					case '{{Price}}':
 						$line_22 = "Price: " . floor($sellprice);
 						break;
@@ -516,18 +532,22 @@ $product_size ="";
 							</select>
 						</div>
 						<div class="control-group-search" style="float:left; margin-left:10px;width:20%">
-							<label class="control-label" for="firstname">Size M:</label>
+							<label class="control-label" for="firstname" >Size <span  id="dynamicvalue1" contenteditable="true"><?php echo (isset($dynamicvalue1)&&!empty($dynamicvalue1))?"$dynamicvalue1":"M"; ?></span></label>
+							<input type="hidden" name="dynamicvalue1" value="<?php echo (isset($dynamicvalue1)&&!empty($dynamicvalue1))?"$dynamicvalue1":"M";?>" >
 							<input type="text" class="span3 " name="line_m" id="line_m" value="<?php echo $line_m; ?>" data-value="<?php echo $line_mm; ?>" autocomplete="off" />
 						</div>
 						<div class="control-group-search" style="float:left; margin-left:10px;width:20%">
-							<label class="control-label" for="firstname">Size L:</label>
+							<label class="control-label" for="firstname">Size <span contenteditable="true" id="dynamicvalue2"><?php echo (isset($dynamicvalue2)&&!empty($dynamicvalue2))?"$dynamicvalue2":"L"; ?></span>:</label>
+							<input type="hidden" name="dynamicvalue2" value="<?php (isset($dynamicvalue2)&&!empty($dynamicvalue2))?"$dynamicvalue2":"L";?>">
 							<input type="text" class="span3 " name="line_l" id="line_l" value="<?php echo $line_l; ?>" data-value="<?php echo $line_ll; ?>" autocomplete="off" />
 						</div><div class="control-group-search" style="float:left; margin-left:10px;width:20%">
-							<label class="control-label" for="firstname">Size XL:</label>
+							<label class="control-label" for="firstname">Size <span contenteditable="true" id="dynamicvalue3"><?php echo (isset($dynamicvalue3)&&!empty($dynamicvalue3))?"$dynamicvalue3":"XL"; ?></span>:</label>
+							<input type="hidden" name="dynamicvalue3" value="<?php (isset($dynamicvalue3)&&!empty($dynamicvalue3))?"$dynamicvalue3":"XL";?>" >
 							<input type="text" class="span3 " name="line_xl" id="line_xl" value="<?php echo $line_xl; ?>" data-value="<?php echo $line_xll; ?>" autocomplete="off" />
 						</div>
 						<div class="control-group-search" style="float:left; margin-left:10px;width:20%">
-							<label class="control-label" for="firstname">Size XXL:</label>
+							<label class="control-label" for="firstname">Size <span contenteditable="true" id="dynamicvalue4"><?php echo (isset($dynamicvalue4)&&!empty($dynamicvalue4))?"$dynamicvalue4":"XXL"; ?></span>:</label>
+							<input type="hidden" name="dynamicvalue4" value="<?php (isset($dynamicvalue4)&&!empty($dynamicvalue4))?"$dynamicvalue4":"XXL";?>" >
 							<input type="text" class="span3 " name="line_xxl" id="line_xxl" value="<?php echo $line_xxl; ?>" data-value="<?php echo $line_xxll; ?>" autocomplete="off" />
 						</div>
 						<div class="list-detail-search-action">
@@ -742,6 +762,9 @@ $product_size ="";
 						label: "{{Product Name}}",
 					},
 					{
+						label: "{{Product Code}}",
+					},
+					{
 						label: "{{Price}}",
 					}
 				];
@@ -787,6 +810,28 @@ $product_size ="";
 					$(this).autocomplete("search");
 				});
 			</script>
+			 <script>
+        function updateInputField(editableElement) {
+            var id = editableElement.id;
+			console.log(id);
+            var hiddenInput = document.querySelector('input[name="' + id + '"]');
+
+            // Update the hidden input field with the content of the editable element
+            hiddenInput.value = editableElement.textContent.trim();
+			console.log(editableElement.textContent.trim());
+			console.log(hiddenInput.value);
+        }
+
+        // Add event listeners to all contenteditable elements on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            var editableElements = document.querySelectorAll('[contenteditable]');
+            editableElements.forEach(function(element) {
+                element.addEventListener('input', function() {
+                    updateInputField(element);
+                });
+            });
+        });
+    </script>
 			<script>
 				document.addEventListener('DOMContentLoaded', () => {
 					$('#printer').change(function() {

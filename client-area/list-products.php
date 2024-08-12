@@ -111,7 +111,7 @@ if ($total_pages > 1) {
 	$url_string .= "&page=".$cur_page;
 }
 
-$sql1 = "SELECT * FROM " . DB_BASE . ".store_product 
+$sql1 = "SELECT product_id,product_name,hsn_sac,pur_price,sell_price,item_available,gst FROM " . DB_BASE . ".store_product 
          WHERE 1=:user AND is_deleted != 1 " . $searchQuery . " 
          ORDER BY product_id DESC 
          LIMIT " . $page_start . "," . $per_page;
@@ -121,7 +121,16 @@ $product_count1 = count($product1);
 
 //pagination end
 ?>
-
+<style>
+	table.dataTable tbody th, table.dataTable tbody td {
+		padding: 0.875rem 0.9375rem;
+    vertical-align: top;
+    border-top: 1px solid #e8ebf1;
+	}
+	th {
+    color: black !important;
+}
+</style>
 <nav class="page-breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
@@ -212,7 +221,7 @@ $product_count1 = count($product1);
                 </h6>
 
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-sortable">
                         <thead>
                             <tr>
                                 <th></th>
@@ -279,6 +288,16 @@ $product_count1 = count($product1);
                             </tr>
                             <?php }} ?>
                         </tbody>
+                        <tfoot>
+                            <tr class="summary-row">
+                                <td colspan="4" class="text-right">Total :</td>
+                                <td class="text-right"><?php echo $rowcount; ?></td>
+                                <td class="text-right"></td>
+                                <td class="text-right"></td>
+                                <td class="text-right"></td>
+                                <td class="text-right"><?php echo $total_stock; ?></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -326,6 +345,18 @@ $(function()
 			});
 	});
 });
+$(document).ready(function() {
+        $('.table-sortable').DataTable({
+            "paging": false, 
+            "searching": false, 
+            "ordering": true, 
+            "info": false, 
+            "lengthMenu": [10, 25, 50, 75, 100], 
+            "columnDefs": [
+            { "orderable": false, "targets": [0, -1] } // Disable sorting for the first (0) and last (-1) columns
+        ]
+        });
+    });
 </script>
 <?php require_once('footer.php'); ?>
 

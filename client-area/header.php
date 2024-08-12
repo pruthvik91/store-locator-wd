@@ -13,14 +13,17 @@
 	<link rel="stylesheet" href="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
 	<link rel="stylesheet" href="../assets/vendors/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="../assets/fonts/feather-font/css/iconfont.css">	
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" href="../assets/css/my-bootstrap.min.css">  
 	<link rel="stylesheet" href="../assets/css/jquery-ui.css">
 	<link rel="stylesheet" href="../assets/css/demo_5/style.css">
 	<link rel="stylesheet" href="../assets/css/style.css">
 	<link rel="stylesheet" href="../assets/css/custom.css">  
 	<link rel="stylesheet" href="../assets/css/font-awesome.css">
+
     <link rel="shortcut icon" href="./favicon_io/android-chrome-192x192.png" />  
 	<script src="../assets/vendors/core/core.js"></script>
+
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<script src="../assets/js/jquery-1.12.4.min.js"></script>
@@ -120,8 +123,19 @@
 											<img src="./favicon_io/android-chrome-512x512.png" alt="">
 										</div>
 										<div class="info text-center">
-											<p class="name font-weight-bold mb-0"><?php echo $_SESSION['user_name']; ?></p>
-											<p class="email text-muted mb-3"><?php echo $_SESSION['user_email']; ?></p>
+											<?php 
+											  $sql = "select * from ".DB_MAIN.".user_detail";
+											   $getuser =  CP_Select($sql, []);
+									
+											   $getusercnt = count($getuser); 
+											   if($getusercnt = 1)
+											   {
+													$user_name =$getuser[0]->user_first_name;
+													$user_email = $getuser[0]->user_email;
+												}
+											   ?>
+											<p class="name font-weight-bold mb-0"><?php echo $user_name; ?></p>
+											<p class="email text-muted mb-3"><?php echo $user_email; ?></p>
 										</div>
 									</div>
 									<div class="dropdown-body">
@@ -158,11 +172,23 @@
 								<span class="menu-title">Dashboard</span>
 							</a>
 						</li>
-						<li class="nav-item">
+						<!-- <li class="nav-item">
 							<a class="nav-link" href="list-products.php">
 								<i class="link-icon" data-feather="box"></i>
 								<span class="menu-title">Products</span>
 							</a>
+						</li> -->
+						<li class="nav-item">
+						<a class="nav-link" href="list-products.php">
+						<i class="link-icon" data-feather="box"></i>
+						<span class="menu-title">Products</span>
+								<i class="link-arrow"></i>
+							</a>
+							<div class="submenu">
+								<ul class="submenu-item">									
+									<li class="nav-item"><a class="nav-link" href="manage-stock.php">Stock</a></li>
+								</ul>
+							</div>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="invoicedetail.php">

@@ -1148,7 +1148,7 @@ if (isset($rowcountpro) && $rowcountpro != "") {
                     echo '{
 				
 				value: "' . $product->product_id . '",
-				label: "' . addslashes($product->product_name ?? '') . '",
+				label: "' . addslashes($product->product_name."-".$product->hsn_sac ?? '') . '",
 				sellprice: "' . $product->sell_price . '",
 				purchaseprice: "' . $product->pur_price . '",
 				items_available: "' . str_replace(',', '', $product->item_available) . '",

@@ -525,7 +525,7 @@ table th{
         size: A4; 
         margin: 5mm; 
     }   
-    body * {
+body * {
         visibility: hidden;
     }
     .invoice-1, .invoice-1 * {

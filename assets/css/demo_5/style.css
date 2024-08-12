@@ -20607,7 +20607,7 @@ address p {
               box-shadow: none; } }
           .horizontal-menu .bottom-navbar .page-navigation > .nav-item:not(.mega-menu) .submenu ul {
             width: auto;
-            padding: 15px 30px; }
+            padding: 0px 15px; }
             @media (max-width: 991.98px) {
               .horizontal-menu .bottom-navbar .page-navigation > .nav-item:not(.mega-menu) .submenu ul {
                 padding: 0 35px; } }

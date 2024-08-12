@@ -30,5 +30,6 @@
         <script src="../assets/js/bootstrap-colorpicker.js"></script>
         <script src="../assets/js/timepicker.js"></script>
         <script src="../assets/js/file-upload.js"></script>
+        <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
     </body>
 </html>

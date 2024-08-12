@@ -94,7 +94,7 @@ require_once('header.php'); ?>
                iid.product_id = sp.product_id
                WHERE id.is_deleted != 1
            GROUP BY 
-               sp.product_id
+               sp.product_id, sp.product_name
            ORDER BY 
                total_quantity_sold Asc limit 5;";
               $topselling =  CP_Select($sql, []);
@@ -114,7 +114,7 @@ require_once('header.php'); ?>
       </div><!-- /widget-table  -->
     </div><!-- /span12 -->
     <div class="span4 span-md-4 span-sm-12 span-xs-12" >
-      <div class="widget widget-table action-table" style="height:315px;">
+    <div class="widget widget-table action-table" style="height:315px;">  
         <div class="widget-header header-line-height">
           <h3>Low Stock</h3>
         </div><!-- /widget-header -->
@@ -129,15 +129,19 @@ require_once('header.php'); ?>
             <tbody>
               <?php 
             $sql = "SELECT 
-              sp.item_available, 
-              sp.product_name
-          FROM 
-              " . DB_BASE . ".`store_product` sp 
-            WHERE sp.is_deleted != 1
-          GROUP BY 
-              sp.product_id
-          ORDER BY 
-              sp.item_available ASC limit 5;";
+            MIN((sp.item_available)) AS item_available, 
+            concat(sp.product_name,'-', sp.hsn_sac) as product_name
+        FROM 
+            store_db_0_5k.`store_product` sp 
+        WHERE 
+            sp.is_deleted != 1 
+        GROUP BY 
+            sp.product_name 
+        ORDER BY 
+            item_available ASC 
+        LIMIT 5;
+        ";
+
              $lowstock =  CP_Select($sql, []);
              $lowstock_count = count($lowstock);
              if ($lowstock_count > 0) {
@@ -152,6 +156,53 @@ require_once('header.php'); ?>
           </table><!-- /table -->
         </div><!-- /widget-content -->
       </div><!-- /widget-table  -->
+    </div><!-- /span12 -->
+  </div><!-- /row -->  
+  <div class="row" data-section="1">
+    <div class="span12 span-md-12 span-sm-12 span-xs-12" >
+       <div class="widget widget-table action-table" style="height:315px;">
+        <div class="widget-header header-line-height">
+         <center> <h3>Total Stock</h3></center>
+        </div><!-- /widget-header -->
+        <div class="widget-content">
+          <table class="table" style="display: table;">
+            <thead>
+              <tr class="footable-header">
+                <th style="display: table-cell;">Product Name</th>
+                <th data-breakpoints="sm" class="footable-last-visible text-right" style="display: table-cell;"> Qty.</th>
+              </tr>
+            </thead><!-- /thead -->
+            <tbody>
+              <?php 
+            $sql = "SELECT 
+            sum(sp.item_available) AS item_available, 
+            sp.product_name as product_name
+        FROM 
+            store_db_0_5k.`store_product` sp 
+        WHERE 
+            sp.is_deleted != 1 
+        GROUP BY 
+            sp.product_name 
+        ORDER BY 
+            item_available DESC 
+        ";
+             $lowstock =  CP_Select($sql, []);
+             $lowstock_count = count($lowstock);
+             if ($lowstock_count > 0) {
+               foreach ($lowstock as $tp) {
+             ?>
+              <tr>
+                <td style="display: table-cell;"><?= $tp->product_name ?></td>
+                <td class="footable-last-visible text-right" style="display: table-cell;"><?= $tp->item_available ?></td>
+              </tr>
+              <?php } }?>
+            </tbody><!-- /tbody -->
+          </table><!-- /table -->
+        </div><!-- /widget-content -->
+      </div><!-- /widget-table  -->
+    </div><!-- /span12 -->
+
+     
     </div><!-- /span12 -->
   </div><!-- /row -->
   <div class="quick-links" style="
