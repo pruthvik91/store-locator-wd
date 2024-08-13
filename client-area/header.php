@@ -34,6 +34,12 @@
 
 </head>
 <body>
+	<?php 
+	$current_page = basename($_SERVER['PHP_SELF']);
+	if ($current_page !== 'list-products.php') {
+		clearCheckboxStates(); // Call the function to clear checkbox states
+	}
+	 ?>
 <script>
         var gst_rates_options_igst = "<?php echo gst_rates_options('','igst'); ?>";
         var gst_rates_options_cgst = "<?php echo gst_rates_options(); ?>";

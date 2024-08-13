@@ -171,7 +171,7 @@ $product_count1 = count($product1);
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Product Search</h6>
-                <form method="POST">
+                <form method="POST" id="searchForm">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -195,7 +195,7 @@ $product_count1 = count($product1);
                     </button>
                     <button class="btn btn-primary 	btn-icon-text submit" name="showall">
                         <i class="btn-icon-prepend" data-feather="list"></i>
-                        Show all
+                        Show all    
                     </button>
                 </form>
             </div>
@@ -288,16 +288,6 @@ $product_count1 = count($product1);
                             </tr>
                             <?php }} ?>
                         </tbody>
-                        <tfoot>
-                            <tr class="summary-row">
-                                <td colspan="4" class="text-right">Total :</td>
-                                <td class="text-right"><?php echo $rowcount; ?></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"><?php echo $total_stock; ?></td>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -309,6 +299,80 @@ $product_count1 = count($product1);
 				<a href="generate_barcode.php?" target="_blank" class="btn btn-default pull-right generatebarcode"  name="generatebarcode"><i class="btn-icon-only fa fa-barcode"> </i>Generate Barcode</a>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Restore checkbox states
+        restoreCheckboxStates();
+
+        // Update barcode URL when checkboxes change
+        document.querySelectorAll('input.delall').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                saveCheckboxStates();
+                updateBarcodeUrl();
+            });
+        });
+
+        // Update barcode URL on page load
+        updateBarcodeUrl();
+
+        // Handle barcode generation button click
+        document.querySelector('.generatebarcode').addEventListener('click', function() {
+            clearCheckedStates();
+        });
+    });
+
+    function saveCheckboxStates() {
+        const checkedCheckboxes = JSON.parse(localStorage.getItem('checkedCheckboxes') || '[]');
+        const newChecked = [];
+        document.querySelectorAll('input.delall:checked').forEach(checkbox => {
+            newChecked.push(checkbox.value);
+        });
+
+        // Merge new checked states with existing ones
+        const allChecked = Array.from(new Set([...checkedCheckboxes, ...newChecked]));
+        localStorage.setItem('checkedCheckboxes', JSON.stringify(allChecked));
+    }
+
+    function restoreCheckboxStates() {
+        const checkedCheckboxes = JSON.parse(localStorage.getItem('checkedCheckboxes') || '[]');
+        document.querySelectorAll('input.delall').forEach(checkbox => {
+            checkbox.checked = checkedCheckboxes.includes(checkbox.value);
+        });
+    }
+
+    function updateBarcodeUrl() {
+        const checkedCheckboxes = JSON.parse(localStorage.getItem('checkedCheckboxes') || '[]');
+        const listPrint = checkedCheckboxes.join('-');
+        const barcodeUrl = listPrint ? `generate_barcode.php?pid=${listPrint}&original=1` : '#';
+        const generateBarcodeButton = document.querySelector('.generatebarcode');
+        generateBarcodeButton.setAttribute('href', barcodeUrl);
+        generateBarcodeButton.setAttribute('target', listPrint ? '_blank' : '');
+    }
+
+    function clearCheckedStates() {
+        // Clear local storage
+        localStorage.removeItem('checkedCheckboxes');
+
+        // Optionally, you can also send an AJAX request to clear session on the server
+        fetch('clear_checkbox_states.php', {
+            method: 'POST'
+        });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+       $("[name='btnSearch1']").on('click', function() {
+            clearCheckedStates();
+        }); $("[name='showall']").on('click', function() {
+            clearCheckedStates();
+        }); 
+        
+    });
+
+</script>
+
+
+
+
+
 <script>
 function confirmDelete(productId) {
     Swal.fire({

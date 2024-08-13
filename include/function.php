@@ -317,6 +317,16 @@ function randombarcode() {
 
     return $barcode;
 }
+function clearCheckboxStates() { ?>
+	<script>
+		 localStorage.removeItem('checkedCheckboxes');
+		fetch('clear_checkbox_states.php', {
+			method: 'POST'
+		});
+	</script>
+    
+<?php } 
+
 require_once('image.php');
 require_once('mail.php');
 require_once('db_class.php');

@@ -2,8 +2,8 @@
 require_once('../config.php');
 require_once('uservalidation.php');
 require_once('header.php');
-
-
+?>
+<?php
 $title = (isset($_GET["invoice_id"]) && $_GET["invoice_id"] != "") ? ' Update ' : ' Create ';
 $title .= " Sale Invoice";
 $IsAccessError = false;
