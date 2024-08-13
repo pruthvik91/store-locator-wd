@@ -453,7 +453,6 @@ $product_size ="";
 						margin: 0;
 						padding: 0;
 					}
-
 					.barcode-table tr td {
 						border: none;
 					}
@@ -825,13 +824,10 @@ $product_size ="";
 			 <script>
         function updateInputField(editableElement) {
             var id = editableElement.id;
-			console.log(id);
-            var hiddenInput = document.querySelector('input[name="' + id + '"]');
+			var hiddenInput = document.querySelector('input[name="' + id + '"]');
 
             // Update the hidden input field with the content of the editable element
             hiddenInput.value = editableElement.textContent.trim();
-			console.log(editableElement.textContent.trim());
-			console.log(hiddenInput.value);
         }
 
         // Add event listeners to all contenteditable elements on page load
