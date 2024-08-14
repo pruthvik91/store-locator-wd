@@ -27,7 +27,7 @@
     $number2 = trim($_POST['number2']);
     $instagram = trim($_POST['instagram']);
     $storeaddress = trim($_POST['address']);
-    $display_hsn = trim($_POST['display_hsn']);
+    $display_hsn = isset($_POST['display_hsn']) && !empty($_POST['display_hsn'])? trim($_POST['display_hsn']):'';
     $general_options = array(
         'number1'=>$number1
         ,'number2'=>$number2
@@ -43,12 +43,16 @@
   $getsettings = "SELECT * FROM ".DB_BASE.".store_settings order by store_id desc limit 1";
   $qrysettings =  CP_Select($getsettings,[]);
   $settings_count = count($qrysettings);
-  $st = json_decode($qrysettings[0]->settings,true);
-  $number1 = isset($st['number1']) && !empty($st['number1']) ? $st['number1'] :'Add number In store Setting';
-  $number2 = isset($st['number2']) && !empty($st['number2']) ? $st['number2'] :'Add number In store Setting';
-  $instagram = isset($st['instagram']) && !empty($st['instagram']) ? $st['instagram'] :'Add instagram store Setting';
-  $storeaddress = isset($st['storeaddress']) && !empty($st['storeaddress']) ? $st['storeaddress']:'Add store address store Setting';
-  $display_hsn = isset($st['display_hsn']) && !empty($st['display_hsn']) ? $st['display_hsn']:'';
+  if($settings_count >0 )
+  {
+    $st = json_decode($qrysettings[0]->settings,true);
+    $number1 = isset($st['number1']) && !empty($st['number1']) ? $st['number1'] :'Add number In store Setting';
+    $number2 = isset($st['number2']) && !empty($st['number2']) ? $st['number2'] :'Add number In store Setting';
+    $instagram = isset($st['instagram']) && !empty($st['instagram']) ? $st['instagram'] :'Add instagram store Setting';
+    $storeaddress = isset($st['storeaddress']) && !empty($st['storeaddress']) ? $st['storeaddress']:'Add store address store Setting';
+    $display_hsn = isset($st['display_hsn']) && !empty($st['display_hsn']) ? $st['display_hsn']:'';
+  }
+  
   
 
 

@@ -546,7 +546,10 @@ VALUES(
         }
            
        
-        }
+        }else{
+           
+       
+    }
  
     }
     header("Location:invoicedetail.php");

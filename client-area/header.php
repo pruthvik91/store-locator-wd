@@ -35,8 +35,17 @@
 </head>
 <body>
 	<?php 
+	function clearCheckboxStates() { ?>
+		<script>
+			 localStorage.removeItem('checkedCheckboxes');
+			fetch('clear_checkbox_states.php', {
+				method: 'POST'
+			});
+		</script>
+		
+	<?php } 
 	$current_page = basename($_SERVER['PHP_SELF']);
-	if ($current_page !== 'list-products.php') {
+	if ($current_page !== 'list-products.php' && $current_page !== 'generate_barcode.php') {
 		clearCheckboxStates(); // Call the function to clear checkbox states
 	}
 	 ?>
