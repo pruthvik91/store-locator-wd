@@ -19,7 +19,7 @@ $export_postfix = "";
 $other_tax_1_after_Taxable = "";
 $total_to_qty = 0;
 $payment_type = "";
-$term_detail ="";
+$term_detail = "";
 $payment_type_option = "";
 $PlaceofSupply = isset($_POST['PlaceofSupply']) ? $_POST['PlaceofSupply'] : '';
 $lut_no = isset($_POST['lut_no']) ? $_POST['lut_no'] : '';
@@ -352,12 +352,9 @@ if ((!empty($_POST)) && isset($_POST)) {
         $selectitem->execute();
         $itmrows = $selectitem->fetchAll(PDO::FETCH_OBJ);
         $invitmrowcount = count($itmrows);
-       
+
         $result = $db->prepare("delete  FROM " . DB_BASE . ".invoice_item_detail WHERE invoice_detail_id=" . $invoice_detail_id);
         $result->execute();
-      
-           
- 
     } else {
         $enable_inventory_val = 0;
         if (isset($_POST['enable_inventory']) && $_POST['enable_inventory'] == 1) {
@@ -473,8 +470,8 @@ VALUES(
         $affected_rows = $stmt->rowCount();
         $invoice_detail_id = $db->lastInsertId();
     }
- 
-    
+
+
     $i = count($_POST['quantity']);
     for ($j = 0; $j < $i; $j++) {
         $user_id = $userid;
@@ -490,6 +487,24 @@ VALUES(
         $igst_rate = $_POST['igst_rate'][$j];
         $igst = isset($_POST['igst'][$j]) ? $_POST['igst'][$j] : '';
         $item_total = $_POST['line_total'][$j];
+        if(empty($product_id) && !empty($producttitle) )
+        {
+            $barcode_no = randombarcode();
+            $dt1 = date("Y-m-d H:i:s");
+            $sql = "INSERT INTO " . DB_BASE . ".store_product (product_name,sell_price,pur_price,hsn_sac,barcode_no,gst,item_available,createdate) VALUES (:product_name,:sell_price,:pur_price,:hsn_sac,:barcode_no,:gst,:item_available,:createdate);";
+            $data = array(
+                ':product_name' => $producttitle,
+                ':sell_price' => $rate,
+                ':pur_price' => 0,
+                ':hsn_sac' => $HSC_SAC,
+                ':barcode_no' => $barcode_no,
+                ':gst' => $igst,
+                ':item_available' => $quantity,
+                ':createdate' => $dt1
+            );
+            $product_id = CP_Insert($sql, $data);
+        }
+        
         if ($product_id != "" && $quantity != "" && $rate != "") {
             $stmt = $db->prepare("INSERT INTO " . DB_BASE . ".invoice_item_detail (
     invoice_detail_id,
@@ -530,30 +545,23 @@ VALUES(
                 ':taxable_line_value' => $taxable_line_value
             ));
 
-            $invoiceitemdetailid = $db->lastInsertId(); 
-            if($invitmrowcount > 0)
-            {
-            
-            foreach($itmrows as $item)
-            {
-                $product_id = $item->product_id;
-                $oldquantity = $item->quantity;
-                $updateproduct = $db->prepare("update " . DB_BASE . ".store_product set item_available = (item_available+$oldquantity) WHERE product_id=" . $product_id);
-                $updateproduct->execute();
-                $result = $db->prepare("update " . DB_BASE . ".store_product set item_available = (item_available-$quantity) WHERE product_id=" . $product_id);
-                $result->execute();
+            $invoiceitemdetailid = $db->lastInsertId();
+            if ($invitmrowcount > 0) {
+
+                foreach ($itmrows as $item) {
+                    $product_id = $item->product_id;
+                    $oldquantity = $item->quantity;
+                    $updateproduct = $db->prepare("update " . DB_BASE . ".store_product set item_available = (item_available+$oldquantity) WHERE product_id=" . $product_id);
+                    $updateproduct->execute();
+                    $result = $db->prepare("update " . DB_BASE . ".store_product set item_available = (item_available-$quantity) WHERE product_id=" . $product_id);
+                    $result->execute();
+                }
             }
+        } else {
         }
-           
-       
-        }else{
-           
-       
-    }
- 
     }
     header("Location:invoicedetail.php");
-    exit; 
+    exit;
 }
 ?>
 
@@ -991,7 +999,7 @@ VALUES(
                                                     <div class="control-group tc_counter-1" style="margin-right: 25px;">
                                                         <label for="Address" class="control-label">Detail</label>
                                                         <div class="controls">
-                                                            <textarea name="term_detail" class="span4" placeholder="Terms & Conditions"><?= (isset($term_detail) && !empty($term_detail))?$term_detail:"કપડાં માં વોશિંગ ગેરંટી આવતી નથી.
+                                                            <textarea name="term_detail" class="span4" placeholder="Terms & Conditions"><?= (isset($term_detail) && !empty($term_detail)) ? $term_detail : "કપડાં માં વોશિંગ ગેરંટી આવતી નથી.
 શેમ્પૂ વોશ કરવું ફરજિયાત છે.
 ખરીદી સમયે બરાબર ચકાસણી કરી લઇ જવું."; ?></textarea>
                                                         </div>
@@ -1042,7 +1050,7 @@ VALUES(
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                   
+
                                                     <tr>
                                                         <td colspan="2" class="tdttlinwords">
                                                             <label class="inner-widget-content-label">Total in words</label>
@@ -1064,13 +1072,15 @@ VALUES(
                                                 <div class="controls">
 
 
-                                                        <div class="payment-type-section">
-                                                            <input type="radio" id="cash" value="cash" class="payment" name="payment_type"  <?php echo ($payment_type == "cash")?'checked':''; ?>>
-                                                            <label for="cash" class="btn btn-payment-type btn-payment-type-cash">CASH</label>
-                                                            <input type="radio" id="Online" value="online" class="payment" name="payment_type"  <?php echo ($payment_type == "online")?'checked':''; ?>>
-                                                            <label for="Online" class="btn btn-payment-type btn-payment-type-cash">ONLINE</label>
-                                                        </div>
-                                                        <div id="paymentError" style="color: red; display: none;">Please select a payment type.</div>
+                                                    <div class="payment-type-section">
+                                                        <input type="radio" id="cash" value="cash" class="payment" name="payment_type" <?php echo ($payment_type == "cash") ? 'checked' : ''; ?>>
+                                                        <label for="cash" class="btn btn-payment-type btn-payment-type-cash">CASH</label>
+                                                        <input type="radio" id="Online" value="online" class="payment" name="payment_type" <?php echo ($payment_type == "online") ? 'checked' : ''; ?>>
+                                                        <label for="Online" class="btn btn-payment-type btn-payment-type-cash">ONLINE</label>
+                                                        <input type="radio" id="debit" value="Debit" class="payment" name="payment_type" <?php echo ($payment_type == "debit") ? 'checked' : ''; ?>>
+                                                        <label for="debit" class="btn btn-payment-type btn-payment-type-cash">DEBIT</label>
+                                                    </div>
+                                                    <div id="paymentError" style="color: red; display: none;">Please select a payment type.</div>
                                                     <!-- <label id="payment-error" class="error" for="payment" style="width:100%;display:none;"></label> -->
                                                 </div> <!-- /controls -->
                                             </div> <!-- /control-group -->
@@ -1150,7 +1160,7 @@ if (isset($rowcountpro) && $rowcountpro != "") {
                     echo '{
 				
 				value: "' . $product->product_id . '",
-				label: "' . addslashes($product->product_name."-".$product->hsn_sac ?? '') . '",
+				label: "' . addslashes($product->product_name . "-" . $product->hsn_sac ?? '') . '",
 				sellprice: "' . $product->sell_price . '",
 				purchaseprice: "' . $product->pur_price . '",
 				items_available: "' . str_replace(',', '', $product->item_available) . '",
